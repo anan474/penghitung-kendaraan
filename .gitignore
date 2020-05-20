@@ -1,0 +1,11 @@
+video
+training
+classifier/archive/*
+classifier/archivebaru/*
+*.pyc
+*.db
+contoh
+test
+__pycache__
+nolog
+logklasifikasi
