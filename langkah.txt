@@ -1,0 +1,4 @@
+- hubungkan dengan modul deteksi objek
+- coba penghitung bisa jalan ke ndak
+- bikin bisa gambar track
+- coba apakah penghitung berjalan dengan benar sesuai dengan track

@@ -1,0 +1,14 @@
+saat objek telah di dihitung tampilkan lah 
+    gambar objek
+    jumlah pixel objek tersebut
+    kelurusan vektor
+    klasifikasi kendaraaan 
+        berdasarkan haar cascade
+        berdasarkan pixel count
+        tingkat kepercayaan klasifikasi
+        jumlah faktor klasifikasi
+
+
+catat ketika
+    jumlah pixel objek tidak konsisten
+    objek bergerak ke arah yang tidak konsisten
