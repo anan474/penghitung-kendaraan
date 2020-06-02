@@ -2,6 +2,11 @@ import math
 
 import numpy as np
 
+
+# ============================================================================
+
+BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT = 3
+
 # ============================================================================
 
 WARNA_GARIS = [(0, 0, 255), (0, 106, 255), (0, 216, 255), (0, 255, 182), (0, 255, 76),
@@ -48,7 +53,7 @@ class Penghitung (object):
         self.id_kendaraan_selanjutnya = 0
         self.jumlah_kendaraan = 0
         # jika pada @limit frame tidak terlihat maka kendaraan dihilangkan
-        self.limit_tidak_terlihat = 10
+        self.limit_tidak_terlihat = BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT
 
     @staticmethod
     def hitung_vektor(a, b):
@@ -119,6 +124,7 @@ class Penghitung (object):
                 if self.apakah_vektor_valid(vektor):
                     # update status kendaraan
                     kendaraan.perbarui_centroid(centroid_objek_ini)
+                    kendaraan.perbarui_posisi(posisi_objek_ini)
                     # hilangkan dari daftar objek
                     del objek[indek_objek_ini]
                     # set bahwa ada objek yang cocok untuk kendaraan ini

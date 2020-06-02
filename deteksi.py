@@ -35,9 +35,11 @@ WARNA_GARIS_PEMBATAS_KELUAR = (0, 255, 255)
 WARNA_GARIS_PEMBATAS_TENGAH = (0, 0, 0)
 
 WARNA_BOUNDING_BOX = (255, 0, 0)
-WARNA_BOUNDING_BOX_HIJAU = (255, 0, 0)
+WARNA_BOUNDING_BOX_HIJAU = (0, 255, 0)
 
 WARNA_CENTROID = (0, 0, 255)
+WARNA_GARIS = [(0, 0, 255), (0, 106, 255), (0, 216, 255), (0, 255, 182), (0, 255, 76),
+               (144, 255, 0), (255, 255, 0), (255, 148, 0), (255, 0, 178), (220, 0, 255)]
 
 # ============================================================================
 
@@ -59,7 +61,7 @@ def main():
 
     gambar_background = cv.imread(GAMBAR_BACKGROUND)
 
-    background_subtractor = cv.createBackgroundSubtractorMOG2(100, 0, True)
+    background_subtractor = cv.createBackgroundSubtractorMOG2()
     background_subtractor.setShadowValue(0)
     background_subtractor.apply(gambar_background, 1)
 
@@ -90,8 +92,9 @@ def main():
 
         ####
         frame_foreground = background_subtractor.apply(frame, 1)
+        cv.imshow('foreground 1', frame_foreground)
 
-        kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (9, 9))
+        kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (3, 3))
 
         frame_foreground = cv.bilateralFilter(frame_foreground, 9, 75, 75)
         frame_foreground = cv.morphologyEx(
@@ -153,14 +156,30 @@ def main():
             cv.circle(frame, centroid, 2, WARNA_CENTROID, -1)
 
         ####
-        # gambar objek terdeteksi dan centroid nya, dari penghitung kendaraan
-        for (i, objek) in enumerate(objek_ditemukan_lajur_kanan + objek_ditemukan_lajur_kiri):
-            posisi, centroid = objek
-            x, y, w, h = posisi
+        # gambar kedaraan terdeteksi, centroid nya dan garis pergerakan kendaraan tersebut, dari penghitung kendaraan
+
+        for (i, kendaraan) in enumerate(penghitung_lajur_kanan.kendaraan + penghitung_lajur_kiri.kendaraan):
+            x, y, w, h = kendaraan.posisi
+            warna = WARNA_GARIS[kendaraan.id % len(WARNA_GARIS)]
 
             # gambar bounding box pada frame
             cv.rectangle(frame, (x, y), (x + w - 1, y + h - 1),
-                         WARNA_BOUNDING_BOX, 1)
+                         WARNA_BOUNDING_BOX_HIJAU if kendaraan.telah_dihitung else WARNA_BOUNDING_BOX, 1)
+
+            teks = 'id:{}\ncentroid:{}\nmuncul:{} frame'.format(
+
+                kendaraan.id, kendaraan.centroid[-1], len(kendaraan.centroid))
+
+            for i, baris in enumerate(teks.split('\n')):
+                cv.putText(frame, baris, (x+5, y+10 + (10*i)),
+                           cv.FONT_HERSHEY_SIMPLEX, 0.3,
+                           warna,
+                           1)
+            # gambar garis pergerakan
+            for point in kendaraan.centroid:
+                cv.circle(frame, point, 2, warna, -1)
+                cv.polylines(frame, [np.int32(
+                    kendaraan.centroid)], False, warna, 1)
 
             # gambar centroid pada frame
             cv.circle(frame, centroid, 2, WARNA_CENTROID, -1)
@@ -186,7 +205,7 @@ def main():
 
         ####
         cv.imshow('asli', frame)
-        # cv.imshow('foreground', frame_foreground)
+        cv.imshow('foreground', frame_foreground)
 
         ###
         c = cv.waitKey(0)

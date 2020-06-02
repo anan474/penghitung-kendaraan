@@ -1,4 +1,7 @@
-- hubungkan dengan modul deteksi objek
-- coba penghitung bisa jalan ke ndak
-- bikin bisa gambar track
-- coba apakah penghitung berjalan dengan benar sesuai dengan track
+>- hubungkan dengan modul deteksi objek
+>- coba penghitung bisa jalan ke ndak
+>- bikin bisa gambar track
+>- coba apakah penghitung berjalan dengan benar sesuai dengan track
+>- cetak info kendaraaan di tiap kotak box kendaraaan yang di deteksi, tulis id, kordiant centroid, berapa frame telah di tracking
+
+- otak atik parameter background substraction dan operasi setelahnya, temukan yang optimal
