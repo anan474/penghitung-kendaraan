@@ -7,6 +7,7 @@ import cv2 as cv
 import numpy as np
 
 from penghitung import Penghitung
+from klasifier import Klasifier
 
 
 # ============================================================================
@@ -77,6 +78,9 @@ def main():
 
     frame_counter = -1
 
+    ###
+    klasifier = Klasifier()
+
     while True:
 
         frame_counter += 1
@@ -110,7 +114,7 @@ def main():
         LEBAR_MINIMAL = 21
         TINGGI_MINIMAL = 21
 
-        _, contours, _ = cv.findContours(
+        contours, _ = cv.findContours(
             frame_foreground, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 
         objek_ditemukan_lajur_kiri = []
@@ -208,7 +212,7 @@ def main():
         cv.imshow('foreground', frame_foreground)
 
         ###
-        c = cv.waitKey(0)
+        c = cv.waitKey(100)
         if c == 27:
             print("ESC ditekan, menghentikan program.")
             break
