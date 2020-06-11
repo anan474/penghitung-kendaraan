@@ -27,6 +27,9 @@ class Kendaraan(object):
         self.telah_dihitung = False
         self.posisi = posisi
 
+        self.klasifikasi = ""
+        self.sudah_klasifikasi = False
+
     @property
     def centroid_terakhir(self):
         return self.centroid[-1]
@@ -49,6 +52,7 @@ class Penghitung (object):
 
         self.lajur = lajur
 
+        self.kendaraan_untuk_diklasifikasi = []
         self.kendaraan = []
         self.id_kendaraan_selanjutnya = 0
         self.jumlah_kendaraan = 0
@@ -140,6 +144,12 @@ class Penghitung (object):
             if not kendaraan.telah_dihitung and self.apakah_melewati_garis_keluar(kendaraan):
                 self.jumlah_kendaraan += 1
                 kendaraan.telah_dihitung = True
+
+
+            # jika kendaraan telah dihitung maka pindahkan ke kendaraan_untuk_diklasifikasi
+            if kendaraan.telah_dihitung:
+                self.kendaraan_untuk_diklasifikasi.append(self.kendaraan[indek_kendaraan])
+                del self.kendaraan[indek_kendaraan]
 
             # hapus kendaraan yang telah melewati limit batas nilai tidak terlihat di frame
             if kendaraan.tidak_terlihat > self.limit_tidak_terlihat:
