@@ -7,8 +7,6 @@ import cv2 as cv
 import numpy as np
 
 from penghitung import Penghitung
-from klasifier import Klasifier
-
 
 # ============================================================================
 
@@ -78,9 +76,6 @@ def main():
 
     frame_counter = -1
 
-    ###
-    klasifier = Klasifier()
-
     while True:
 
         frame_counter += 1
@@ -136,8 +131,8 @@ def main():
 
         ####
         # hubungkan dengan modul penghitung
-        penghitung_lajur_kiri.perbarui_penghitung(objek_ditemukan_lajur_kiri)
-        penghitung_lajur_kanan.perbarui_penghitung(objek_ditemukan_lajur_kanan)
+        penghitung_lajur_kiri.perbarui_penghitung(objek_ditemukan_lajur_kiri, frame)
+        penghitung_lajur_kanan.perbarui_penghitung(objek_ditemukan_lajur_kanan, frame)
 
         ####
         # print jumlah kendaraan terdeteksi

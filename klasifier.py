@@ -13,12 +13,12 @@ class Klasifier():
         self.klasifier_cascade_motor_kanan = cv.CascadeClassifier(
             CASCADE_MOTOR_KANAN)
 
-    def klasifikasi_kendaraan(self, gambar, jalur):
+    def klasifikasi_kendaraan(self, gambar, lajur):
         klasifikasi = ""
-        if jalur is "kiri":
+        if lajur is "kiri":
             klasifikasi = self.klasifier_cascade_motor_kiri.detectMultiScale(
                 gambar)
-        elif jalur is "kanan":
+        elif lajur is "kanan":
             klasifikasi = self.klasifier_cascade_motor_kanan.detectMultiScale(
                 gambar)
         return klasifikasi

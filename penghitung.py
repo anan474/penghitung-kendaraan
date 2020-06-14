@@ -2,6 +2,9 @@ import math
 
 import numpy as np
 
+from klasifier import Klasifier
+
+klasifier = Klasifier()
 
 # ============================================================================
 
@@ -56,6 +59,9 @@ class Penghitung (object):
         self.kendaraan = []
         self.id_kendaraan_selanjutnya = 0
         self.jumlah_kendaraan = 0
+        self.jumlah_kendaraan_mobil = 0
+        self.jumlah_kendaraan_motor = 0
+
         # jika pada @limit frame tidak terlihat maka kendaraan dihilangkan
         self.limit_tidak_terlihat = BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT
 
@@ -110,7 +116,7 @@ class Penghitung (object):
         else:
             return False
 
-    def perbarui_penghitung(self, objek):
+    def perbarui_penghitung(self, objek, frame):
 
         # dari data kendaraan yang telah di-tracking, cek satu persatu mana yang merupakan kendaraan tersebut
         for indek_kendaraan, kendaraan in enumerate(self.kendaraan):
@@ -165,3 +171,14 @@ class Penghitung (object):
                     self.id_kendaraan_selanjutnya, centroid_objek_ini, posisi_objek_ini)
                 self.id_kendaraan_selanjutnya += 1
                 self.kendaraan.append(kendaraan_baru)
+
+        # dari kendaraan_untuk_diklasifikasi lakukan klasifikasi, lalu masukkan nilai nya ke variabel
+        for indek_kendaraan, kendaraan in enumerate(self.kendaraan_untuk_diklasifikasi):
+            x, y, w, h = kendaraan.posisi
+            gambar_kendaraan = frame[y:y+h, x:x+w] # crop gambar jadi hanya kendaraan
+            gambar_kendaraan = cv2.cvtColor(gambar_kendaraan, cv2.COLOR_BGR2GRAY) # convert ke grayscale
+            gambar_kendaraan[gambar_kendaraan < 10] = 10 # kalo ada pixel di bawah 10 (hitam pekat), jadikan abu abu
+            
+            klasifikasi = klasifier.klasifikasi_kendaraan(gambar_kendaraan ,self.lajur)
+
+            print("klasifikasi kendaraan, motor: ", klasifikasi)
