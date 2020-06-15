@@ -1,6 +1,7 @@
 import math
 
 import numpy as np
+import cv2 as cv
 
 from klasifier import Klasifier
 
@@ -8,7 +9,7 @@ klasifier = Klasifier()
 
 # ============================================================================
 
-BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT = 3
+BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT = 10
 
 # ============================================================================
 
@@ -176,9 +177,13 @@ class Penghitung (object):
         for indek_kendaraan, kendaraan in enumerate(self.kendaraan_untuk_diklasifikasi):
             x, y, w, h = kendaraan.posisi
             gambar_kendaraan = frame[y:y+h, x:x+w] # crop gambar jadi hanya kendaraan
-            gambar_kendaraan = cv2.cvtColor(gambar_kendaraan, cv2.COLOR_BGR2GRAY) # convert ke grayscale
+            gambar_kendaraan = cv.cvtColor(gambar_kendaraan, cv.COLOR_BGR2GRAY) # convert ke grayscale
             gambar_kendaraan[gambar_kendaraan < 10] = 10 # kalo ada pixel di bawah 10 (hitam pekat), jadikan abu abu
             
             klasifikasi = klasifier.klasifikasi_kendaraan(gambar_kendaraan ,self.lajur)
 
-            print("klasifikasi kendaraan, motor: ", klasifikasi)
+            if len(klasifikasi):
+                self.jumlah_kendaraan_motor += 1
+
+            # print("klasifikasi motor ", self.lajur, klasifikasi)
+            del self.kendaraan_untuk_diklasifikasi[indek_kendaraan]

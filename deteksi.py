@@ -91,7 +91,6 @@ def main():
 
         ####
         frame_foreground = background_subtractor.apply(frame, 1)
-        cv.imshow('foreground 1', frame_foreground)
 
         kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (3, 3))
 
@@ -134,12 +133,18 @@ def main():
         penghitung_lajur_kiri.perbarui_penghitung(objek_ditemukan_lajur_kiri, frame)
         penghitung_lajur_kanan.perbarui_penghitung(objek_ditemukan_lajur_kanan, frame)
 
+
         ####
-        # print jumlah kendaraan terdeteksi
+        # clear console
         os.system("clear")
+
+        # print jumlah kendaraan terdeteksi
         print("frame ke: ", frame_counter)
         print("lajur kiri: ", penghitung_lajur_kiri.jumlah_kendaraan)
+        print("lajur kiri motor: ", penghitung_lajur_kiri.jumlah_kendaraan_motor)
         print("lajur kanan:", penghitung_lajur_kanan.jumlah_kendaraan)
+        print("lajur kanan motor: ", penghitung_lajur_kanan.jumlah_kendaraan_motor)
+
 
         ####
         # gambar objek terdeteksi dan centroid nya
@@ -203,8 +208,8 @@ def main():
                 WARNA_GARIS_PEMBATAS_TENGAH, 1)
 
         ####
-        cv.imshow('asli', frame)
-        cv.imshow('foreground', frame_foreground)
+        # cv.imshow('asli', frame)
+        # cv.imshow('foreground', frame_foreground)
 
         ###
         c = cv.waitKey(100)
