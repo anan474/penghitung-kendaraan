@@ -93,12 +93,13 @@ def main():
         frame_foreground = background_subtractor.apply(frame, 1)
 
         kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (3, 3))
+        kernel2 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (7, 7))
 
         frame_foreground = cv.bilateralFilter(frame_foreground, 9, 75, 75)
         frame_foreground = cv.morphologyEx(
             frame_foreground, cv.MORPH_CLOSE, kernel)
         frame_foreground = cv.morphologyEx(
-            frame_foreground, cv.MORPH_OPEN, kernel)
+            frame_foreground, cv.MORPH_OPEN, kernel2)
         frame_foreground = cv.dilate(frame_foreground, kernel, iterations=5)
         frame_foreground = cv.erode(frame_foreground, kernel, iterations=3)
         frame_foreground = cv.morphologyEx(
@@ -208,7 +209,7 @@ def main():
                 WARNA_GARIS_PEMBATAS_TENGAH, 1)
 
         ####
-        # cv.imshow('asli', frame)
+        cv.imshow('asli', frame)
         # cv.imshow('foreground', frame_foreground)
 
         ###
