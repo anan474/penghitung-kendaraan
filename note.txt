@@ -12,3 +12,18 @@ saat objek telah di dihitung tampilkan lah
 catat ketika
     jumlah pixel objek tidak konsisten
     objek bergerak ke arah yang tidak konsisten
+
+
+struktur baru
+    main
+    pendeteksi_objek
+    kendaraaan
+    tracking_kendaraan
+    klasifier_kendaraan
+    pengelola_basisdata
+
+    penyedia_data_realtime
+    penyedia_data_statistik
+
+    gambar_objek
+    logger
