@@ -7,6 +7,8 @@ import cv2 as cv
 from pendeteksi_objek import PendeteksiObjek
 from tracker_kendaraan import TrackerKendaraan
 
+from penyedia_data_realtime import PenyediaDataRealtime
+
 from gambar_objek import GambarObjek
 
 from logger import Logger
@@ -25,6 +27,8 @@ def main():
     pendeteksi_objek = PendeteksiObjek()
     tracker_kendaraan = TrackerKendaraan()
     gambar_objek = GambarObjek()
+
+    penyedia_data_realtime = PenyediaDataRealtime()
 
     logger = Logger()
 
