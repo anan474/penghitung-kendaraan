@@ -29,6 +29,7 @@ def main():
     gambar_objek = GambarObjek()
 
     penyedia_data_realtime = PenyediaDataRealtime()
+    penyedia_data_realtime.start()
 
     logger = Logger()
 
@@ -63,6 +64,7 @@ def main():
     print("Menutup video ...")
     video.release()
     cv.destroyAllWindows()
+    penyedia_data_realtime.stop()
     print("Selesai .")
 
 

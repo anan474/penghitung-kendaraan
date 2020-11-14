@@ -19,6 +19,7 @@ class PengelolaBasisdata(object):
             params = ()
             cursor.execute(query, params)
             records = cursor.fetchall()
+
             print("Jumlah kendaraan:  ", len(records))
             print("Data:")
             for row in records:
@@ -29,6 +30,68 @@ class PengelolaBasisdata(object):
                 print("\n")
 
             cursor.close()
+
+            return records
+
+        except sqlite3.Error as error:
+            print("gagal membaca tabel:", error)
+
+        return self
+
+    def get_status_sekarang(self):
+        try:
+            cursor = self.sqliteConnection.cursor()
+
+            query = """SELECT 
+                            COUNT(*), 
+                            klasifikasi 
+                        FROM 
+                            trafik_kendaraan
+                        GROUP BY 
+                            klasifikasi
+                            ;"""
+            params = ()
+            cursor.execute(query, params)
+            records = cursor.fetchall()
+            # print("Jumlah kendaraan:  ", len(records))
+            # print("Data:")
+            for row in records:
+                print("jumlah: ", row[0])
+                print("klasifikasi: ", row[1])
+
+            # print(records[0])
+
+            cursor.close()
+
+            return records
+
+        except sqlite3.Error as error:
+            print("gagal membaca tabel:", error)
+
+        return self
+
+    def jumlah_data(self):
+        try:
+            cursor = self.sqliteConnection.cursor()
+
+            query = """SELECT 
+                            COUNT(*) 
+                        FROM 
+                            trafik_kendaraan
+                            ;"""
+            params = ()
+            cursor.execute(query, params)
+            records = cursor.fetchall()
+            # print("Jumlah kendaraan:  ", len(records))
+            # print("Data:")
+            for row in records:
+                print("jumlah: ", row[0])
+
+            # print(records[0])
+
+            cursor.close()
+
+            return records
 
         except sqlite3.Error as error:
             print("gagal membaca tabel:", error)
@@ -44,11 +107,8 @@ class PengelolaBasisdata(object):
             query = """INSERT INTO trafik_kendaraan (klasifikasi, lajur, waktu) VALUES (? ,?, ? );"""
 
             params = (klasifikasi, lajur, waktu)
-            print(params)
             cursor.execute(query, params)
             self.sqliteConnection.commit()
-
-            print("data berhasil ditambahkan \n")
 
             cursor.close()
 

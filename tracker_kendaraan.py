@@ -172,7 +172,6 @@ class TrackerKendaraan (object):
             klasifikasi = klasifier.klasifikasi_kendaraan(
                 gambar_kendaraan, lajur)
 
-            print(klasifikasi, lajur)
             # tambahkan ke basis data
             pengelola_basisdata.simpan_ke_db(klasifikasi, lajur)
 

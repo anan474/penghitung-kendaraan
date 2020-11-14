@@ -16,12 +16,12 @@ class Klasifier():
     def klasifikasi_kendaraan_lajur_kiri(self, gambar):
         klasifikasi = self.klasifier_cascade_motor_kiri.detectMultiScale(
             gambar)
-        return 'sepedamotor' if len(klasifikasi) >= 1 else "a"
+        return 'sepedamotor' if len(klasifikasi) >= 1 else ""
 
     def klasifikasi_kendaraan_lajur_kanan(self, gambar):
         klasifikasi = self.klasifier_cascade_motor_kanan.detectMultiScale(
             gambar)
-        return 'sepedamotor' if len(klasifikasi) >= 1 else "a"
+        return 'sepedamotor' if len(klasifikasi) >= 1 else ""
 
     def klasifikasi_kendaraan(self, gambar, lajur):
         klasifikasi = ""
