@@ -15,10 +15,10 @@ class Klasifier():
 
     def klasifikasi_kendaraan(self, gambar, lajur):
         klasifikasi = ""
-        if lajur is "kiri":
+        if lajur == "kiri":
             klasifikasi = self.klasifier_cascade_motor_kiri.detectMultiScale(
                 gambar)
-        elif lajur is "kanan":
+        elif lajur == "kanan":
             klasifikasi = self.klasifier_cascade_motor_kanan.detectMultiScale(
                 gambar)
         return klasifikasi

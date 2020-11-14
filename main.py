@@ -4,8 +4,8 @@ import datetime
 
 import cv2 as cv
 
-from penghitung_kendaraan import Penghitung
 from pendeteksi_objek import PendeteksiObjek
+from tracker_kendaraan import TrackerKendaraan
 
 from gambar_objek import GambarObjek
 
@@ -15,22 +15,20 @@ from logger import Logger
 
 VIDEO = "vid.mp4"
 
+RESIZE_LEBAR = 640
+RESIZE_TINGGI = 360
 # ============================================================================
 
 
 def main():
 
-    video = cv.VideoCapture(VIDEO)
-
-    penghitung_lajur_kiri = Penghitung(
-        GARIS_PEMBATAS_KIRI_MASUK, GARIS_PEMBATAS_KIRI_KELUAR, "kiri")
-    penghitung_lajur_kanan = Penghitung(
-        GARIS_PEMBATAS_KANAN_MASUK, GARIS_PEMBATAS_KANAN_KELUAR, "kanan")
-
     pendeteksi_objek = PendeteksiObjek()
+    tracker_kendaraan = TrackerKendaraan()
     gambar_objek = GambarObjek()
+
     logger = Logger()
 
+    video = cv.VideoCapture(VIDEO)
     frame_counter = -1
 
     while True:
@@ -38,18 +36,17 @@ def main():
         frame_counter += 1
 
         ret, frame = video.read()
+
         if not ret:
             print("Tidak dapat membuka video. Stop.")
             break
 
+        frame = cv.resize(frame, (RESIZE_LEBAR, RESIZE_TINGGI))
+
         daftar_objek = pendeteksi_objek.deteksi_objek(frame)
 
-        ####
-        # hubungkan dengan modul penghitung
-        penghitung_lajur_kiri.perbarui_penghitung(
-            objek_ditemukan_lajur_kiri, frame)
-        penghitung_lajur_kanan.perbarui_penghitung(
-            objek_ditemukan_lajur_kanan, frame)
+        daftar_kendaraan = tracker_kendaraan.perbarui_tracker(
+            daftar_objek, frame)
 
         gambar_objek.tampilkan_frame(frame, daftar_objek, daftar_kendaraan)
 

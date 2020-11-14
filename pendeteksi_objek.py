@@ -12,7 +12,8 @@ TINGGI_MINIMAL = 21
 
 class PendeteksiObjek():
     def __init__(self):
-        self.gambar_background = cv.imread(GAMBAR_BACKGROUND)
+        gambar_background = cv.imread(GAMBAR_BACKGROUND)
+
         self.background_subtractor = cv.createBackgroundSubtractorMOG2()
         self.background_subtractor.setShadowValue(0)
         self.background_subtractor.apply(gambar_background, 1)
@@ -22,10 +23,6 @@ class PendeteksiObjek():
 
         self.kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (3, 3))
         self.kernel2 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (7, 7))
-
-    def resize(self, frame):
-        frame_resized = cv.resize(frame, (self.lebar_frame, self.tinggi_frame))
-        return frame_resized
 
     def get_foreground(self, frame):
         frame_foreground = self.background_subtractor.apply(frame, 1)
@@ -62,7 +59,7 @@ class PendeteksiObjek():
 
     def dapatkan_objek(self, frame):
         contours, _ = cv.findContours(
-            frame_foreground, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+            frame, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 
         objek_ditemukan = []
         for (i, contour) in enumerate(contours):
@@ -73,15 +70,20 @@ class PendeteksiObjek():
             if not objek_valid:
                 continue
 
-            centroid = hitung_centroid(x, y, w, h)
-            objek_ditemukan.append(((x, y, w, h), centroid))
+            centroid = self.hitung_centroid(x, y, w, h)
+
+            lajur = "kiri" if centroid[0] < (self.lebar_frame/2) else "kanan"
+
+            objek_ditemukan.append(
+                ((x, y, w, h), centroid, lajur))
+
         return objek_ditemukan
 
     def deteksi_objek(self, frame):
-        frame = resize(frame)
-        foreground = get_foreground(frame)
-        foreground = proses_morfologi(foreground)
 
-        daftar_objek = dapatkan_objek(foreground)
+        foreground = self.get_foreground(frame)
+        foreground = self.proses_morfologi(foreground)
+
+        daftar_objek = self.dapatkan_objek(foreground)
 
         return daftar_objek

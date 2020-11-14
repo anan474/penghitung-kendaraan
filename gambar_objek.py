@@ -16,6 +16,13 @@ RESIZE_LEBAR = 640
 RESIZE_TINGGI = 360
 
 
+GARIS_PEMBATAS_KIRI_MASUK = 240
+GARIS_PEMBATAS_KIRI_KELUAR = 60
+
+GARIS_PEMBATAS_KANAN_MASUK = 40
+GARIS_PEMBATAS_KANAN_KELUAR = 120
+
+
 class GambarObjek():
     def __init__(self):
         self.lebar_frame = RESIZE_LEBAR
@@ -26,15 +33,15 @@ class GambarObjek():
         # gambar objek terdeteksi dan centroid nya
 
         for (i, objek) in enumerate(daftar_objek):
-            posisi, centroid = objek
-        x, y, w, h = posisi
+            posisi, centroid, _ = objek
+            x, y, w, h = posisi
 
-        # gambar bounding box pada frame
-        cv.rectangle(frame, (x, y), (x + w - 1, y + h - 1),
-                     WARNA_BOUNDING_BOX, 1)
+            # gambar bounding box pada frame
+            cv.rectangle(frame, (x, y), (x + w - 1, y + h - 1),
+                         WARNA_BOUNDING_BOX, 1)
 
-        # gambar centroid pada frame
-        cv.circle(frame, centroid, 2, WARNA_CENTROID, -1)
+            # gambar centroid pada frame
+            cv.circle(frame, centroid, 2, WARNA_CENTROID, -1)
 
         return frame
 
@@ -66,7 +73,7 @@ class GambarObjek():
                     kendaraan.centroid)], False, warna, 1)
 
             # gambar centroid pada frame
-            cv.circle(frame, centroid, 2, WARNA_CENTROID, -1)
+            cv.circle(frame, kendaraan.centroid[-1], 2, WARNA_CENTROID, -1)
 
         return frame
 
@@ -93,8 +100,8 @@ class GambarObjek():
         return frame
 
     def tampilkan_frame(self, frame, daftar_objek, daftar_kendaraan):
-        frame = gambar_garis_batas(frame)
-        frame = gambar_box_n_centroid(frame, daftar_objek)
-        frame = gambar_dengan_garis_tracking(frame, daftar_kendaraan)
+        frame = self.gambar_garis_batas(frame)
+        frame = self.gambar_box_n_centroid(frame, daftar_objek)
+        frame = self.gambar_dengan_garis_tracking(frame, daftar_kendaraan)
 
         cv.imshow('asli', frame)

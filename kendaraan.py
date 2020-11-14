@@ -1,12 +1,14 @@
 
 class Kendaraan(object):
-    def __init__(self, id, centroid, posisi):
+    def __init__(self, id, centroid, posisi, lajur):
         self.id = id
 
         self.centroid = [centroid]
         self.tidak_terlihat = 0
         self.telah_dihitung = False
         self.posisi = posisi
+
+        self.lajur = lajur
 
         self.klasifikasi = ""
         self.sudah_klasifikasi = False
