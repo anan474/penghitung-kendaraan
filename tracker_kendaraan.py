@@ -5,8 +5,10 @@ import cv2 as cv
 
 from klasifier_kendaraan import Klasifier
 from kendaraan import Kendaraan
+from pengelola_basisdata import PengelolaBasisdata
 
 klasifier = Klasifier()
+pengelola_basisdata = PengelolaBasisdata()
 
 # ============================================================================
 
@@ -170,10 +172,15 @@ class TrackerKendaraan (object):
             klasifikasi = klasifier.klasifikasi_kendaraan(
                 gambar_kendaraan, lajur)
 
+            print(klasifikasi, lajur)
+            # tambahkan ke basis data
+            pengelola_basisdata.simpan_ke_db(klasifikasi, lajur)
+
             # tambah nilai ke kounter
-            if len(klasifikasi):
+            if klasifikasi:
                 self.jumlah_kendaraan_terklasifikasi += 1
 
+            # hapus dari daftar
             del self.kendaraan_untuk_diklasifikasi[indek_kendaraan]
 
     def perbarui_tracker(self, objek, frame):

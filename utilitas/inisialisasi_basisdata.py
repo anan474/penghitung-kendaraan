@@ -4,9 +4,9 @@ try:
     sqliteConnection = sqlite3.connect('trafikkendaraan.db')
     sqlite_create_table_query = '''CREATE TABLE trafik_kendaraan (
                                 id INTEGER PRIMARY KEY,
-                                jenis TEXT NOT NULL,
-                                sebelah TEXT NOT NULL,
-                                waktu datetime);'''
+                                klasifikasi TEXT NOT NULL,
+                                lajur TEXT NOT NULL,
+                                waktu timestamp);'''
 
     cursor = sqliteConnection.cursor()
     print("Berhasil terhubung ke SQLite")
