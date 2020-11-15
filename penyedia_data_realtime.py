@@ -32,6 +32,7 @@ class PenyediaDataRealtime():
         self.loop.stop()
 
     def konversi_ke_json(self, data):
+        print(data)
         return json.dumps({"type": "users", "count": len(self.users)})
 
     async def repeat(self, interval, func, *args, **kwargs):
@@ -59,6 +60,24 @@ class PenyediaDataRealtime():
         await self.kirim_data()
 
     async def server_websocket(self, websocket, path):
+
+        pengelola_basisdata = PengelolaBasisdata()
+
         # await asyncio.ensure_future(self.repeat(5, self.kirim_data))
         await self.register(websocket)
         # await websocket.send(self.kirim_data())
+
+    async def register(self, websocket):
+        self.users.add(websocket)
+        await self.kirim_data()
+
+    def unregister(self, websocket):
+        self.users.remove(websocket)
+
+    async def server_websocket(self, websocket, path):
+        await self.register(websocket)
+        try:
+            await self.kirim_data()
+
+        finally:
+            self.unregister(websocket)

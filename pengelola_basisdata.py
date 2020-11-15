@@ -9,7 +9,8 @@ class PengelolaBasisdata(object):
         self.nama_db = 'trafikkendaraan.db'
         self.nama_tabel = 'trafik_kendaraan'
 
-        self.sqliteConnection = sqlite3.connect(self.nama_db)
+        self.sqliteConnection = sqlite3.connect(
+            self.nama_db, check_same_thread=False)
 
     def get_data_hari_ini(self):
         try:
@@ -20,14 +21,14 @@ class PengelolaBasisdata(object):
             cursor.execute(query, params)
             records = cursor.fetchall()
 
-            print("Jumlah kendaraan:  ", len(records))
-            print("Data:")
-            for row in records:
-                print("id: ", row[0])
-                print("klasifikasi: ", row[1])
-                print("lajur: ", row[2])
-                print("waktu: ", row[3])
-                print("\n")
+            # print("Jumlah kendaraan:  ", len(records))
+            # print("Data:")
+            # for row in records:
+            #     print("id: ", row[0])
+            #     print("klasifikasi: ", row[1])
+            #     print("lajur: ", row[2])
+            #     print("waktu: ", row[3])
+            #     print("\n")
 
             cursor.close()
 
@@ -55,9 +56,9 @@ class PengelolaBasisdata(object):
             records = cursor.fetchall()
             # print("Jumlah kendaraan:  ", len(records))
             # print("Data:")
-            for row in records:
-                print("jumlah: ", row[0])
-                print("klasifikasi: ", row[1])
+            # for row in records:
+            #     print("jumlah: ", row[0])
+            #     print("klasifikasi: ", row[1])
 
             # print(records[0])
 
