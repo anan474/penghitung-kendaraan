@@ -35,29 +35,11 @@ class PenyediaDataRealtime():
         print(data)
         return json.dumps({"type": "users", "count": len(self.users)})
 
-    async def repeat(self, interval, func, *args, **kwargs):
-        """Run func every interval seconds.
-
-        If func has not finished before *interval*, will run again
-        immediately when the previous iteration finished.
-
-        *args and **kwargs are passed as the arguments to func.
-        """
-        while True:
-            await asyncio.gather(
-                func(*args, **kwargs),
-                asyncio.sleep(interval),
-            )
-
     async def kirim_data(self):
-        if self.users:  # asyncio.wait doesn't accept an empty list
+        if self.users:
             data = pengelola_basisdata.get_status_sekarang()
             message = self.konversi_ke_json(data)
             await asyncio.wait([user.send(message) for user in self.users])
-
-    async def register(self, websocket):
-        self.users.add(websocket)
-        await self.kirim_data()
 
     async def server_websocket(self, websocket, path):
 
@@ -71,13 +53,12 @@ class PenyediaDataRealtime():
         self.users.add(websocket)
         await self.kirim_data()
 
-    def unregister(self, websocket):
+    async def unregister(self, websocket):
         self.users.remove(websocket)
 
     async def server_websocket(self, websocket, path):
         await self.register(websocket)
         try:
             await self.kirim_data()
-
         finally:
-            self.unregister(websocket)
+            await self.unregister(websocket)

@@ -2,19 +2,87 @@
 <html>
   <head>
     <title>WebSocket demo</title>
+    <style type="text/css">
+      body {
+        font-family: "Courier New", sans-serif;
+        text-align: center;
+      }
+      .buttons {
+        font-size: 2em;
+        display: flex;
+        justify-content: center;
+        border: medium solid;
+        margin: 1rem;
+        padding: 1rem;
+      }
+      .button {
+        line-height: 1;
+        padding: 1rem 2rem;
+        margin: 1rem;
+        border: medium solid;
+        /* min-height: 1em; */
+        min-width: 8em;
+        user-select: none;
+      }
+      #mobil {
+        color: red;
+      }
+      #sepedamotor {
+        color: green;
+      }
+      .jumlah {
+        font-size: 2em;
+      }
+    </style>
   </head>
   <body>
+    <div class="buttons">
+      <div class="button">
+        <p>mobil</p>
+        <p class="jumlah">20</p>
+      </div>
+      <div class="button">
+        <p>sepedamotor</p>
+        <p class="jumlah">20</p>
+      </div>
+      <div class="button">
+        <p>tidakdiketahui</p>
+        <p class="jumlah">20</p>
+      </div>
+      <div class="button">
+        <p>total</p>
+        <p class="jumlah">20</p>
+      </div>
+    </div>
+    <div class="buttons">
+      <div class="button">
+        <p>mobil</p>
+        <p class="jumlah">20</p>
+      </div>
+      <div class="button">
+        <p>sepedamotor</p>
+        <p class="jumlah">20</p>
+      </div>
+      <div class="button">
+        <p>tidakdiketahui</p>
+        <p class="jumlah">20</p>
+      </div>
+      <div class="button">
+        <p>total</p>
+        <p class="jumlah">20</p>
+      </div>
+    </div>
+    <!-- <div class="state">total hari ini: <span class="users">?</span></div> -->
     <script>
-      var ws = new WebSocket("ws://127.0.0.1:5678/"),
-        messages = document.createElement("ul");
-      ws.onmessage = function (event) {
-        var messages = document.getElementsByTagName("ul")[0],
-          message = document.createElement("li"),
-          content = document.createTextNode(event.data);
-        message.appendChild(content);
-        messages.appendChild(message);
+      var mobil = document.querySelector("#mobil"),
+        sepedamotor = document.querySelector("#sepedamotor"),
+        tidakdiketahui = document.querySelector("#tidakdiketahui"),
+        websocket = new WebSocket("ws://127.0.0.1:6789/");
+
+      websocket.onmessage = function (event) {
+        data = JSON.parse(event.data);
+        console.log(data);
       };
-      document.body.appendChild(messages);
     </script>
   </body>
 </html>
