@@ -8,6 +8,7 @@ from pendeteksi_objek import PendeteksiObjek
 from tracker_kendaraan import TrackerKendaraan
 
 from penyedia_data_realtime import PenyediaDataRealtime
+from penyedia_data_statistik import PenyediaDataStatistik
 
 from gambar_objek import GambarObjek
 
@@ -30,6 +31,9 @@ def main():
 
     penyedia_data_realtime = PenyediaDataRealtime()
     penyedia_data_realtime.start()
+
+    penyedia_data_statistik = PenyediaDataStatistik()
+    penyedia_data_statistik.start()
 
     logger = Logger()
 
