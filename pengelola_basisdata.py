@@ -44,11 +44,13 @@ class PengelolaBasisdata(object):
             cursor = self.sqliteConnection.cursor()
 
             query = """SELECT 
-                            COUNT(*), 
-                            klasifikasi 
+                            klasifikasi,
+                            lajur, 
+                            COUNT(*)
                         FROM 
                             trafik_kendaraan
                         GROUP BY 
+                            lajur,
                             klasifikasi
                             ;"""
             params = ()
@@ -57,10 +59,11 @@ class PengelolaBasisdata(object):
             # print("Jumlah kendaraan:  ", len(records))
             # print("Data:")
             # for row in records:
-            #     print("jumlah: ", row[0])
-            #     print("klasifikasi: ", row[1])
+            #     print("klasifikasi: ", row[0])
+            #     print("lajur: ", row[1])
+            #     print("jumlah: ", row[2])
 
-            # print(records[0])
+            print(records[0])
 
             cursor.close()
 
@@ -108,6 +111,7 @@ class PengelolaBasisdata(object):
             query = """INSERT INTO trafik_kendaraan (klasifikasi, lajur, waktu) VALUES (? ,?, ? );"""
 
             params = (klasifikasi, lajur, waktu)
+            # print(params)
             cursor.execute(query, params)
             self.sqliteConnection.commit()
 

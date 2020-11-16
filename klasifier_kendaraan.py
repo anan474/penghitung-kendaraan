@@ -2,8 +2,8 @@ import cv2 as cv
 
 CASCADE_MOTOR_KIRI = "./classifier/motorkiri.xml"
 CASCADE_MOTOR_KANAN = "./classifier/motorkanan.xml"
-# CASCADE_MOBIL_KIRI = ""
-# CASCADE_MOBIL_KANAN = ""
+CASCADE_MOBIL_KIRI = "./classifier/download/cars.xml"
+CASCADE_MOBIL_KANAN = "./classifier/download/cars.xml"
 
 
 class Klasifier():
@@ -13,22 +13,51 @@ class Klasifier():
         self.klasifier_cascade_motor_kanan = cv.CascadeClassifier(
             CASCADE_MOTOR_KANAN)
 
+        self.klasifier_cascade_mobil_kiri = cv.CascadeClassifier(
+            CASCADE_MOBIL_KIRI)
+        self.klasifier_cascade_mobil_kanan = cv.CascadeClassifier(
+            CASCADE_MOBIL_KANAN)
+
     def klasifikasi_kendaraan_lajur_kiri(self, gambar):
-        klasifikasi = self.klasifier_cascade_motor_kiri.detectMultiScale(
+        klasifikasi_motor = self.klasifier_cascade_motor_kiri.detectMultiScale(
             gambar)
-        return 'sepedamotor' if len(klasifikasi) >= 1 else ""
+
+        klasifikasi_mobil = self.klasifier_cascade_mobil_kiri.detectMultiScale(
+            gambar)
+
+        klasifikasi = "tidakdiketahui"
+
+        if((len(klasifikasi_motor) >= 1) and (len(klasifikasi_mobil) >= 1)):
+            klasifikasi = "keduanya"
+        elif(len(klasifikasi_motor) >= 1):
+            klasifikasi = "motor"
+        elif(len(klasifikasi_mobil) >= 1):
+            klasifikasi = "mobil"
+
+        return klasifikasi
 
     def klasifikasi_kendaraan_lajur_kanan(self, gambar):
-        klasifikasi = self.klasifier_cascade_motor_kanan.detectMultiScale(
+        klasifikasi_motor = self.klasifier_cascade_motor_kanan.detectMultiScale(
             gambar)
-        return 'sepedamotor' if len(klasifikasi) >= 1 else ""
+
+        klasifikasi_mobil = self.klasifier_cascade_mobil_kanan.detectMultiScale(
+            gambar)
+
+        klasifikasi = "tidakdiketahui"
+
+        if((len(klasifikasi_motor) >= 1) and (len(klasifikasi_mobil) >= 1)):
+            klasifikasi = "keduanya"
+        elif(len(klasifikasi_motor) >= 1):
+            klasifikasi = "motor"
+        elif(len(klasifikasi_mobil) >= 1):
+            klasifikasi = "mobil"
+
+        return klasifikasi
 
     def klasifikasi_kendaraan(self, gambar, lajur):
-        klasifikasi = ""
         if lajur == "kiri":
-            klasifikasi = self.klasifikasi_kendaraan_lajur_kiri(
+            return self.klasifikasi_kendaraan_lajur_kiri(
                 gambar)
         elif lajur == "kanan":
-            klasifikasi = self.klasifikasi_kendaraan_lajur_kanan(
+            return self.klasifikasi_kendaraan_lajur_kanan(
                 gambar)
-        return klasifikasi
