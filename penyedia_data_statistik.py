@@ -51,6 +51,51 @@ class DataView(FlaskView):
         respon.headers["Content-Type"] = "application/json; charset=utf-8"
         return respon
 
+    def semuadata(self):
+        data = pengelola_basis_data.get_semua_data()
+        data_json = json.dumps(data)
+        respon = Response(response=data_json, status=200,
+                          mimetype="application/json")
+        respon.headers["Content-Type"] = "application/json; charset=utf-8"
+        return respon
+
+    def semuadatahariini(self):
+        data = pengelola_basis_data.get_semua_data_hari_ini()
+        data_json = json.dumps(data)
+        respon = Response(response=data_json, status=200,
+                          mimetype="application/json")
+        respon.headers["Content-Type"] = "application/json; charset=utf-8"
+        return respon
+
+    def semuadatabytanggal(self, tanggal):
+        data = pengelola_basis_data.get_semua_data_by_tanggal(tanggal)
+        data_json = json.dumps(data)
+        respon = Response(response=data_json, status=200,
+                          mimetype="application/json")
+        respon.headers["Content-Type"] = "application/json; charset=utf-8"
+        return respon
+
+    def statusbytanggal(self, tanggal):
+        data = pengelola_basis_data.get_status_by_tanggal(tanggal)
+        data_json = json.dumps({
+            "kanan": {
+                "keduanya": data[0][2],
+                "mobil": data[1][2],
+                "motor": data[2][2],
+                "tidakdiketahui": data[3][2],
+            },
+            "kiri": {
+                "keduanya": data[4][2],
+                "mobil": data[5][2],
+                "motor": data[6][2],
+                "tidakdiketahui": data[7][2],
+            }
+        })
+        respon = Response(response=data_json, status=200,
+                          mimetype="application/json")
+        respon.headers["Content-Type"] = "application/json; charset=utf-8"
+        return respon
+
 
 class PenyediaDataStatistik():
     def __init__(self):

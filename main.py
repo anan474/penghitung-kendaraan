@@ -57,7 +57,7 @@ def main():
         daftar_kendaraan = tracker_kendaraan.perbarui_tracker(
             daftar_objek, frame)
 
-        gambar_objek.tampilkan_frame(frame, daftar_objek, daftar_kendaraan)
+        # gambar_objek.tampilkan_frame(frame, daftar_objek, daftar_kendaraan)
 
         ###
         c = cv.waitKey(100)

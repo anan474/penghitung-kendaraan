@@ -1,6 +1,6 @@
 import sqlite3
 import logging
-import datetime
+from datetime import datetime, time, timedelta
 
 
 class PengelolaBasisdata(object):
@@ -12,7 +12,7 @@ class PengelolaBasisdata(object):
         self.sqliteConnection = sqlite3.connect(
             self.nama_db, check_same_thread=False)
 
-    def get_data_hari_ini(self):
+    def get_semua_data(self):
         try:
             cursor = self.sqliteConnection.cursor()
 
@@ -21,14 +21,70 @@ class PengelolaBasisdata(object):
             cursor.execute(query, params)
             records = cursor.fetchall()
 
-            # print("Jumlah kendaraan:  ", len(records))
-            # print("Data:")
-            # for row in records:
-            #     print("id: ", row[0])
-            #     print("klasifikasi: ", row[1])
-            #     print("lajur: ", row[2])
-            #     print("waktu: ", row[3])
-            #     print("\n")
+            cursor.close()
+
+            return records
+
+        except sqlite3.Error as error:
+            print("gagal membaca tabel:", error)
+
+        return self
+
+    def get_semua_data_hari_ini(self):
+        try:
+            cursor = self.sqliteConnection.cursor()
+
+            waktu_sekarang = datetime.now()
+            awal_waktu_hariini = datetime.combine(
+                datetime.now(), time.min)
+            query = """SELECT 
+                            * 
+                        FROM 
+                            trafik_kendaraan 
+                        WHERE 
+                            waktu 
+                        BETWEEN 
+                            ?
+                        AND 
+                            ?
+                    ;"""
+
+            params = (awal_waktu_hariini, waktu_sekarang)
+            cursor.execute(query, params)
+            records = cursor.fetchall()
+
+            cursor.close()
+
+            return records
+
+        except sqlite3.Error as error:
+            print("gagal membaca tabel:", error)
+
+        return self
+
+    def get_semua_data_by_tanggal(self, tanggal):
+        try:
+            cursor = self.sqliteConnection.cursor()
+
+            tanggal = tanggal.split("-")
+            hari = datetime(int(tanggal[2]), int(tanggal[1]), int(tanggal[0]))
+            hari_plus = hari + timedelta(days=1)
+            query = """SELECT 
+                            * 
+                        FROM 
+                            trafik_kendaraan 
+                        WHERE 
+                            waktu 
+                        BETWEEN 
+                            ?
+                        AND 
+                            ?
+                    ;"""
+
+            params = (hari, hari_plus)
+            print(params)
+            cursor.execute(query, params)
+            records = cursor.fetchall()
 
             cursor.close()
 
@@ -55,6 +111,42 @@ class PengelolaBasisdata(object):
                     ;"""
 
             params = ()
+            cursor.execute(query, params)
+            records = cursor.fetchall()
+
+            cursor.close()
+
+            return records
+
+        except sqlite3.Error as error:
+            print("gagal membaca tabel:", error)
+
+        return self
+
+    def get_status_by_tanggal(self, tanggal):
+        try:
+            cursor = self.sqliteConnection.cursor()
+            tanggal = tanggal.split("-")
+            hari = datetime(int(tanggal[2]), int(tanggal[1]), int(tanggal[0]))
+            hari_plus = hari + timedelta(days=1)
+            query = """SELECT 
+                            klasifikasi,
+                            lajur, 
+                            COUNT(*)
+                        FROM 
+                            trafik_kendaraan
+                        WHERE 
+                            waktu 
+                        BETWEEN 
+                            ?
+                        AND 
+                            ?
+                        GROUP BY 
+                            lajur,
+                            klasifikasi
+                    ;"""
+
+            params = (hari, hari_plus)
             cursor.execute(query, params)
             records = cursor.fetchall()
 
@@ -97,7 +189,7 @@ class PengelolaBasisdata(object):
 
     def simpan_ke_db(self, klasifikasi, lajur):
         try:
-            waktu = datetime.datetime.now()
+            waktu = datetime.now()
 
             cursor = self.sqliteConnection.cursor()
 
