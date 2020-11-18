@@ -29,7 +29,20 @@ class PenyediaDataRealtime():
         self.loop.stop()
 
     def konversi_ke_json(self, data):
-        return json.dumps(data)
+        return json.dumps({
+            "kanan": {
+                "keduanya": data[0][2],
+                "mobil": data[1][2],
+                "motor": data[2][2],
+                "tidakdiketahui": data[3][2],
+            },
+            "kiri": {
+                "keduanya": data[4][2],
+                "mobil": data[5][2],
+                "motor": data[6][2],
+                "tidakdiketahui": data[7][2],
+            }
+        })
 
     async def server_websocket(self, websocket, path):
         while True:

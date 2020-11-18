@@ -68,7 +68,7 @@ def main():
     print("Menutup video ...")
     video.release()
     cv.destroyAllWindows()
-    penyedia_data_realtime.stop()
+    # penyedia_data_realtime.stop()
     print("Selesai .")
 
 
