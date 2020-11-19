@@ -45,7 +45,7 @@ class GambarObjek():
 
         return frame
 
-    def gambar_dengan_garis_tracking(self, frame, daftar_kendaraan):
+    def gambar_garis_tracking(self, frame, daftar_kendaraan):
         ####
         # gambar kedaraan terdeteksi, centroid nya dan garis pergerakan kendaraan tersebut, dari penghitung kendaraan
 
@@ -102,6 +102,6 @@ class GambarObjek():
     def tampilkan_frame(self, frame, daftar_objek, daftar_kendaraan):
         frame = self.gambar_garis_batas(frame)
         frame = self.gambar_box_n_centroid(frame, daftar_objek)
-        frame = self.gambar_dengan_garis_tracking(frame, daftar_kendaraan)
+        frame = self.gambar_garis_tracking(frame, daftar_kendaraan)
 
         cv.imshow('asli', frame)
