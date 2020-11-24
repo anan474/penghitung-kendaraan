@@ -11,6 +11,9 @@ TINGGI_MINIMAL = 21
 
 
 class PendeteksiObjek():
+    """Kelas ini melakukan proses terhadap citra asli untuk mengekstrak daftar objek kendaraan yang ada dengan melakukan Background Subtraction dan proses morfologi.
+    """
+
     def __init__(self):
         gambar_background = cv.imread(GAMBAR_BACKGROUND)
 

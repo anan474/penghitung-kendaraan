@@ -12,56 +12,6 @@ class PengelolaBasisdata(object):
         self.sqliteConnection = sqlite3.connect(
             self.nama_db, check_same_thread=False)
 
-    def get_semua_data(self):
-        try:
-            cursor = self.sqliteConnection.cursor()
-
-            query = """SELECT * from trafik_kendaraan"""
-            params = ()
-            cursor.execute(query, params)
-            records = cursor.fetchall()
-
-            cursor.close()
-
-            return records
-
-        except sqlite3.Error as error:
-            print("gagal membaca tabel:", error)
-
-        return self
-
-    def get_semua_data_hari_ini(self):
-        try:
-            cursor = self.sqliteConnection.cursor()
-
-            waktu_sekarang = datetime.now()
-            awal_waktu_hariini = datetime.combine(
-                datetime.now(), time.min)
-            query = """SELECT 
-                            * 
-                        FROM 
-                            trafik_kendaraan 
-                        WHERE 
-                            waktu 
-                        BETWEEN 
-                            ?
-                        AND 
-                            ?
-                    ;"""
-
-            params = (awal_waktu_hariini, waktu_sekarang)
-            cursor.execute(query, params)
-            records = cursor.fetchall()
-
-            cursor.close()
-
-            return records
-
-        except sqlite3.Error as error:
-            print("gagal membaca tabel:", error)
-
-        return self
-
     def get_semua_data_by_tanggal(self, tanggal):
         try:
             cursor = self.sqliteConnection.cursor()

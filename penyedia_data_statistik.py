@@ -30,7 +30,7 @@ class DataView(FlaskView):
         respon.headers["Content-Type"] = "application/json; charset=utf-8"
         return respon
 
-    def sekarang(self):
+    def statussekarang(self):
         data = pengelola_basis_data.get_status_sekarang()
         data_json = json.dumps({
             "kanan": {
@@ -46,22 +46,6 @@ class DataView(FlaskView):
                 "tidakdiketahui": data[7][2],
             }
         })
-        respon = Response(response=data_json, status=200,
-                          mimetype="application/json")
-        respon.headers["Content-Type"] = "application/json; charset=utf-8"
-        return respon
-
-    def semuadata(self):
-        data = pengelola_basis_data.get_semua_data()
-        data_json = json.dumps(data)
-        respon = Response(response=data_json, status=200,
-                          mimetype="application/json")
-        respon.headers["Content-Type"] = "application/json; charset=utf-8"
-        return respon
-
-    def semuadatahariini(self):
-        data = pengelola_basis_data.get_semua_data_hari_ini()
-        data_json = json.dumps(data)
         respon = Response(response=data_json, status=200,
                           mimetype="application/json")
         respon.headers["Content-Type"] = "application/json; charset=utf-8"

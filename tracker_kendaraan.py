@@ -24,7 +24,10 @@ BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT = 10
 # =======================================================
 
 
-class TrackerKendaraan (object):
+class TrackerKendaraan ():
+    """Kelas ini mencatat dan memanajemen daftar kendaraan yang sedang di tracking
+    """
+
     def __init__(self):
         self.garis_masuk_kiri = GARIS_PEMBATAS_KIRI_MASUK
         self.garis_keluar_kiri = GARIS_PEMBATAS_KIRI_KELUAR
