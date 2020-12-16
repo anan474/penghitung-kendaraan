@@ -1,0 +1,27 @@
+{
+  "logging": true,
+  "cetakgambar": {
+    "asli": true,
+    "hasil": true,
+    "morfologi": true
+  },
+  "simpangambar": {
+    "direktori": "gambar_output",
+    "asli": true,
+    "hasil": true,
+    "morfologi": true
+  },
+  "sediadata": {
+    "realtime": false,
+    "statistik": false
+  },
+  "db": {
+    "simpandb": false,
+    "nama": "trafikkendaraan-dev.db"
+  },
+  "input": {
+    "kamera": false,
+    "background": "bg.png",
+    "video": "vid.mp4"
+  }
+}

@@ -24,7 +24,8 @@ GARIS_PEMBATAS_KANAN_KELUAR = 120
 
 
 class GambarObjek():
-    def __init__(self):
+    def __init__(self, config):
+        self.config = config
         self.lebar_frame = RESIZE_LEBAR
         self.tinggi_frame = RESIZE_TINGGI
 
@@ -100,8 +101,13 @@ class GambarObjek():
         return frame
 
     def tampilkan_frame(self, frame, daftar_objek, daftar_kendaraan):
-        frame = self.gambar_garis_batas(frame)
-        frame = self.gambar_box_n_centroid(frame, daftar_objek)
-        frame = self.gambar_garis_tracking(frame, daftar_kendaraan)
+        if (self.config['cetakgambar']['asli']):
+            cv.imshow('asli', frame)
 
-        cv.imshow('asli', frame)
+        frame_hasil = frame.copy()
+        frame_hasil = self.gambar_garis_batas(frame_hasil)
+        frame_hasil = self.gambar_box_n_centroid(frame_hasil, daftar_objek)
+        frame_hasil = self.gambar_garis_tracking(frame_hasil, daftar_kendaraan)
+
+        if (self.config['cetakgambar']['hasil']):
+            cv.imshow('hasil', frame_hasil)

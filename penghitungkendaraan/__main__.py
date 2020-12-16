@@ -1,3 +1,4 @@
+import json
 import time
 import sys
 import datetime
@@ -24,6 +25,11 @@ RESIZE_TINGGI = 360
 
 
 def main():
+
+    with open("config-dev.json") as json_data_file:
+        config = json.load(json_data_file)
+    print(config)
+
     print('in main')
     args = sys.argv[1:]
     print('count of args :: {}'.format(len(args)))
@@ -32,13 +38,15 @@ def main():
 
     pendeteksi_objek = PendeteksiObjek()
     tracker_kendaraan = TrackerKendaraan()
-    gambar_objek = GambarObjek()
+    gambar_objek = GambarObjek(config)
 
-    penyedia_data_realtime = PenyediaDataRealtime()
-    # penyedia_data_realtime.start()
+    if (config['sediadata']['realtime']):
+        penyedia_data_realtime = PenyediaDataRealtime()
+        penyedia_data_realtime.start()
 
-    penyedia_data_statistik = PenyediaDataStatistik()
-    # penyedia_data_statistik.start()
+    if (config['sediadata']['statistik']):
+        penyedia_data_statistik = PenyediaDataStatistik()
+        penyedia_data_statistik.start()
 
     logger = Logger()
 
