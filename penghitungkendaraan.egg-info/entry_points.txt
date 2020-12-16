@@ -1,0 +1,3 @@
+[console_scripts]
+penghitungkendaraan = penghitungkendaraan.__main__:main
+
