@@ -71,9 +71,10 @@ def main():
             daftar_objek, frame)
 
         gambar_objek.tampilkan_frame(frame, daftar_objek, daftar_kendaraan)
+        # cv.imshow('asli', frame)
 
         ###
-        c = cv.waitKey(100)
+        c = cv.waitKey(1)
         if c == 27:
             print("ESC ditekan, menghentikan program.")
             break
