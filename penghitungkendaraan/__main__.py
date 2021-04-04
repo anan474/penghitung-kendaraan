@@ -4,6 +4,9 @@ import sys
 import datetime
 
 import cv2 as cv
+import logging
+logging.basicConfig(level=logging.CRITICAL)
+
 
 from pendeteksi_objek import PendeteksiObjek
 from tracker_kendaraan import TrackerKendaraan
@@ -13,7 +16,6 @@ from penyedia_data_statistik import PenyediaDataStatistik
 
 from gambar_objek import GambarObjek
 
-from logger import Logger
 
 # ============================================================================
 
@@ -47,8 +49,6 @@ def main():
     if (config['sediadata']['statistik']):
         penyedia_data_statistik = PenyediaDataStatistik()
         penyedia_data_statistik.start()
-
-    logger = Logger()
 
     video = cv.VideoCapture(VIDEO)
     frame_counter = -1

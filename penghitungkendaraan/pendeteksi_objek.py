@@ -1,5 +1,7 @@
 import cv2 as cv
+import logging
 
+logger = logging.getLogger(__name__)
 
 GAMBAR_BACKGROUND = "bg.png"
 
@@ -27,11 +29,15 @@ class PendeteksiObjek():
         self.kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (3, 3))
         self.kernel2 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (7, 7))
 
+        logger.debug("init module")
+
     def get_foreground(self, frame):
         frame_foreground = self.background_subtractor.apply(frame, 1)
+        
         return frame_foreground
 
     def proses_morfologi(self, frame):
+
         frame = cv.bilateralFilter(
             frame, 9, 75, 75)
 

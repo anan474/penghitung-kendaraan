@@ -1,4 +1,7 @@
 import cv2 as cv
+import logging
+
+logger = logging.getLogger(__name__)
 
 CASCADE_MOTOR_KIRI = "./classifier/motorkiri.xml"
 CASCADE_MOTOR_KANAN = "./classifier/motorkanan.xml"
@@ -17,6 +20,7 @@ class Klasifier():
             CASCADE_MOBIL_KIRI)
         self.klasifier_cascade_mobil_kanan = cv.CascadeClassifier(
             CASCADE_MOBIL_KANAN)
+    logger.debug('init modul')
 
     def klasifikasi_kendaraan_lajur_kiri(self, gambar):
         klasifikasi_motor = self.klasifier_cascade_motor_kiri.detectMultiScale(
@@ -33,7 +37,8 @@ class Klasifier():
             klasifikasi = "motor"
         elif(len(klasifikasi_mobil) >= 1):
             klasifikasi = "mobil"
-
+            
+        logger.debug('klasifikasi %s',klasifikasi)
         return klasifikasi
 
     def klasifikasi_kendaraan_lajur_kanan(self, gambar):
@@ -52,9 +57,12 @@ class Klasifier():
         elif(len(klasifikasi_mobil) >= 1):
             klasifikasi = "mobil"
 
+        logger.debug('klasifikasi %s',klasifikasi)
+
         return klasifikasi
 
     def klasifikasi_kendaraan(self, gambar, lajur):
+        logger.debug('kendaraan lajur %s',lajur)
         if lajur == "kiri":
             return self.klasifikasi_kendaraan_lajur_kiri(
                 gambar)
