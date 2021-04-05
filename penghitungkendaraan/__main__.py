@@ -19,7 +19,7 @@ from gambar_objek import GambarObjek
 
 # ============================================================================
 
-VIDEO = "vid.mp4"
+VIDEO = "ta.mp4"
 
 RESIZE_LEBAR = 640
 RESIZE_TINGGI = 360
@@ -69,6 +69,9 @@ def main():
 
         daftar_kendaraan = tracker_kendaraan.perbarui_tracker(
             daftar_objek, frame)
+
+
+        # print(cv.utils.dumpInputArray(frame))
 
         gambar_objek.tampilkan_frame(frame, daftar_objek, daftar_kendaraan)
         # cv.imshow('asli', frame)

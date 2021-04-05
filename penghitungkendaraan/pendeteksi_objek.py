@@ -28,6 +28,7 @@ class PendeteksiObjek():
 
         self.kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (3, 3))
         self.kernel2 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (7, 7))
+        self.kernel9 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (9, 9))
 
         logger.debug("init module")
 
@@ -41,18 +42,21 @@ class PendeteksiObjek():
         frame = cv.bilateralFilter(
             frame, 9, 75, 75)
 
+
+        # frame_foreground = cv.morphologyEx(
+        #     frame, cv.MORPH_OPEN, self.kernel9)
+
+
+        # frame = cv.erode(frame, self.kernel, iterations=3)
+        frame = cv.erode(frame, self.kernel, iterations=1)
+        frame = cv.dilate(frame, self.kernel, iterations=1)
         frame = cv.morphologyEx(
-            frame, cv.MORPH_CLOSE, self.kernel)
+            frame, cv.MORPH_CLOSE, self.kernel2)
 
-        frame_foreground = cv.morphologyEx(
-            frame, cv.MORPH_OPEN, self.kernel2)
+        # frame = cv.morphologyEx(
+        #     frame, cv.MORPH_CLOSE, self.kernel)
 
-        frame = cv.dilate(frame, self.kernel, iterations=5)
-
-        frame = cv.erode(frame, self.kernel, iterations=3)
-
-        frame = cv.morphologyEx(
-            frame, cv.MORPH_CLOSE, self.kernel)
+        # cv.imshow('morfologi', frame)
 
         return frame
 
