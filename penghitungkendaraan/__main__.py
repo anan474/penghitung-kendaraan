@@ -30,7 +30,6 @@ def main():
 
     with open("config-dev.json") as json_data_file:
         config = json.load(json_data_file)
-    print(config)
 
     print('in main')
     args = sys.argv[1:]
@@ -50,7 +49,7 @@ def main():
         penyedia_data_statistik = PenyediaDataStatistik()
         penyedia_data_statistik.start()
 
-    video = cv.VideoCapture(VIDEO)
+    video = cv.VideoCapture(config["input"]["video"])
     frame_counter = -1
 
     while True:
@@ -77,7 +76,7 @@ def main():
         # cv.imshow('asli', frame)
 
         ###
-        c = cv.waitKey(1)
+        c = cv.waitKey(config["input"]["speed"])
         if c == 27:
             print("ESC ditekan, menghentikan program.")
             break

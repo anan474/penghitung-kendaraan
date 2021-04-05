@@ -22,6 +22,7 @@
   "input": {
     "kamera": false,
     "background": "bg.png",
-    "video": "ta.mp4"
+    "video": "ta.mp4",
+    "speed": 100
   }
 }
