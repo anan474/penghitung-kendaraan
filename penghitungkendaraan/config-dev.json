@@ -1,9 +1,9 @@
 {
   "logging": true,
   "cetakgambar": {
-    "asli": true,
+    "asli": false,
     "hasil": true,
-    "morfologi": true
+    "morfologi": false
   },
   "simpangambar": {
     "direktori": "gambar_output",

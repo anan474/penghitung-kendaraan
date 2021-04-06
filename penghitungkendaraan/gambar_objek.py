@@ -102,8 +102,8 @@ class GambarObjek():
 
     def tampilkan_frame(self, frame, daftar_objek, daftar_kendaraan):
         # print(cv.utils.dumpInputArray(frame))
-        # if (self.config['cetakgambar']['asli']):
-            # cv.imshow('asli', frame)
+        if (self.config['cetakgambar']['asli']):
+            cv.imshow('asli', frame)
 
         frame_hasil = frame.copy()
         frame_hasil = self.gambar_garis_batas(frame_hasil)

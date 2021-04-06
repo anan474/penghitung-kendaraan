@@ -37,7 +37,7 @@ def main():
     for arg in args:
         print('passed argument :: {}'.format(arg))
 
-    pendeteksi_objek = PendeteksiObjek()
+    pendeteksi_objek = PendeteksiObjek(config)
     tracker_kendaraan = TrackerKendaraan()
     gambar_objek = GambarObjek(config)
 

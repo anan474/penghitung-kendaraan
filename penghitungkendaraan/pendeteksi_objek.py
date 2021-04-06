@@ -16,7 +16,10 @@ class PendeteksiObjek():
     """Kelas ini melakukan proses terhadap citra asli untuk mengekstrak daftar objek kendaraan yang ada dengan melakukan Background Subtraction dan proses morfologi.
     """
 
-    def __init__(self):
+    def __init__(self,config):
+
+        self.config = config
+
         gambar_background = cv.imread(GAMBAR_BACKGROUND)
 
         self.background_subtractor = cv.createBackgroundSubtractorMOG2()
@@ -56,7 +59,8 @@ class PendeteksiObjek():
         # frame = cv.morphologyEx(
         #     frame, cv.MORPH_CLOSE, self.kernel)
 
-        # cv.imshow('morfologi', frame)
+        if (self.config['cetakgambar']['morfologi']):
+            cv.imshow('morfologi', frame)
 
         return frame
 
