@@ -6,10 +6,10 @@
     "morfologi": false
   },
   "simpangambar": {
-    "direktori": "gambar_output",
-    "asli": true,
-    "hasil": true,
-    "morfologi": true
+    "direktori": "gambar_output/",
+    "asli": false,
+    "hasil": false,
+    "morfologi": false
   },
   "sediadata": {
     "realtime": false,

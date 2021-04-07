@@ -100,15 +100,23 @@ class GambarObjek():
 
         return frame
 
-    def tampilkan_frame(self, frame, daftar_objek, daftar_kendaraan):
+
+    def tampilkan_simpan(self, tipe, frame, frame_counter):
+        if (self.config['cetakgambar'][tipe]):
+            cv.imshow(tipe, frame)
+
+        if (self.config['simpangambar'][tipe]):
+            cv.imwrite((self.config['simpangambar']['direktori'] + tipe + "/%04d.png") % frame_counter, frame)
+
+
+    def tampilkan_frame(self, frame, frame_counter, daftar_objek, daftar_kendaraan):
         # print(cv.utils.dumpInputArray(frame))
-        if (self.config['cetakgambar']['asli']):
-            cv.imshow('asli', frame)
+
+        self.tampilkan_simpan('asli',frame,frame_counter)
 
         frame_hasil = frame.copy()
         frame_hasil = self.gambar_garis_batas(frame_hasil)
         frame_hasil = self.gambar_box_n_centroid(frame_hasil, daftar_objek)
         frame_hasil = self.gambar_garis_tracking(frame_hasil, daftar_kendaraan)
 
-        if (self.config['cetakgambar']['hasil']):
-            cv.imshow('hasil', frame_hasil)
+        self.tampilkan_simpan('hasil',frame_hasil,frame_counter)

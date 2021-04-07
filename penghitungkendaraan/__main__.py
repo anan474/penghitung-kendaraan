@@ -72,7 +72,7 @@ def main():
 
         # print(cv.utils.dumpInputArray(frame))
 
-        gambar_objek.tampilkan_frame(frame, daftar_objek, daftar_kendaraan)
+        gambar_objek.tampilkan_frame(frame, frame_counter, daftar_objek, daftar_kendaraan)
         # cv.imshow('asli', frame)
 
         ###
