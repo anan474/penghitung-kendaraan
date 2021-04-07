@@ -109,7 +109,7 @@ class GambarObjek():
             cv.imwrite((self.config['simpangambar']['direktori'] + tipe + "/%04d.png") % frame_counter, frame)
 
 
-    def tampilkan_frame(self, frame, frame_counter, daftar_objek, daftar_kendaraan):
+    def tampilkan_frame(self, frame, foreground, frame_counter, daftar_objek, daftar_kendaraan):
         # print(cv.utils.dumpInputArray(frame))
 
         self.tampilkan_simpan('asli',frame,frame_counter)
@@ -120,3 +120,4 @@ class GambarObjek():
         frame_hasil = self.gambar_garis_tracking(frame_hasil, daftar_kendaraan)
 
         self.tampilkan_simpan('hasil',frame_hasil,frame_counter)
+        self.tampilkan_simpan('morfologi',foreground,frame_counter)

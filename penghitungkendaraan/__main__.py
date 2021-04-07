@@ -64,7 +64,7 @@ def main():
 
         frame = cv.resize(frame, (RESIZE_LEBAR, RESIZE_TINGGI))
 
-        daftar_objek = pendeteksi_objek.deteksi_objek(frame)
+        daftar_objek,foreground = pendeteksi_objek.deteksi_objek(frame)
 
         daftar_kendaraan = tracker_kendaraan.perbarui_tracker(
             daftar_objek, frame)
@@ -72,7 +72,7 @@ def main():
 
         # print(cv.utils.dumpInputArray(frame))
 
-        gambar_objek.tampilkan_frame(frame, frame_counter, daftar_objek, daftar_kendaraan)
+        gambar_objek.tampilkan_frame(frame, foreground, frame_counter, daftar_objek, daftar_kendaraan)
         # cv.imshow('asli', frame)
 
         ###

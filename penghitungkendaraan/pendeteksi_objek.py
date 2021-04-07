@@ -103,4 +103,4 @@ class PendeteksiObjek():
 
         daftar_objek = self.dapatkan_objek(foreground)
 
-        return daftar_objek
+        return daftar_objek, foreground
