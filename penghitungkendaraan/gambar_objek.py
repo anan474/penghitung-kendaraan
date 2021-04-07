@@ -121,3 +121,11 @@ class GambarObjek():
 
         self.tampilkan_simpan('hasil',frame_hasil,frame_counter)
         self.tampilkan_simpan('morfologi',foreground,frame_counter)
+
+        lebar = self.config['input']['dimensi']['lebar']
+        tinggi = self.config['input']['dimensi']['tinggi']
+
+        foreground_rgb = cv.cvtColor(foreground,cv.COLOR_GRAY2RGB)
+        gabungan = cv.hconcat([frame,foreground_rgb,frame_hasil])
+
+        self.tampilkan_simpan('gabungan',gabungan,frame_counter)

@@ -2,14 +2,16 @@
   "logging": true,
   "cetakgambar": {
     "asli": false,
-    "hasil": true,
-    "morfologi": false
+    "hasil": false,
+    "morfologi": false,
+    "gabungan": false
   },
   "simpangambar": {
     "direktori": "gambar_output/",
     "asli": false,
     "hasil": false,
-    "morfologi": false
+    "morfologi": false,
+    "gabungan": false
   },
   "sediadata": {
     "realtime": false,
@@ -23,6 +25,10 @@
     "kamera": false,
     "background": "bg.png",
     "video": "ta.mp4",
-    "speed": 100
+    "speed": 100,
+    "dimensi": {
+      "lebar": 640,
+      "tinggi": 360
+    }
   }
 }
