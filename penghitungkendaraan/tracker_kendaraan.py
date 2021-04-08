@@ -7,6 +7,7 @@ import cv2 as cv
 from klasifier_kendaraan import Klasifier
 from kendaraan import Kendaraan
 from pengelola_basisdata import PengelolaBasisdata
+from gambar_objek import GambarObjek
 
 klasifier = Klasifier()
 pengelola_basisdata = PengelolaBasisdata()
@@ -167,15 +168,16 @@ class TrackerKendaraan ():
 
             # crop gambar jadi hanya kendaraan | ambil snapshot kendaraan
             gambar_kendaraan = frame[y:y+h, x:x+w]
-            gambar_kendaraan = cv.cvtColor(
+            gambar_kendaraan_gray = cv.cvtColor(
                 gambar_kendaraan, cv.COLOR_BGR2GRAY)  # convert ke grayscale
 
             # kalo ada pixel di bawah 10 (hitam pekat), jadikan abu abu
-            gambar_kendaraan[gambar_kendaraan < 10] = 10
+            gambar_kendaraan_gray[gambar_kendaraan_gray < 10] = 10
 
             klasifikasi = klasifier.klasifikasi_kendaraan(
-                gambar_kendaraan, lajur)
+                gambar_kendaraan_gray, lajur)
 
+            GambarObjek.print_simpan_kendaraan(gambar_kendaraan,lajur,klasifikasi)
             # tambahkan ke basis data
             pengelola_basisdata.simpan_ke_db(klasifikasi, lajur)
 
@@ -192,6 +194,5 @@ class TrackerKendaraan ():
         self.tambahkan_ke_daftar_tracking(objek_sisa)
 
         self.handle_kendaraan_melewati_batas(frame)
-        kendaraan_untuk_diklasifikasi = copy.deepcopy(self.kendaraan_untuk_diklasifikasi)
 
-        return self.kendaraan, kendaraan_untuk_diklasifikasi
+        return self.kendaraan

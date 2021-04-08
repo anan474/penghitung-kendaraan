@@ -66,12 +66,12 @@ def main():
 
         daftar_objek, foreground = pendeteksi_objek.deteksi_objek(frame)
 
-        daftar_kendaraan, kendaraan_untuk_diklasifikasi = tracker_kendaraan.perbarui_tracker(
+        daftar_kendaraan = tracker_kendaraan.perbarui_tracker(
             daftar_objek, frame)
 
         # print(cv.utils.dumpInputArray(frame))
 
-        gambar_objek.tampilkan_frame(frame, foreground, frame_counter, daftar_objek, daftar_kendaraan, kendaraan_untuk_diklasifikasi)
+        gambar_objek.tampilkan_frame(frame, foreground, frame_counter, daftar_objek, daftar_kendaraan)
         # cv.imshow('asli', frame)
 
         ###

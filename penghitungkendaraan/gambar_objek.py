@@ -109,7 +109,7 @@ class GambarObjek():
             cv.imwrite((self.config['simpangambar']['direktori'] + tipe + "/%04d.png") % frame_counter, frame)
 
 
-    def tampilkan_frame(self, frame, foreground, frame_counter, daftar_objek, daftar_kendaraan,kendaraan_untuk_diklasifikasi):
+    def tampilkan_frame(self, frame, foreground, frame_counter, daftar_objek, daftar_kendaraan):
         # print(cv.utils.dumpInputArray(frame))
 
         self.tampilkan_simpan_jalan('asli',frame,frame_counter)
@@ -130,7 +130,8 @@ class GambarObjek():
 
         self.tampilkan_simpan_jalan('gabungan',gabungan,frame_counter)
 
-        for kendaraan in kendaraan_untuk_diklasifikasi:
-            print(kendaraan.posisi)
-            print(kendaraan.sudah_klasifikasi)
-            print(kendaraan.klasifikasi)
+    @staticmethod
+    def print_simpan_kendaraan(gbr_kendaraan, lajur, klasifikasi):
+        cv.imshow("kendaraan",gbr_kendaraan)
+        print(lajur)
+        print(klasifikasi)
