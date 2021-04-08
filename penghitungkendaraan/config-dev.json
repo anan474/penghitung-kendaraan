@@ -7,11 +7,24 @@
     "gabungan": false
   },
   "simpangambar": {
-    "direktori": "gambar_output/",
+    "direktori": "gambar_output/citra/",
     "asli": false,
     "hasil": false,
     "morfologi": false,
     "gabungan": false
+  },
+  "simpangambar_klasifikasi": {
+    "direktori": "gambar_output/klasifikasi/",
+    "kiri": {
+      "mobil": true,
+      "motor": true,
+      "tidakdiketahui": true
+    },
+    "kanan": {
+      "mobil": true,
+      "motor": true,
+      "tidakdiketahui": true
+    }
   },
   "sediadata": {
     "realtime": false,

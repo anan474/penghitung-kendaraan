@@ -1,5 +1,6 @@
 
 import math
+import copy
 import numpy as np
 import cv2 as cv
 
@@ -186,11 +187,11 @@ class TrackerKendaraan ():
             del self.kendaraan_untuk_diklasifikasi[indek_kendaraan]
 
     def perbarui_tracker(self, objek, frame):
-
         objek_sisa = self.cocokkan_dengan_data_yg_ada(objek)
 
         self.tambahkan_ke_daftar_tracking(objek_sisa)
 
         self.handle_kendaraan_melewati_batas(frame)
+        kendaraan_untuk_diklasifikasi = copy.deepcopy(self.kendaraan_untuk_diklasifikasi)
 
-        return self.kendaraan
+        return self.kendaraan, kendaraan_untuk_diklasifikasi

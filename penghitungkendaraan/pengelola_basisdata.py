@@ -121,12 +121,6 @@ class PengelolaBasisdata(object):
             params = ()
             cursor.execute(query, params)
             records = cursor.fetchall()
-            # print("Jumlah kendaraan:  ", len(records))
-            # print("Data:")
-            for row in records:
-                print("jumlah: ", row[0])
-
-            # print(records[0])
 
             cursor.close()
 

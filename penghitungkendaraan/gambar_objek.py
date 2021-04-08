@@ -101,7 +101,7 @@ class GambarObjek():
         return frame
 
 
-    def tampilkan_simpan(self, tipe, frame, frame_counter):
+    def tampilkan_simpan_jalan(self, tipe, frame, frame_counter):
         if (self.config['cetakgambar'][tipe]):
             cv.imshow(tipe, frame)
 
@@ -109,18 +109,18 @@ class GambarObjek():
             cv.imwrite((self.config['simpangambar']['direktori'] + tipe + "/%04d.png") % frame_counter, frame)
 
 
-    def tampilkan_frame(self, frame, foreground, frame_counter, daftar_objek, daftar_kendaraan):
+    def tampilkan_frame(self, frame, foreground, frame_counter, daftar_objek, daftar_kendaraan,kendaraan_untuk_diklasifikasi):
         # print(cv.utils.dumpInputArray(frame))
 
-        self.tampilkan_simpan('asli',frame,frame_counter)
+        self.tampilkan_simpan_jalan('asli',frame,frame_counter)
 
         frame_hasil = frame.copy()
         frame_hasil = self.gambar_garis_batas(frame_hasil)
         frame_hasil = self.gambar_box_n_centroid(frame_hasil, daftar_objek)
         frame_hasil = self.gambar_garis_tracking(frame_hasil, daftar_kendaraan)
 
-        self.tampilkan_simpan('hasil',frame_hasil,frame_counter)
-        self.tampilkan_simpan('morfologi',foreground,frame_counter)
+        self.tampilkan_simpan_jalan('hasil',frame_hasil,frame_counter)
+        self.tampilkan_simpan_jalan('morfologi',foreground,frame_counter)
 
         lebar = self.config['input']['dimensi']['lebar']
         tinggi = self.config['input']['dimensi']['tinggi']
@@ -128,4 +128,9 @@ class GambarObjek():
         foreground_rgb = cv.cvtColor(foreground,cv.COLOR_GRAY2RGB)
         gabungan = cv.hconcat([frame,foreground_rgb,frame_hasil])
 
-        self.tampilkan_simpan('gabungan',gabungan,frame_counter)
+        self.tampilkan_simpan_jalan('gabungan',gabungan,frame_counter)
+
+        for kendaraan in kendaraan_untuk_diklasifikasi:
+            print(kendaraan.posisi)
+            print(kendaraan.sudah_klasifikasi)
+            print(kendaraan.klasifikasi)
