@@ -131,7 +131,8 @@ class GambarObjek():
         self.tampilkan_simpan_jalan('gabungan',gabungan,frame_counter)
 
     @staticmethod
-    def print_simpan_kendaraan(gbr_kendaraan, lajur, klasifikasi):
+    def print_simpan_kendaraan(gbr_kendaraan, lajur, klasifikasi, jumlah):
         cv.imshow("kendaraan",gbr_kendaraan)
         print(lajur)
         print(klasifikasi)
+        print(jumlah)

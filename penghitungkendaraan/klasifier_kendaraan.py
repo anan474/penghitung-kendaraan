@@ -22,50 +22,35 @@ class Klasifier():
             CASCADE_MOBIL_KANAN)
     logger.debug('init modul')
 
-    def klasifikasi_kendaraan_lajur_kiri(self, gambar):
-        klasifikasi_motor = self.klasifier_cascade_motor_kiri.detectMultiScale(
-            gambar)
-
-        klasifikasi_mobil = self.klasifier_cascade_mobil_kiri.detectMultiScale(
-            gambar)
-
-        klasifikasi = "tidakdiketahui"
-
-        if((len(klasifikasi_motor) >= 1) and (len(klasifikasi_mobil) >= 1)):
-            klasifikasi = "keduanya"
-        elif(len(klasifikasi_motor) >= 1):
-            klasifikasi = "motor"
-        elif(len(klasifikasi_mobil) >= 1):
-            klasifikasi = "mobil"
-            
-        logger.debug('klasifikasi %s',klasifikasi)
-        return klasifikasi
-
-    def klasifikasi_kendaraan_lajur_kanan(self, gambar):
-        klasifikasi_motor = self.klasifier_cascade_motor_kanan.detectMultiScale(
-            gambar)
-
-        klasifikasi_mobil = self.klasifier_cascade_mobil_kanan.detectMultiScale(
-            gambar)
-
-        klasifikasi = "tidakdiketahui"
-
-        if((len(klasifikasi_motor) >= 1) and (len(klasifikasi_mobil) >= 1)):
-            klasifikasi = "keduanya"
-        elif(len(klasifikasi_motor) >= 1):
-            klasifikasi = "motor"
-        elif(len(klasifikasi_mobil) >= 1):
-            klasifikasi = "mobil"
-
-        logger.debug('klasifikasi %s',klasifikasi)
-
-        return klasifikasi
-
     def klasifikasi_kendaraan(self, gambar, lajur):
         logger.debug('kendaraan lajur %s',lajur)
         if lajur == "kiri":
-            return self.klasifikasi_kendaraan_lajur_kiri(
+            klasifikasi_motor = self.klasifier_cascade_motor_kiri.detectMultiScale(
+            gambar)
+
+            klasifikasi_mobil = self.klasifier_cascade_mobil_kiri.detectMultiScale(
                 gambar)
         elif lajur == "kanan":
-            return self.klasifikasi_kendaraan_lajur_kanan(
+            klasifikasi_motor = self.klasifier_cascade_motor_kanan.detectMultiScale(
                 gambar)
+
+            klasifikasi_mobil = self.klasifier_cascade_mobil_kanan.detectMultiScale(
+                gambar)
+
+        klasifikasi = "tidakdiketahui"
+        jumlah = 0
+
+        if((len(klasifikasi_motor) >= 1) and (len(klasifikasi_mobil) >= 1)):
+            klasifikasi = "keduanya"
+            jumlah = len(klasifikasi_motor) + len(klasifikasi_mobil)
+        elif(len(klasifikasi_motor) >= 1):
+            klasifikasi = "motor"
+            jumlah = len(klasifikasi_motor)
+
+        elif(len(klasifikasi_mobil) >= 1):
+            klasifikasi = "mobil"
+            jumlah = len(klasifikasi_mobil)
+
+        logger.debug('klasifikasi %s',klasifikasi, jumlah)
+
+        return klasifikasi, jumlah

@@ -174,10 +174,10 @@ class TrackerKendaraan ():
             # kalo ada pixel di bawah 10 (hitam pekat), jadikan abu abu
             gambar_kendaraan_gray[gambar_kendaraan_gray < 10] = 10
 
-            klasifikasi = klasifier.klasifikasi_kendaraan(
+            klasifikasi, jumlah = klasifier.klasifikasi_kendaraan(
                 gambar_kendaraan_gray, lajur)
 
-            GambarObjek.print_simpan_kendaraan(gambar_kendaraan,lajur,klasifikasi)
+            GambarObjek.print_simpan_kendaraan(gambar_kendaraan,lajur,klasifikasi, jumlah)
             # tambahkan ke basis data
             pengelola_basisdata.simpan_ke_db(klasifikasi, lajur)
 
