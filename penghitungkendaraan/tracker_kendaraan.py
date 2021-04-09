@@ -30,7 +30,8 @@ class TrackerKendaraan ():
     """Kelas ini mencatat dan memanajemen daftar kendaraan yang sedang di tracking
     """
 
-    def __init__(self):
+    def __init__(self, config):
+        self.config = config
         self.garis_masuk_kiri = GARIS_PEMBATAS_KIRI_MASUK
         self.garis_keluar_kiri = GARIS_PEMBATAS_KIRI_KELUAR
         self.garis_masuk_kanan = GARIS_PEMBATAS_KANAN_MASUK
