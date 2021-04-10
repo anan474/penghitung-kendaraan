@@ -136,3 +136,5 @@ class GambarObjek():
         print(lajur)
         print(klasifikasi)
         print(jumlah)
+
+        

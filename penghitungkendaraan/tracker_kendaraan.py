@@ -177,8 +177,9 @@ class TrackerKendaraan ():
 
             klasifikasi, jumlah = klasifier.klasifikasi_kendaraan(
                 gambar_kendaraan_gray, lajur)
+                        
+            cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] + lajur + "/" + klasifikasi + "/%04d.png") % kendaraan.id, gambar_kendaraan)
 
-            GambarObjek.print_simpan_kendaraan(gambar_kendaraan,lajur,klasifikasi, jumlah)
             # tambahkan ke basis data
             pengelola_basisdata.simpan_ke_db(klasifikasi, lajur)
 
