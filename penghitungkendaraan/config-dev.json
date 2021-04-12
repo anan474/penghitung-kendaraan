@@ -16,14 +16,14 @@
   "simpangambar_klasifikasi": {
     "direktori": "gambar_output/klasifikasi/",
     "kiri": {
-      "mobil": true,
-      "motor": true,
-      "tidakdiketahui": true
+      "mobil": false,
+      "motor": false,
+      "tidakdiketahui": false
     },
     "kanan": {
-      "mobil": true,
-      "motor": true,
-      "tidakdiketahui": true
+      "mobil": false,
+      "motor": false,
+      "tidakdiketahui": false
     }
   },
   "sediadata": {
