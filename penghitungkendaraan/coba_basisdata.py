@@ -11,6 +11,8 @@ def main():
     jumlah = pengelola_basisdata.jumlah_data()
     print("jumlah :",jumlah[0][0])
 
+    pengelola_basisdata.empty_table()
+
 # ============================================================================
 if __name__ == "__main__":
     print("Mulai .")

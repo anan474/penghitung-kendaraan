@@ -12,6 +12,31 @@ class PengelolaBasisdata(object):
         self.sqliteConnection = sqlite3.connect(
             self.nama_db, check_same_thread=False)
 
+    def empty_table(self):
+        try:
+            cursor = self.sqliteConnection.cursor()
+            query1 = """DROP TABLE trafik_kendaraan;"""
+            cursor.execute(query1)
+            self.sqliteConnection.commit()
+            
+            query2 = '''CREATE TABLE trafik_kendaraan (
+                        id INTEGER PRIMARY KEY,
+                        klasifikasi TEXT NOT NULL,
+                        lajur TEXT NOT NULL,
+                        waktu timestamp);'''
+            cursor.execute(query2)
+            self.sqliteConnection.commit()
+
+            cursor.close()
+
+            return "done"
+
+        except sqlite3.Error as error:
+            print("gagal mengosongkan tabel:", error)
+
+        return self
+
+
     def get_semua_data_by_tanggal(self, tanggal):
         try:
             cursor = self.sqliteConnection.cursor()
