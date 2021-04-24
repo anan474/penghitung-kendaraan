@@ -10,7 +10,11 @@ pengelola_basis_data = PengelolaBasisdata()
 
 class DataView(FlaskView):
     def index(self):
+
+        print("index dipanggil")
         data = pengelola_basis_data.get_status_sekarang()
+        print(data)
+
         data_json = json.dumps({
             "kanan": {
                 "keduanya": data[0][2],

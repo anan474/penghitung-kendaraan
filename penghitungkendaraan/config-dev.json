@@ -27,8 +27,8 @@
     }
   },
   "sediadata": {
-    "realtime": false,
-    "statistik": false
+    "realtime": true,
+    "statistik": true
   },
   "db": {
     "simpandb": false,
