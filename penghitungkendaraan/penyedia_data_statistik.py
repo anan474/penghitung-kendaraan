@@ -11,24 +11,9 @@ pengelola_basis_data = PengelolaBasisdata()
 class DataView(FlaskView):
     def index(self):
 
-        print("index dipanggil")
         data = pengelola_basis_data.get_status_sekarang()
-        print(data)
 
-        data_json = json.dumps({
-            "kanan": {
-                "keduanya": data[0][2],
-                "mobil": data[1][2],
-                "motor": data[2][2],
-                "tidakdiketahui": data[3][2],
-            },
-            "kiri": {
-                "keduanya": data[4][2],
-                "mobil": data[5][2],
-                "motor": data[6][2],
-                "tidakdiketahui": data[7][2],
-            }
-        })
+        data_json = json.dumps(data)
         respon = Response(response=data_json, status=200,
                           mimetype="application/json")
         respon.headers["Content-Type"] = "application/json; charset=utf-8"
@@ -36,20 +21,7 @@ class DataView(FlaskView):
 
     def statussekarang(self):
         data = pengelola_basis_data.get_status_sekarang()
-        data_json = json.dumps({
-            "kanan": {
-                "keduanya": data[0][2],
-                "mobil": data[1][2],
-                "motor": data[2][2],
-                "tidakdiketahui": data[3][2],
-            },
-            "kiri": {
-                "keduanya": data[4][2],
-                "mobil": data[5][2],
-                "motor": data[6][2],
-                "tidakdiketahui": data[7][2],
-            }
-        })
+        data_json = json.dumps(data)
         respon = Response(response=data_json, status=200,
                           mimetype="application/json")
         respon.headers["Content-Type"] = "application/json; charset=utf-8"
@@ -65,20 +37,7 @@ class DataView(FlaskView):
 
     def statusbytanggal(self, tanggal):
         data = pengelola_basis_data.get_status_by_tanggal(tanggal)
-        data_json = json.dumps({
-            "kanan": {
-                "keduanya": data[0][2],
-                "mobil": data[1][2],
-                "motor": data[2][2],
-                "tidakdiketahui": data[3][2],
-            },
-            "kiri": {
-                "keduanya": data[4][2],
-                "mobil": data[5][2],
-                "motor": data[6][2],
-                "tidakdiketahui": data[7][2],
-            }
-        })
+        data_json = json.dumps(data)
         respon = Response(response=data_json, status=200,
                           mimetype="application/json")
         respon.headers["Content-Type"] = "application/json; charset=utf-8"
@@ -91,10 +50,10 @@ class PenyediaDataStatistik():
 
     def start(self):
 
+        self.app.use_reloader=False  
         DataView.register(self.app)
 
         def run_forever():
-            self.app.run()
-
+            self.app.run(debug=True, use_reloader=False)
         thread = threading.Thread(target=run_forever)
         thread.start()

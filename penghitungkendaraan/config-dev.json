@@ -37,7 +37,7 @@
   "input": {
     "kamera": false,
     "background": "bg.png",
-    "video": "ta.mp4",
+    "video": "vid.mp4",
     "speed": 100,
     "dimensi": {
       "lebar": 640,
