@@ -80,34 +80,56 @@
         websocket = new WebSocket("ws://127.0.0.1:6789/");
 
       websocket.onmessage = function (event) {
-        data = JSON.parse(event.data);
+        const datanya = JSON.parse(event.data);
+        const data = {
+          mobil: {
+            kiri: 0,
+            kanan: 0,
+          },
+          motor: {
+            kiri: 0,
+            kanan: 0,
+          },
+          keduanya: {
+            kiri: 0,
+            kanan: 0,
+          },
+          tidakdiketahui: {
+            kiri: 0,
+            kanan: 0,
+          },
+        };
+        datanya.forEach((el) => {
+          data[el[0]][el[1]] = el[2];
+        });
+
         console.log(data);
         try {
           // Kanan
           document.getElementById("mobil_masuk").innerText =
-            data.kanan.mobil + data.kanan.keduanya;
+            data.mobil.kanan + data.keduanya.kanan;
           document.getElementById("sepedamotor_masuk").innerText =
-            data.kanan.motor + data.kanan.keduanya;
+            data.motor.kanan + data.keduanya.kanan;
           document.getElementById("tidakdiketahui_masuk").innerText =
-            data.kanan.tidakdiketahui;
+            data.tidakdiketahui.kanan;
           document.getElementById("total_masuk").innerText =
-            data.kanan.tidakdiketahui +
-            data.kanan.motor +
-            data.kanan.mobil +
-            data.kanan.keduanya;
+            data.tidakdiketahui.kanan +
+            data.motor.kanan +
+            data.mobil.kanan +
+            data.keduanya.kanan;
 
           // Kiri
           document.getElementById("mobil_keluar").innerText =
-            data.kiri.mobil + data.kiri.keduanya;
+            data.mobil.kiri + data.keduanya.kiri;
           document.getElementById("sepedamotor_keluar").innerText =
-            data.kiri.motor + data.kiri.keduanya;
+            data.motor.kiri + data.keduanya.kiri;
           document.getElementById("tidakdiketahui_keluar").innerText =
-            data.kiri.tidakdiketahui;
+            data.tidakdiketahui.kiri;
           document.getElementById("total_keluar").innerText =
-            data.kiri.tidakdiketahui +
-            data.kiri.motor +
-            data.kiri.mobil +
-            data.kiri.keduanya;
+            data.tidakdiketahui.kiri +
+            data.motor.kiri +
+            data.mobil.kiri +
+            data.keduanya.kiri;
         } catch (err) {
           console.log(err);
         }
