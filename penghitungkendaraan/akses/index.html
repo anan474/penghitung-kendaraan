@@ -8,7 +8,7 @@
         text-align: center;
       }
       .buttons {
-        font-size: 0.5em;
+        font-size: 0.75em;
         display: flex;
         justify-content: center;
         border: medium solid;
@@ -39,37 +39,37 @@
     <div class="buttons">
       <div class="button">
         <p>mobil</p>
-        <p class="jumlah" id="mobil_masuk">20</p>
+        <p class="jumlah" id="mobil_masuk">-</p>
       </div>
       <div class="button">
         <p>sepedamotor</p>
-        <p class="jumlah" id="sepedamotor_masuk">20</p>
+        <p class="jumlah" id="sepedamotor_masuk">-</p>
       </div>
       <div class="button">
         <p>tidakdiketahui</p>
-        <p class="jumlah" id="tidakdiketahui_masuk">20</p>
+        <p class="jumlah" id="tidakdiketahui_masuk">-</p>
       </div>
       <div class="button">
         <p>total</p>
-        <p class="jumlah" id="total_masuk">20</p>
+        <p class="jumlah" id="total_masuk">-</p>
       </div>
     </div>
     <div class="buttons">
       <div class="button">
         <p>mobil</p>
-        <p class="jumlah" id="mobil_keluar">20</p>
+        <p class="jumlah" id="mobil_keluar">-</p>
       </div>
       <div class="button">
         <p>sepedamotor</p>
-        <p class="jumlah" id="sepedamotor_keluar">20</p>
+        <p class="jumlah" id="sepedamotor_keluar">-</p>
       </div>
       <div class="button">
         <p>tidakdiketahui</p>
-        <p class="jumlah" id="tidakdiketahui_keluar">20</p>
+        <p class="jumlah" id="tidakdiketahui_keluar">-</p>
       </div>
       <div class="button">
         <p>total</p>
-        <p class="jumlah" id="total_keluar">20</p>
+        <p class="jumlah" id="total_keluar">-</p>
       </div>
     </div>
     <!-- <div class="state">total hari ini: <span class="users">?</span></div> -->
@@ -80,34 +80,56 @@
         websocket = new WebSocket("ws://127.0.0.1:6789/");
 
       websocket.onmessage = function (event) {
-        data = JSON.parse(event.data);
+        const datanya = JSON.parse(event.data);
+        const data = {
+          mobil: {
+            kiri: 0,
+            kanan: 0,
+          },
+          motor: {
+            kiri: 0,
+            kanan: 0,
+          },
+          keduanya: {
+            kiri: 0,
+            kanan: 0,
+          },
+          tidakdiketahui: {
+            kiri: 0,
+            kanan: 0,
+          },
+        };
+        datanya.forEach((el) => {
+          data[el[0]][el[1]] = el[2];
+        });
+
         console.log(data);
         try {
           // Kanan
           document.getElementById("mobil_masuk").innerText =
-            data.kanan.mobil + data.kanan.keduanya;
+            data.mobil.kanan + data.keduanya.kanan;
           document.getElementById("sepedamotor_masuk").innerText =
-            data.kanan.motor + data.kanan.keduanya;
+            data.motor.kanan + data.keduanya.kanan;
           document.getElementById("tidakdiketahui_masuk").innerText =
-            data.kanan.tidakdiketahui;
+            data.tidakdiketahui.kanan;
           document.getElementById("total_masuk").innerText =
-            data.kanan.tidakdiketahui +
-            data.kanan.motor +
-            data.kanan.mobil +
-            data.kanan.keduanya;
+            data.tidakdiketahui.kanan +
+            data.motor.kanan +
+            data.mobil.kanan +
+            data.keduanya.kanan;
 
           // Kiri
           document.getElementById("mobil_keluar").innerText =
-            data.kiri.mobil + data.kiri.keduanya;
+            data.mobil.kiri + data.keduanya.kiri;
           document.getElementById("sepedamotor_keluar").innerText =
-            data.kiri.motor + data.kiri.keduanya;
+            data.motor.kiri + data.keduanya.kiri;
           document.getElementById("tidakdiketahui_keluar").innerText =
-            data.kiri.tidakdiketahui;
+            data.tidakdiketahui.kiri;
           document.getElementById("total_keluar").innerText =
-            data.kiri.tidakdiketahui +
-            data.kiri.motor +
-            data.kiri.mobil +
-            data.kiri.keduanya;
+            data.tidakdiketahui.kiri +
+            data.motor.kiri +
+            data.mobil.kiri +
+            data.keduanya.kiri;
         } catch (err) {
           console.log(err);
         }
