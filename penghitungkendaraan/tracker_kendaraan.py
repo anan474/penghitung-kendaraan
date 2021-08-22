@@ -1,5 +1,7 @@
 
 import math
+import time
+import uuid
 import copy
 import numpy as np
 import cv2 as cv
@@ -178,9 +180,21 @@ class TrackerKendaraan ():
             klasifikasi, jumlah = klasifier.klasifikasi_kendaraan(
                 gambar_kendaraan_gray, lajur)
 
+            filename = str(uuid.uuid4())[:8]+("%04d.png") % kendaraan.id
             if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] + lajur + "/" + klasifikasi + "/%04d.png") % kendaraan.id, gambar_kendaraan)
+                cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                            lajur + "/" + klasifikasi + "/s" + filename), gambar_kendaraan)
+            if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
+                with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
+                    ts = time.time()
+                    teks = str(ts)+";"+lajur+";"+klasifikasi + ";"+filename
+                    if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                        teks += ";simpan"
+                    else:
+                        teks += ";tidaksimpan"
 
+                    f.write(teks)
+                    f.write('\n')
             # tambahkan ke basis data
             pengelola_basisdata.simpan_ke_db(klasifikasi, lajur)
 

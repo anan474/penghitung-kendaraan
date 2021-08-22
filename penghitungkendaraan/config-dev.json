@@ -16,19 +16,35 @@
   "simpangambar_klasifikasi": {
     "direktori": "gambar_output/klasifikasi/",
     "kiri": {
-      "mobil": false,
-      "motor": false,
-      "tidakdiketahui": false
+      "mobil": true,
+      "motor": true,
+      "tidakdiketahui": true
     },
     "kanan": {
-      "mobil": false,
-      "motor": false,
-      "tidakdiketahui": false
+      "mobil": true,
+      "motor": true,
+      "tidakdiketahui": true
+    }
+  },
+  "logs": {
+    "direktori": "logs/",
+    "klasifikasi": {
+      "direktori": "klasifikasi/",
+      "kiri": {
+        "mobil": true,
+        "motor": true,
+        "tidakdiketahui": true
+      },
+      "kanan": {
+        "mobil": true,
+        "motor": true,
+        "tidakdiketahui": true
+      }
     }
   },
   "sediadata": {
     "realtime": true,
-    "statistik": false
+    "statistik": true
   },
   "db": {
     "simpandb": false,
@@ -38,7 +54,7 @@
     "kamera": false,
     "background": "bg.png",
     "video": "vid.mp4",
-    "speed": 500,
+    "speed": 100,
     "dimensi": {
       "lebar": 640,
       "tinggi": 360

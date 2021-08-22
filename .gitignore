@@ -1,7 +1,7 @@
 video
 training
-classifier/archive/*
-classifier/archivebaru/*
+penghitungkendaraan/classifier/archive/*
+penghitungkendaraan/classifier/archivebaru/*
 *.pyc
 *.db
 contoh
@@ -9,3 +9,5 @@ test
 __pycache__
 nolog
 logklasifikasi
+penghitungkendaraan/gambar_output/**/*.png
+logs.csv
