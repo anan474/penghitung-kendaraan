@@ -54,7 +54,7 @@
     "kamera": false,
     "background": "bg.png",
     "video": "vid.mp4",
-    "speed": 100,
+    "speed": 500,
     "dimensi": {
       "lebar": 640,
       "tinggi": 360
