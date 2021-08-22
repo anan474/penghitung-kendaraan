@@ -37,4 +37,4 @@ class PenyediaDataRealtime():
             data = self.pengelola_basisdata.get_status_sekarang()
             message = self.konversi_ke_json(data)
             await websocket.send(message)
-            await asyncio.sleep(5)
+            await asyncio.sleep(1)

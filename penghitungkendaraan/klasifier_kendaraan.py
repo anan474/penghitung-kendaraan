@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 
 CASCADE_MOTOR_KIRI = "./classifier/motorkiri.xml"
 CASCADE_MOTOR_KANAN = "./classifier/motorkanan.xml"
-CASCADE_MOBIL_KIRI = "./classifier/download/cars.xml"
+CASCADE_MOBIL_KIRI = "./classifier/mobil_kiri/classifier/cascade.xml"
 CASCADE_MOBIL_KANAN = "./classifier/download/cars.xml"
 
 
@@ -23,13 +23,19 @@ class Klasifier():
     logger.debug('init modul')
 
     def klasifikasi_kendaraan(self, gambar, lajur):
-        logger.debug('kendaraan lajur %s',lajur)
+        logger.debug('kendaraan lajur %s', lajur)
         if lajur == "kiri":
             klasifikasi_motor = self.klasifier_cascade_motor_kiri.detectMultiScale(
-            gambar)
+                gambar)
 
             klasifikasi_mobil = self.klasifier_cascade_mobil_kiri.detectMultiScale(
                 gambar)
+
+            print("output klasifikasi motor jalur kiri")
+            print(klasifikasi_motor)
+            print("output klasifikasi mobil jalur kiri")
+            print(klasifikasi_mobil)
+            print("\n")
         elif lajur == "kanan":
             klasifikasi_motor = self.klasifier_cascade_motor_kanan.detectMultiScale(
                 gambar)
@@ -51,6 +57,6 @@ class Klasifier():
             klasifikasi = "mobil"
             jumlah = len(klasifikasi_mobil)
 
-        logger.debug('klasifikasi %s',klasifikasi, jumlah)
+        logger.debug('klasifikasi %s', klasifikasi, jumlah)
 
         return klasifikasi, jumlah

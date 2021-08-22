@@ -2,7 +2,7 @@
   "logging": true,
   "cetakgambar": {
     "asli": false,
-    "hasil": false,
+    "hasil": true,
     "morfologi": false,
     "gabungan": false
   },
@@ -38,7 +38,7 @@
     "kamera": false,
     "background": "bg.png",
     "video": "vid.mp4",
-    "speed": 100,
+    "speed": 500,
     "dimensi": {
       "lebar": 640,
       "tinggi": 360
