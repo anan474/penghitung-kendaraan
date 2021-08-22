@@ -187,7 +187,8 @@ class TrackerKendaraan ():
             if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
                 with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
                     ts = time.time()
-                    teks = str(ts)+";"+lajur+";"+klasifikasi + ";"+filename
+                    teks = str(int(ts))+";"+lajur+";" + \
+                        klasifikasi + ";"+filename
                     if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
                         teks += ";simpan"
                     else:
