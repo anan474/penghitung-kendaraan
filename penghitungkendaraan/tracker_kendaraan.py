@@ -181,6 +181,16 @@ class TrackerKendaraan ():
                 gambar_kendaraan_gray, lajur)
 
             filename = str(uuid.uuid4())[:8]+("%04d.png") % kendaraan.id
+
+            ### CEK KLASIFIKASI ~ START
+
+            klasifikasi_frame, jumlah_frame = klasifier.klasifikasi_kendaraan(
+                frame, lajur)
+
+            # gambar bounding box output klasifikasi, simpan
+
+            ### CEK KLASIFIKASI ~ END
+
             if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
                 cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
                             lajur + "/" + klasifikasi + "/s" + filename), gambar_kendaraan)

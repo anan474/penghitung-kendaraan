@@ -2,16 +2,16 @@
   "logging": true,
   "cetakgambar": {
     "asli": false,
-    "hasil": true,
+    "hasil": false,
     "morfologi": false,
-    "gabungan": false
+    "gabungan": true
   },
   "simpangambar": {
     "direktori": "gambar_output/citra/",
-    "asli": false,
-    "hasil": false,
-    "morfologi": false,
-    "gabungan": false
+    "asli": true,
+    "hasil": true,
+    "morfologi": true,
+    "gabungan": true
   },
   "simpangambar_klasifikasi": {
     "direktori": "gambar_output/klasifikasi/",
@@ -47,14 +47,14 @@
     "statistik": true
   },
   "db": {
-    "simpandb": false,
+    "simpandb": true,
     "nama": "trafikkendaraan-dev.db"
   },
   "input": {
     "kamera": false,
     "background": "bg.png",
     "video": "vid.mp4",
-    "speed": 500,
+    "speed": 1,
     "dimensi": {
       "lebar": 640,
       "tinggi": 360
