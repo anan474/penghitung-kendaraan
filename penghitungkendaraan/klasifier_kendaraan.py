@@ -1,5 +1,6 @@
 import cv2 as cv
 import logging
+import uuid
 
 logger = logging.getLogger(__name__)
 
@@ -7,6 +8,9 @@ CASCADE_MOTOR_KIRI = "./classifier/motorkiri.xml"
 CASCADE_MOTOR_KANAN = "./classifier/motorkanan.xml"
 CASCADE_MOBIL_KIRI = "./classifier/mobil_kiri/classifier/cascade.xml"
 CASCADE_MOBIL_KANAN = "./classifier/download/cars.xml"
+
+WARNA_BOUNDING_BOX = (255, 0, 0)
+WARNA_BOUNDING_BOX_HIJAU = (0, 255, 0)
 
 
 class Klasifier():
@@ -24,6 +28,10 @@ class Klasifier():
 
     def klasifikasi_kendaraan(self, gambar, lajur):
         logger.debug('kendaraan lajur %s', lajur)
+
+        filename = str(uuid.uuid4())[:8]+".png" 
+
+
         if lajur == "kiri":
             klasifikasi_motor = self.klasifier_cascade_motor_kiri.detectMultiScale(
                 gambar)
@@ -31,17 +39,54 @@ class Klasifier():
             klasifikasi_mobil = self.klasifier_cascade_mobil_kiri.detectMultiScale(
                 gambar)
 
-            print("output klasifikasi motor jalur kiri")
-            print(klasifikasi_motor)
-            print("output klasifikasi mobil jalur kiri")
-            print(klasifikasi_mobil)
-            print("\n")
+            for klasifikasi in klasifikasi_motor:
+                print(klasifikasi)
+
+                x,y,w,h = klasifikasi
+                cv.rectangle(gambar, (x, y), (x + w, y + h),
+                            WARNA_BOUNDING_BOX, 1)
+                cv.imwrite(("debug/" + lajur + "/motor/" + filename), gambar)
+
+            for klasifikasi in klasifikasi_mobil:
+                # print(klasifikasi)
+
+                x,y,w,h = klasifikasi
+                cv.rectangle(gambar, (x, y), (x + w, y + h),
+                            WARNA_BOUNDING_BOX_HIJAU, 1)
+                cv.imwrite(("debug/" + lajur + "/mobil/" + filename), gambar)
+
+            if len(klasifikasi_mobil) == 0 and len(klasifikasi_motor) ==0 :
+                cv.imwrite(("debug/" + lajur + "/tidakdiketahui/" + filename), gambar)
+
+
         elif lajur == "kanan":
             klasifikasi_motor = self.klasifier_cascade_motor_kanan.detectMultiScale(
                 gambar)
 
             klasifikasi_mobil = self.klasifier_cascade_mobil_kanan.detectMultiScale(
                 gambar)
+
+            for klasifikasi in klasifikasi_motor:
+                print(klasifikasi)
+
+                x,y,w,h = klasifikasi
+                cv.rectangle(gambar, (x, y), (x + w, y + h),
+                            WARNA_BOUNDING_BOX, 1)
+                cv.imwrite(("debug/" + lajur + "/motor/" + filename), gambar)
+
+            for klasifikasi in klasifikasi_mobil:
+                print(klasifikasi)
+
+                x,y,w,h = klasifikasi
+                cv.rectangle(gambar, (x, y), (x + w, y + h),
+                            WARNA_BOUNDING_BOX_HIJAU, 1)
+                cv.imwrite(("debug/" + lajur + "/mobil/" + filename), gambar)
+
+            if len(klasifikasi_mobil) == 0 and len(klasifikasi_motor) ==0 :
+                cv.imwrite(("debug/" + lajur + "/tidakdiketahui/" + filename), gambar)
+
+
+
 
         klasifikasi = "tidakdiketahui"
         jumlah = 0
@@ -56,6 +101,7 @@ class Klasifier():
         elif(len(klasifikasi_mobil) >= 1):
             klasifikasi = "mobil"
             jumlah = len(klasifikasi_mobil)
+
 
         logger.debug('klasifikasi %s', klasifikasi, jumlah)
 

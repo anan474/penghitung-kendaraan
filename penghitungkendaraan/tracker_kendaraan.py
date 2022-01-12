@@ -28,6 +28,11 @@ BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT = 10
 # =======================================================
 
 
+LEBAR = 640
+TINGGI = 360
+
+
+
 class TrackerKendaraan ():
     """Kelas ini mencatat dan memanajemen daftar kendaraan yang sedang di tracking
     """
@@ -169,8 +174,31 @@ class TrackerKendaraan ():
             x, y, w, h = kendaraan.posisi
             lajur = kendaraan.lajur
 
+            ya = y-10
+            yb = y+h+10
+
+            xa = x-10
+            xb = x+w+10
+
+
+            print("---")
+            print(ya,yb)
+            print(xa,xb)
+            print("===")
+
+
+            if ya < 0 :
+                ya = 0
+            if yb > 360:
+                yb = 360
+            
+            if xa < 0:
+                xa = 0
+            if xb > 640:
+                xb = 640
+
             # crop gambar jadi hanya kendaraan | ambil snapshot kendaraan
-            gambar_kendaraan = frame[y:y+h, x:x+w]
+            gambar_kendaraan = frame[ya:yb, xa:xb]
             gambar_kendaraan_gray = cv.cvtColor(
                 gambar_kendaraan, cv.COLOR_BGR2GRAY)  # convert ke grayscale
 
@@ -192,8 +220,7 @@ class TrackerKendaraan ():
             ### CEK KLASIFIKASI ~ END
 
             if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
-                            lajur + "/" + klasifikasi + "/s" + filename), gambar_kendaraan)
+                cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] + lajur + "/" + klasifikasi + "/s" + filename), gambar_kendaraan)
             if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
                 with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
                     ts = time.time()
