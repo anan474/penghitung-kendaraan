@@ -40,7 +40,7 @@ class Klasifier():
                 gambar)
 
             for klasifikasi in klasifikasi_motor:
-                print(klasifikasi)
+                # print(klasifikasi)
 
                 x,y,w,h = klasifikasi
                 cv.rectangle(gambar, (x, y), (x + w, y + h),
@@ -67,7 +67,7 @@ class Klasifier():
                 gambar)
 
             for klasifikasi in klasifikasi_motor:
-                print(klasifikasi)
+                # print(klasifikasi)
 
                 x,y,w,h = klasifikasi
                 cv.rectangle(gambar, (x, y), (x + w, y + h),
@@ -75,7 +75,7 @@ class Klasifier():
                 cv.imwrite(("debug/" + lajur + "/motor/" + filename), gambar)
 
             for klasifikasi in klasifikasi_mobil:
-                print(klasifikasi)
+                # print(klasifikasi)
 
                 x,y,w,h = klasifikasi
                 cv.rectangle(gambar, (x, y), (x + w, y + h),

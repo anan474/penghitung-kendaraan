@@ -16,6 +16,8 @@ from penyedia_data_statistik import PenyediaDataStatistik
 
 from gambar_objek import GambarObjek
 
+from utilitas import Utilitas
+
 
 # ============================================================================
 
@@ -38,6 +40,9 @@ def main():
     pendeteksi_objek = PendeteksiObjek(config)
     tracker_kendaraan = TrackerKendaraan(config)
     gambar_objek = GambarObjek(config)
+    utilitas = Utilitas()
+
+    utilitas.empty_output()
 
     if (config['sediadata']['realtime']):
         penyedia_data_realtime = PenyediaDataRealtime()
@@ -65,7 +70,7 @@ def main():
         daftar_objek, foreground = pendeteksi_objek.deteksi_objek(frame)
 
         daftar_kendaraan = tracker_kendaraan.perbarui_tracker(
-            daftar_objek, frame)
+            daftar_objek, frame,frame_counter)
 
         gambar_objek.tampilkan_frame(frame, foreground, frame_counter, daftar_objek, daftar_kendaraan)
 

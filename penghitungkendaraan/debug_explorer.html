@@ -1,25 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Debug Explorer</title>
-  </head>
-  <body></body>
 
-  <script>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debug Explorer</title>
+</head>
+
+<body>
+  <div id="img-container" />
+</body>
+
+<script>
+  // console.log("test")
+
+  const container = document.getElementById('img-container')
+  fetch("./logs_gabungan.json").then(res => res.json()).then(res => {
+    console.log(res.kendaraan)
+    for (let kendaraan of res.kendaraan) {
+      // console.log(kendaraan)
+      const { lajur, klasifikasi, filename } = kendaraan
+      let DOM_img = document.createElement("img");
+      DOM_img.src = `gambar_output/klasifikasi/${lajur}/${klasifikasi}/${filename}`;
+
+      container.appendChild(DOM_img);
+    }
+  })
     /**
 
-        steps:
-        - proses output klasifikasi ke bentuk JSON
-        - load json script
-        - tampilkan output ke user
-        - user bisa set good or bad
-        - hasil select bisa di simpan
-        
+steps:
+- proses output klasifikasi ke bentuk JSON
+- load json script
+- tampilkan output ke user
+- user bisa set good or bad
+- hasil select bisa di simpan
+ 
 
 
-      **/
-  </script>
+**/
+</script>
+
 </html>

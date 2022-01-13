@@ -18,27 +18,32 @@
     "kiri": {
       "mobil": true,
       "motor": true,
-      "tidakdiketahui": true
+      "tidakdiketahui": true,
+      "keduanya": true
     },
     "kanan": {
       "mobil": true,
       "motor": true,
-      "tidakdiketahui": true
+      "tidakdiketahui": true,
+      "keduanya": true
     }
   },
   "logs": {
     "direktori": "logs/",
     "klasifikasi": {
+      "gabungan": true,
       "direktori": "klasifikasi/",
       "kiri": {
         "mobil": true,
         "motor": true,
-        "tidakdiketahui": true
+        "tidakdiketahui": true,
+        "keduanya": true
       },
       "kanan": {
         "mobil": true,
         "motor": true,
-        "tidakdiketahui": true
+        "tidakdiketahui": true,
+        "keduanya": true
       }
     }
   },

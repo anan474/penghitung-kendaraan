@@ -168,7 +168,7 @@ class TrackerKendaraan ():
                 self.id_kendaraan_selanjutnya += 1
                 self.kendaraan.append(kendaraan_baru)
 
-    def handle_kendaraan_melewati_batas(self, frame):
+    def handle_kendaraan_melewati_batas(self, frame,frame_counter):
         # dari kendaraan_untuk_diklasifikasi lakukan klasifikasi, lalu masukkan nilai nya ke variabel
         for indek_kendaraan, kendaraan in enumerate(self.kendaraan_untuk_diklasifikasi):
             x, y, w, h = kendaraan.posisi
@@ -181,10 +181,10 @@ class TrackerKendaraan ():
             xb = x+w+10
 
 
-            print("---")
-            print(ya,yb)
-            print(xa,xb)
-            print("===")
+            # print("---")
+            # print(ya,yb)
+            # print(xa,xb)
+            # print("===")
 
 
             if ya < 0 :
@@ -220,11 +220,12 @@ class TrackerKendaraan ():
             ### CEK KLASIFIKASI ~ END
 
             if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] + lajur + "/" + klasifikasi + "/s" + filename), gambar_kendaraan)
+                cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] + lajur + "/" + klasifikasi + "/" + filename), gambar_kendaraan)
             if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
                 with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
                     ts = time.time()
-                    teks = str(int(ts))+";"+lajur+";" + \
+                    teks = (("%04d")%frame_counter) +";"
+                    teks += str(int(ts))+";"+lajur+";" + \
                         klasifikasi + ";"+filename
                     if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
                         teks += ";simpan"
@@ -233,6 +234,21 @@ class TrackerKendaraan ():
 
                     f.write(teks)
                     f.write('\n')
+            
+            if(self.config['logs']['klasifikasi']['gabungan']):
+                with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+"/gabungan/logs_gabungan.csv", 'a') as f:
+                    ts = time.time()
+                    teks = (("%04d")%frame_counter) +";"
+                    teks += str(int(ts))+";"+lajur+";" + \
+                        klasifikasi + ";"+str(int(jumlah))+";"+filename
+                    if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                        teks += ";simpan"
+                    else:
+                        teks += ";tidaksimpan"
+                    
+                    f.write(teks)
+                    f.write('\n')
+            
             # tambahkan ke basis data
             pengelola_basisdata.simpan_ke_db(klasifikasi, lajur)
 
@@ -243,11 +259,11 @@ class TrackerKendaraan ():
             # hapus dari daftar
             del self.kendaraan_untuk_diklasifikasi[indek_kendaraan]
 
-    def perbarui_tracker(self, objek, frame):
+    def perbarui_tracker(self, objek, frame,frame_counter):
         objek_sisa = self.cocokkan_dengan_data_yg_ada(objek)
 
         self.tambahkan_ke_daftar_tracking(objek_sisa)
 
-        self.handle_kendaraan_melewati_batas(frame)
+        self.handle_kendaraan_melewati_batas(frame,frame_counter)
 
         return self.kendaraan

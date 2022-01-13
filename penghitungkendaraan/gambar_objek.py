@@ -133,8 +133,8 @@ class GambarObjek():
     @staticmethod
     def print_simpan_kendaraan(gbr_kendaraan, lajur, klasifikasi, jumlah):
         cv.imshow("kendaraan",gbr_kendaraan)
-        print(lajur)
-        print(klasifikasi)
-        print(jumlah)
+        # print(lajur)
+        # print(klasifikasi)
+        # print(jumlah)
 
         
