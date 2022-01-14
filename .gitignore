@@ -12,3 +12,5 @@ logklasifikasi
 penghitungkendaraan/gambar_output/**/*.png
 logs.csv
 debug
+logs_gabungan.csv
+logs_gabungan.json
