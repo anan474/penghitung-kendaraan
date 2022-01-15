@@ -26,6 +26,10 @@
         margin-bottom: 24px;
       }
 
+      .info_header p,
+      .info_stats p {
+        margin: 0;
+      }
       .info_stats span {
         font-size: 1.5rem;
         font-weight: bold;
@@ -48,6 +52,46 @@
         height: 100px;
         border: 1px solid black;
         text-align: center;
+      }
+
+      #area_cek_hasil {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      #citra_container {
+        flex: 1;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 8px;
+      }
+      #citra_container img {
+        width: 415px;
+      }
+      #hasil_container {
+        flex: 2;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 8px;
+      }
+      #citra_kendaraan {
+        height: 360px;
+        width: auto;
+      }
+      #hasil_container span {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      #pilih_hasil button {
+        width: 100px;
+        height: 44px;
       }
     </style>
   </head>
@@ -134,7 +178,24 @@
         </div>
       </div>
     </section>
-    <section id="area_cek_hasil"></section>
+    <section id="area_cek_hasil">
+      <div id="citra_container">
+        <!-- <img id="citra_asli" /> -->
+        <img id="citra_morfologi" />
+        <img id="citra_hasil" />
+      </div>
+      <div id="hasil_container">
+        <img id="citra_kendaraan" />
+        <p>
+          <span id="jenis_kendaraan">Mobil</span> berjalan
+          <span id="arah_kendaraan">Keluar</span>
+        </p>
+        <div id="pilih_hasil">
+          <button>BENAR</button>
+          <button>SALAH</button>
+        </div>
+      </div>
+    </section>
 
     <!-- <div id="img-container" /> -->
   </body>
@@ -144,12 +205,27 @@
 
     let kendaraan = [];
 
+    // const citra_asli = document.getElementById("citra_asli");
+    const citra_morfologi = document.getElementById("citra_morfologi");
+    const citra_hasil = document.getElementById("citra_hasil");
+    const citra_kendaraan = document.getElementById("citra_kendaraan");
+
+    function setTampilanCekKendaraan(id) {
+      let kendaraan_tampil = kendaraan[id];
+      console.log(kendaraan_tampil);
+      // citra_asli.src = `gambar_output/citra/asli/${kendaraan_tampil.frame}.png`;
+      citra_morfologi.src = `gambar_output/citra/morfologi/${kendaraan_tampil.frame}.png`;
+      citra_hasil.src = `gambar_output/citra/hasil/${kendaraan_tampil.frame}.png`;
+      citra_kendaraan.src = `gambar_output/klasifikasi/${kendaraan_tampil.lajur}/${kendaraan_tampil.klasifikasi}/${kendaraan_tampil.filename}`;
+    }
+
     const container = document.getElementById("img-container");
     fetch("./logs_gabungan.json")
       .then((res) => res.json())
       .then((res) => {
         kendaraan = res.kendaraan;
         console.log(res.kendaraan);
+        setTampilanCekKendaraan(1);
         // for (let kendaraan of res.kendaraan) {
         //   // console.log(kendaraan)
         //   const { lajur, klasifikasi, filename } = kendaraan;
