@@ -1,32 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debug Explorer</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Debug Explorer</title>
-</head>
+    <style>
+      #hasil_analisa {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border: 1px solid black;
+        padding: 12px;
+      }
+      .hasil_sisi_container {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border: 1px solid black;
+        padding: 12px 48px;
+      }
+      .info_header {
+        margin-bottom: 24px;
+      }
 
-<body>
-  <div id="img-container" />
-</body>
+      .info_stats span {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
 
-<script>
-  // console.log("test")
+      .matrix_container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .matrix_row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-  const container = document.getElementById('img-container')
-  fetch("./logs_gabungan.json").then(res => res.json()).then(res => {
-    console.log(res.kendaraan)
-    for (let kendaraan of res.kendaraan) {
-      // console.log(kendaraan)
-      const { lajur, klasifikasi, filename } = kendaraan
-      let DOM_img = document.createElement("img");
-      DOM_img.src = `gambar_output/klasifikasi/${lajur}/${klasifikasi}/${filename}`;
+      .matrix_item {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        text-align: center;
+      }
+    </style>
+  </head>
 
-      container.appendChild(DOM_img);
-    }
-  })
+  <body>
+    <!-- <button>Export data</button> -->
+    <section id="hasil_analisa">
+      <div id="sisi_kiri" class="hasil_sisi_container">
+        <div class="info_container">
+          <div class="info_header">
+            <p>Sisi kiri,</p>
+            <h2>Kendaraan keluar</h2>
+          </div>
+          <div class="info_stats">
+            <p>Jumlah objek: <span id="jumlah_objek__kiri">--</span></p>
+            <p>
+              Berhasil diklasifikasi:
+              <span id="berhasil_diklasifikasi__kiri">--</span>
+            </p>
+            <p>Akurasi: <span id="akurasi__kiri">--</span></p>
+            <p>Presisi: <span id="presisi__kiri">--</span></p>
+          </div>
+        </div>
+        <div class="matrix_container">
+          <div class="matrix_row">
+            <div class="matrix_item">
+              <p>TP</p>
+              <h2 id="tp__kiri">--</h2>
+            </div>
+            <div class="matrix_item">
+              <p>TN</p>
+              <h2 id="tn__kiri">--</h2>
+            </div>
+          </div>
+          <div class="matrix_row">
+            <div class="matrix_item">
+              <p>FP</p>
+              <h2 id="fp__kiri">--</h2>
+            </div>
+            <div class="matrix_item">
+              <p>FN</p>
+              <h2 id="fn__kiri">--</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="sisi_kanan" class="hasil_sisi_container">
+        <div class="info_container">
+          <div class="info_header">
+            <p>Sisi kanan,</p>
+            <h2>Kendaraan masuk</h2>
+          </div>
+          <div class="info_stats">
+            <p>Jumlah objek: <span id="jumlah_objek__kanan">--</span></p>
+            <p>
+              Berhasil diklasifikasi:
+              <span id="berhasil_diklasifikasi__kanan">--</span>
+            </p>
+            <p>Akurasi: <span id="akurasi__kanan">--</span></p>
+            <p>Presisi: <span id="presisi__kanan">--</span></p>
+          </div>
+        </div>
+        <div class="matrix_container">
+          <div class="matrix_row">
+            <div class="matrix_item">
+              <p>TP</p>
+              <h2 id="tp__kiri">--</h2>
+            </div>
+            <div class="matrix_item">
+              <p>TN</p>
+              <h2 id="tn__kiri">--</h2>
+            </div>
+          </div>
+          <div class="matrix_row">
+            <div class="matrix_item">
+              <p>FP</p>
+              <h2 id="fp__kiri">--</h2>
+            </div>
+            <div class="matrix_item">
+              <p>FN</p>
+              <h2 id="fn__kiri">--</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="area_cek_hasil"></section>
+
+    <!-- <div id="img-container" /> -->
+  </body>
+
+  <script>
+    // console.log("test")
+
+    let kendaraan = [];
+
+    const container = document.getElementById("img-container");
+    fetch("./logs_gabungan.json")
+      .then((res) => res.json())
+      .then((res) => {
+        kendaraan = res.kendaraan;
+        console.log(res.kendaraan);
+        // for (let kendaraan of res.kendaraan) {
+        //   // console.log(kendaraan)
+        //   const { lajur, klasifikasi, filename } = kendaraan;
+        //   let DOM_img = document.createElement("img");
+        //   DOM_img.src = `gambar_output/klasifikasi/${lajur}/${klasifikasi}/${filename}`;
+
+        //   container.appendChild(DOM_img);
+        // }
+      });
     /**
 
 steps:
@@ -39,6 +171,5 @@ steps:
 
 
 **/
-</script>
-
+  </script>
 </html>
