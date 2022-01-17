@@ -4,14 +4,14 @@
     "asli": false,
     "hasil": false,
     "morfologi": false,
-    "gabungan": true
+    "gabungan": false
   },
   "simpangambar": {
     "direktori": "gambar_output/citra/",
-    "asli": true,
+    "asli": false,
     "hasil": true,
     "morfologi": true,
-    "gabungan": true
+    "gabungan": false
   },
   "simpangambar_klasifikasi": {
     "direktori": "gambar_output/klasifikasi/",
@@ -58,7 +58,7 @@
   "input": {
     "kamera": false,
     "background": "bg.png",
-    "video": "vid.mp4",
+    "video": "gabungan.mp4",
     "speed": 1,
     "dimensi": {
       "lebar": 640,

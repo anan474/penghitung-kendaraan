@@ -58,6 +58,7 @@ def main():
     while True:
 
         frame_counter += 1
+        print("frame ke : " + str(frame_counter))
 
         ret, frame = video.read()
 
