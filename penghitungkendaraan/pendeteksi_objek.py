@@ -32,7 +32,7 @@ class PendeteksiObjek():
         self.kernel7 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (7, 7))
         self.kernel9 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (9, 9))
 
-        logger.debug("init module")
+        logger.info("init module")
 
     def __get_foreground(self, frame):
         frame_foreground = self.background_subtractor.apply(frame, 1)

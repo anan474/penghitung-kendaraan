@@ -174,18 +174,13 @@ class TrackerKendaraan ():
             x, y, w, h = kendaraan.posisi
             lajur = kendaraan.lajur
 
-            ya = y-10
-            yb = y+h+10
+            lebihkan = 10
 
-            xa = x-10
-            xb = x+w+10
+            ya = y-lebihkan
+            yb = y+h+lebihkan
 
-
-            # print("---")
-            # print(ya,yb)
-            # print(xa,xb)
-            # print("===")
-
+            xa = x-lebihkan
+            xb = x+w+lebihkan
 
             if ya < 0 :
                 ya = 0
@@ -206,14 +201,9 @@ class TrackerKendaraan ():
             gambar_kendaraan_gray[gambar_kendaraan_gray < 10] = 10
 
             klasifikasi, jumlah = klasifier.klasifikasi_kendaraan(
-                gambar_kendaraan_gray, lajur)
+                gambar_kendaraan, frame, lajur,frame_counter)
 
             filename = str(uuid.uuid4())[:8]+("%04d.png") % kendaraan.id
-
-            ### CEK KLASIFIKASI ~ START
-
-            klasifikasi_frame, jumlah_frame = klasifier.klasifikasi_kendaraan(
-                frame, lajur)
 
             # gambar bounding box output klasifikasi, simpan
 

@@ -53,6 +53,14 @@ class Utilitas():
                 "./logs/klasifikasi/kanan/motor",
                 "./logs/klasifikasi/kanan/keduanya",
                 "./logs/klasifikasi/kanan/tidakdiketahui",
+                "./debug/kiri/mobil",
+                "./debug/kiri/motor",
+                "./debug/kiri/keduanya",
+                "./debug/kiri/tidakdiketahui",
+                "./debug/kanan/mobil",
+                "./debug/kanan/motor",
+                "./debug/kanan/keduanya",
+                "./debug/kanan/tidakdiketahui",
                 ]
 
             for dir in dirarr:

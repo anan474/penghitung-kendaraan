@@ -5,7 +5,7 @@ import datetime
 
 import cv2 as cv
 import logging
-logging.basicConfig(level=logging.CRITICAL)
+logging.basicConfig(level=logging.INFO)
 
 
 from pendeteksi_objek import PendeteksiObjek
