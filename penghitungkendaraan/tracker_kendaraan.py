@@ -11,8 +11,6 @@ from kendaraan import Kendaraan
 from pengelola_basisdata import PengelolaBasisdata
 from gambar_objek import GambarObjek
 
-klasifier = Klasifier()
-pengelola_basisdata = PengelolaBasisdata()
 
 # ============================================================================
 
@@ -54,6 +52,9 @@ class TrackerKendaraan ():
 
         # jika pada @limit frame tidak terlihat maka kendaraan dihilangkan
         self.limit_tidak_terlihat = BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT
+
+        self.klasifier = Klasifier(config)
+        self.pengelola_basisdata = PengelolaBasisdata()
 
     @staticmethod
     def hitung_vektor(a, b):
@@ -200,7 +201,7 @@ class TrackerKendaraan ():
             # kalo ada pixel di bawah 10 (hitam pekat), jadikan abu abu
             gambar_kendaraan_gray[gambar_kendaraan_gray < 10] = 10
 
-            klasifikasi, jumlah = klasifier.klasifikasi_kendaraan(
+            klasifikasi, jumlah = self.klasifier.klasifikasi_kendaraan(
                 gambar_kendaraan, frame, lajur,frame_counter)
 
             filename = str(uuid.uuid4())[:8]+("%04d.png") % kendaraan.id
@@ -240,7 +241,7 @@ class TrackerKendaraan ():
                     f.write('\n')
             
             # tambahkan ke basis data
-            pengelola_basisdata.simpan_ke_db(klasifikasi, lajur)
+            self.pengelola_basisdata.simpan_ke_db(klasifikasi, lajur)
 
             # tambah nilai ke kounter
             if klasifikasi:
