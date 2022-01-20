@@ -4,7 +4,7 @@
     "asli": false,
     "hasil": false,
     "morfologi": false,
-    "gabungan": false
+    "gabungan": true
   },
   "simpangambar": {
     "direktori": "gambar_output/citra/",

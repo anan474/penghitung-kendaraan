@@ -58,7 +58,7 @@ def main():
     while True:
 
         frame_counter += 1
-        print("frame ke : " + str(frame_counter))
+        # print("frame ke : " + str(frame_counter))
 
         ret, frame = video.read()
 
@@ -77,6 +77,8 @@ def main():
 
         ###
         c = cv.waitKey(config["input"]["speed"])
+        if c == ord('p'):
+            cv.waitKey(-1)
         if c == 27:
             print("ESC ditekan, menghentikan program.")
             break
