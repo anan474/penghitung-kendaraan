@@ -54,6 +54,6 @@ class PenyediaDataStatistik():
         DataView.register(self.app)
 
         def run_forever():
-            self.app.run(debug=True, use_reloader=False)
+            self.app.run(debug=False, use_reloader=False)
         thread = threading.Thread(target=run_forever)
         thread.start()

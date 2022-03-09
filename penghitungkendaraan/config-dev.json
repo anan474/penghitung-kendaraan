@@ -9,24 +9,24 @@
   "simpangambar": {
     "direktori": "gambar_output/citra/",
     "asli": false,
-    "hasil": true,
-    "morfologi": true,
+    "hasil": false,
+    "morfologi": false,
     "gabungan": false,
     "debug": false
   },
   "simpangambar_klasifikasi": {
     "direktori": "gambar_output/klasifikasi/",
     "kiri": {
-      "mobil": true,
-      "motor": true,
-      "tidakdiketahui": true,
-      "keduanya": true
+      "mobil": false,
+      "motor": false,
+      "tidakdiketahui": false,
+      "keduanya": false
     },
     "kanan": {
-      "mobil": true,
-      "motor": true,
-      "tidakdiketahui": true,
-      "keduanya": true
+      "mobil": false,
+      "motor": false,
+      "tidakdiketahui": false,
+      "keduanya": false
     }
   },
   "logs": {
