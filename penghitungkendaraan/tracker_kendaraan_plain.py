@@ -1,16 +1,10 @@
 
 import math
-import time
-import uuid
-import copy
-import numpy as np
 import cv2 as cv
 
 from klasifier_kendaraan import Klasifier
 from kendaraan import Kendaraan
 from pengelola_basisdata import PengelolaBasisdata
-from gambar_objek import GambarObjek
-
 
 # ============================================================================
 
@@ -26,16 +20,11 @@ BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT = 10
 # =======================================================
 
 
-LEBAR = 640
-TINGGI = 360
-
-
 class PenghitungKendaraan ():
     """Kelas ini mencatat dan memanajemen daftar kendaraan yang sedang di tracking
     """
 
-    def __init__(self, config):
-        self.config = config
+    def __init__(self):
         self.garis_masuk_kiri = GARIS_PEMBATAS_KIRI_MASUK
         self.garis_keluar_kiri = GARIS_PEMBATAS_KIRI_KELUAR
         self.garis_masuk_kanan = GARIS_PEMBATAS_KANAN_MASUK
@@ -46,13 +35,10 @@ class PenghitungKendaraan ():
 
         self.kendaraan_untuk_diklasifikasi = []
 
-        self.jumlah_kendaraan = 0
-        self.jumlah_kendaraan_terklasifikasi = 0
-
-        # jika pada @limit frame tidak terlihat maka kendaraan dihilangkan
+        # jika pada batas limit citra tidak terlihat maka kendaraan dihilangkan
         self.limit_tidak_terlihat = BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT
 
-        self.klasifier = Klasifier(config)
+        self.klasifier = Klasifier()
         self.pengelola_basisdata = PengelolaBasisdata()
 
     @staticmethod
@@ -88,7 +74,7 @@ class PenghitungKendaraan ():
         batas_jarak = max(40.0, -0.008 * sudut**2 + 0.4 * sudut + 25.0)
         return (jarak <= batas_jarak)
 
-    def apakah_masuk_garis(self, centroid, lajur):
+    def __apakah_masuk_garis(self, centroid, lajur):
         # jika centroid berada dalam garis sesuai dengan lajur nya maka kembalikan nilai True
         if lajur == "kiri" and (centroid[1] < self.garis_masuk_kiri) and (centroid[1] > self.garis_keluar_kiri):
             return True
@@ -97,7 +83,7 @@ class PenghitungKendaraan ():
         else:
             return False
 
-    def apakah_melewati_garis_keluar(self, kendaraan):
+    def __apakah_melewati_garis_keluar(self, kendaraan):
         # jika kendararan telah melewati garis keluar sesuai lajur nya maka kembalikan nilai True
         if kendaraan.lajur == "kiri" and (kendaraan.centroid_terakhir[1] < self.garis_keluar_kiri):
             return True
@@ -106,18 +92,16 @@ class PenghitungKendaraan ():
         else:
             return False
 
-    def cocokkan_dengan_data_yg_ada(self, objek):
+    def __cocokkan_dengan_data_yg_ada(self, objek_terdeteksi):
         # dari data kendaraan yang telah di-tracking, cek satu persatu mana yang merupakan kendaraan tersebut
-
-        # return sisa objek yang tidak ada kecocokan
+        # return sisa objek_terdeteksi yang tidak ada kecocokan
 
         for indek_kendaraan, kendaraan in enumerate(self.kendaraan):
-
             # update status kendaraan
             #  jika cocok update status kendaraan nya,
             #  jika tidak ada cocok dengan kendaraan yang sudah ada maka tambahkan jadi kendaraan baru
             ada_objek_yg_cocok = False
-            for indek_objek_ini, objek_ini in enumerate(objek):
+            for indek_objek_ini, objek_ini in enumerate(objek_terdeteksi):
                 posisi_objek_ini, centroid_objek_ini, lajur = objek_ini
 
                 vektor = self.hitung_vektor(
@@ -127,20 +111,19 @@ class PenghitungKendaraan ():
                     # update status kendaraan
                     kendaraan.perbarui_centroid(centroid_objek_ini)
                     kendaraan.perbarui_posisi(posisi_objek_ini)
-                    # hilangkan dari daftar objek
-                    del objek[indek_objek_ini]
-                    # set bahwa ada objek yang cocok untuk kendaraan ini
+                    # hilangkan dari daftar objek_terdeteksi
+                    del objek_terdeteksi[indek_objek_ini]
+                    # set bahwa ada objek_terdeteksi yang cocok untuk kendaraan ini
                     ada_objek_yg_cocok = True
 
-                    # sampai disini sebenarnya bisa di hentikan perulangan nya tapi coba biarkan untuk cek apakah bisa terdeteksi menjadi lebih dari dua kendaraan untuk objek yang sama
+                    # sampai disini sebenarnya bisa di hentikan perulangan nya tapi coba biarkan untuk cek apakah bisa terdeteksi menjadi lebih dari dua kendaraan untuk objek_terdeteksi yang sama
 
-            # kalau tidak ada ketemu tambahkan hitungan jumlah frame tidak terlihat untuk kendaraan ini
+            # kalau tidak ada ketemu tambahkan hitungan jumlah citra tidak terlihat untuk kendaraan ini
             if ada_objek_yg_cocok is False:
                 kendaraan.tidak_terlihat += 1
 
             # hitung kendaraan yang belum dihitung dan melewati garis batas keluar
-            if not kendaraan.telah_dihitung and self.apakah_melewati_garis_keluar(kendaraan):
-                self.jumlah_kendaraan += 1
+            if not kendaraan.telah_dihitung and self.__apakah_melewati_garis_keluar(kendaraan):
                 kendaraan.telah_dihitung = True
 
             # jika kendaraan telah dihitung maka pindahkan ke kendaraan_untuk_diklasifikasi
@@ -149,26 +132,26 @@ class PenghitungKendaraan ():
                     self.kendaraan[indek_kendaraan])
                 del self.kendaraan[indek_kendaraan]
 
-            # hapus kendaraan yang telah melewati limit batas nilai tidak terlihat di frame
+            # hapus kendaraan yang telah melewati limit batas nilai tidak terlihat di citra
             if kendaraan.tidak_terlihat > self.limit_tidak_terlihat:
                 del self.kendaraan[indek_kendaraan]
 
-        return objek
+        return objek_terdeteksi
 
-    def tambahkan_ke_daftar_tracking(self, objek):
+    def __tambahkan_ke_daftar_tracking(self, objek_terdeteksi):
 
-        # dari objek yang tersisa dari operasi sebelumnya, tambahkan menjadi kendaraan baru
-        for objek_ini in objek:
+        # dari objek_terdeteksi yang tersisa dari operasi sebelumnya, tambahkan menjadi kendaraan baru
+        for objek_ini in objek_terdeteksi:
             posisi_objek_ini, centroid_objek_ini, lajur = objek_ini
 
-            # cek apakah objek berada dalam area yang dibatasi garis
-            if self.apakah_masuk_garis(centroid_objek_ini, lajur):
+            # cek apakah objek_terdeteksi berada dalam area yang dibatasi garis
+            if self.__apakah_masuk_garis(centroid_objek_ini, lajur):
                 kendaraan_baru = Kendaraan(
                     self.id_kendaraan_selanjutnya, centroid_objek_ini, posisi_objek_ini, lajur)
                 self.id_kendaraan_selanjutnya += 1
                 self.kendaraan.append(kendaraan_baru)
 
-    def handle_kendaraan_melewati_batas(self, frame, frame_counter):
+    def __handle_kendaraan_melewati_batas(self, citra):
         # dari kendaraan_untuk_diklasifikasi lakukan klasifikasi, lalu masukkan nilai nya ke variabel
         for indek_kendaraan, kendaraan in enumerate(self.kendaraan_untuk_diklasifikasi):
             x, y, w, h = kendaraan.posisi
@@ -192,8 +175,8 @@ class PenghitungKendaraan ():
             if xb > 640:
                 xb = 640
 
-            # crop gambar jadi hanya kendaraan | ambil snapshot kendaraan
-            gambar_kendaraan = frame[ya:yb, xa:xb]
+            # crop gambar jadi hanya kendaraan / ambil snapshot kendaraan
+            gambar_kendaraan = citra[ya:yb, xa:xb]
             gambar_kendaraan_gray = cv.cvtColor(
                 gambar_kendaraan, cv.COLOR_BGR2GRAY)  # convert ke grayscale
 
@@ -201,60 +184,18 @@ class PenghitungKendaraan ():
             gambar_kendaraan_gray[gambar_kendaraan_gray < 10] = 10
 
             klasifikasi, jumlah = self.klasifier.klasifikasi_kendaraan(
-                gambar_kendaraan, frame, lajur, frame_counter)
-
-            filename = str(uuid.uuid4())[:8]+("%04d.png") % kendaraan.id
-
-            # gambar bounding box output klasifikasi, simpan
-
-            # CEK KLASIFIKASI ~ END
-
-            if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
-                            lajur + "/" + klasifikasi + "/" + filename), gambar_kendaraan)
-            if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
-                with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
-                    ts = time.time()
-                    teks = (("%04d") % frame_counter) + ";"
-                    teks += str(int(ts))+";"+lajur+";" + \
-                        klasifikasi + ";"+filename
-                    if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                        teks += ";simpan"
-                    else:
-                        teks += ";tidaksimpan"
-
-                    f.write(teks)
-                    f.write('\n')
-
-            if(self.config['logs']['klasifikasi']['gabungan']):
-                with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+"/gabungan/logs_gabungan.csv", 'a') as f:
-                    ts = time.time()
-                    teks = (("%04d") % frame_counter) + ";"
-                    teks += str(int(ts))+";"+lajur+";" + \
-                        klasifikasi + ";"+str(int(jumlah))+";"+filename
-                    if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                        teks += ";simpan"
-                    else:
-                        teks += ";tidaksimpan"
-
-                    f.write(teks)
-                    f.write('\n')
+                gambar_kendaraan, lajur)
 
             # tambahkan ke basis data
-            self.pengelola_basisdata.simpan_ke_db(klasifikasi, lajur)
-
-            # tambah nilai ke kounter
-            if klasifikasi:
-                self.jumlah_kendaraan_terklasifikasi += 1
+            self.pengelola_basisdata.simpan_ke_db(klasifikasi, lajur, jumlah)
 
             # hapus dari daftar
             del self.kendaraan_untuk_diklasifikasi[indek_kendaraan]
 
-    def hitung_kendaraan(self, objek, frame, frame_counter):
-        objek_sisa = self.cocokkan_dengan_data_yg_ada(objek)
-
-        self.tambahkan_ke_daftar_tracking(objek_sisa)
-
-        self.handle_kendaraan_melewati_batas(frame, frame_counter)
+    def hitung_kendaraan(self, objek_terdeteksi, citra):
+        daftar_objek_baru = self.__cocokkan_dengan_data_yg_ada(
+            objek_terdeteksi)
+        self.__tambahkan_ke_daftar_tracking(daftar_objek_baru)
+        self.__handle_kendaraan_melewati_batas(citra)
 
         return self.kendaraan

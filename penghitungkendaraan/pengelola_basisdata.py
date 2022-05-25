@@ -18,7 +18,7 @@ class PengelolaBasisdata(object):
             query1 = """DROP TABLE trafik_kendaraan;"""
             cursor.execute(query1)
             self.sqliteConnection.commit()
-            
+
             query2 = '''CREATE TABLE trafik_kendaraan (
                         id INTEGER PRIMARY KEY,
                         klasifikasi TEXT NOT NULL,
@@ -35,7 +35,6 @@ class PengelolaBasisdata(object):
             print("gagal mengosongkan tabel:", error)
 
         return self
-
 
     def get_semua_data_by_tanggal(self, tanggal):
         try:
@@ -156,20 +155,23 @@ class PengelolaBasisdata(object):
 
         return self
 
-    def simpan_ke_db(self, klasifikasi, lajur):
+    def simpan_ke_db(self, klasifikasi, lajur, jumlah):
         try:
             waktu = datetime.now()
 
-            cursor = self.sqliteConnection.cursor()
+            while jumlah:
+                cursor = self.sqliteConnection.cursor()
 
-            query = """INSERT INTO trafik_kendaraan (klasifikasi, lajur, waktu) VALUES (? ,?, ? );"""
+                query = """INSERT INTO trafik_kendaraan (klasifikasi, lajur, waktu) VALUES (? ,?, ? );"""
 
-            params = (klasifikasi, lajur, waktu)
+                params = (klasifikasi, lajur, waktu)
 
-            cursor.execute(query, params)
-            self.sqliteConnection.commit()
+                cursor.execute(query, params)
+                self.sqliteConnection.commit()
 
-            cursor.close()
+                cursor.close()
+
+                jumlah -= 1
 
         except sqlite3.Error as error:
             print("Gagal menulis ke tabel:", error)

@@ -8,11 +8,11 @@
   },
   "simpangambar": {
     "direktori": "gambar_output/citra/",
-    "asli": false,
+    "asli": true,
     "hasil": true,
     "morfologi": true,
-    "gabungan": false,
-    "debug": false
+    "gabungan": true,
+    "debug": true
   },
   "simpangambar_klasifikasi": {
     "direktori": "gambar_output/klasifikasi/",
