@@ -157,6 +157,7 @@ class PenghitungKendaraan ():
             x, y, w, h = kendaraan.posisi
             lajur = kendaraan.lajur
 
+            # atur berapa ukuran bangsi ketika akan di crop
             lebihkan = 10
 
             ya = y-lebihkan
@@ -197,5 +198,3 @@ class PenghitungKendaraan ():
             objek_terdeteksi)
         self.__tambahkan_ke_daftar_tracking(daftar_objek_baru)
         self.__handle_kendaraan_melewati_batas(citra)
-
-        return self.kendaraan

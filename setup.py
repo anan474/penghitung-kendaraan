@@ -1,10 +1,10 @@
 from setuptools import setup
 setup(
-    name='penghitungkendaraan',
-    version='0.1.0',
-    packages=['penghitungkendaraan'],
+    name='sistempenghitungkendaraan',
+    version='0.1.1',
+    packages=['sistempenghitungkendaraan'],
     entry_points={
         'console_scripts': [
-            'penghitungkendaraan = penghitungkendaraan.__main__:main'
+            'sistempenghitungkendaraan = sistempenghitungkendaraan.__main__:main'
         ]
     })
