@@ -4,8 +4,10 @@ from tracker_kendaraan import PenghitungKendaraan
 from pendeteksi_objek import PendeteksiObjek
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+import sys
 import json
 import time
+import datetime
 import cv2 as cv
 
 
@@ -52,10 +54,12 @@ def main():
 
         # clear the stream in preparation for the next frame
         rawCapture.truncate(0)
+        now = datetime.datetime.now()
+        if now.hour >= 17:
+            print("Selesai .")
+            penyedia_data_realtime.stop()
+            sys.exit(1)
 
-    cv.destroyAllWindows()
-    penyedia_data_realtime.stop()
-    print("Selesai .")
 
 # ============================================================================
 

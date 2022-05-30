@@ -50,7 +50,7 @@ class PenyediaDataStatistik():
 
     def start(self):
 
-        self.app.use_reloader=False  
+        self.app.use_reloader = False
         DataView.register(self.app)
 
         def run_forever():

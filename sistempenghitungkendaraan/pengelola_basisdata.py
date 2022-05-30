@@ -1,6 +1,5 @@
 import sqlite3
-import logging
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 
 
 class PengelolaBasisdata(object):
@@ -56,7 +55,6 @@ class PengelolaBasisdata(object):
                     ;"""
 
             params = (hari, hari_plus)
-            print(params)
             cursor.execute(query, params)
             records = cursor.fetchall()
 
@@ -121,28 +119,6 @@ class PengelolaBasisdata(object):
                     ;"""
 
             params = (hari, hari_plus)
-            cursor.execute(query, params)
-            records = cursor.fetchall()
-
-            cursor.close()
-
-            return records
-
-        except sqlite3.Error as error:
-            print("gagal membaca tabel:", error)
-
-        return self
-
-    def jumlah_data(self):
-        try:
-            cursor = self.sqliteConnection.cursor()
-
-            query = """SELECT 
-                            COUNT(*) 
-                        FROM 
-                            trafik_kendaraan
-                            ;"""
-            params = ()
             cursor.execute(query, params)
             records = cursor.fetchall()
 
