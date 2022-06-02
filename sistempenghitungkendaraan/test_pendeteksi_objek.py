@@ -1,54 +1,49 @@
 import unittest
-
+import collections.abc
 import cv2 as cv
-from kendaraan import Kendaraan
+from pendeteksi_objek import PendeteksiObjek
 
 
-class MainTestCase(unittest.TestCase):
+class PendeteksiObjekTestCase(unittest.TestCase):
     def setUp(self):
-        self.kendaraan = Kendaraan(1, 10, 10, "kiri")
+        self.pendeteksi_objek = PendeteksiObjek()
 
-        self.video = cv.VideoCapture("vid.mp4")
-        self.frame = False
-        self.frame_counter = 0
+        self.citra_jalan = cv.imread("./test_assets/citra_jalan.png")
 
-    def test_read_video(self):
+    def test_background_subtraction(self):
 
-        while self.frame_counter < 5:
+        foreground = self.pendeteksi_objek.background_subtraction(
+            self.citra_jalan)
 
-            print(self.video)
-            print(self.video.read())
-            ret, self.frame = self.video.read()
-            print(self.frame)
-            self.frame_counter += 1
-            if not ret:
-                print("Tidak dapat membuka video. Stop.")
-                break
+        self.assertTrue(foreground.any() and len(foreground) > 0,
+                        "Gagal ambil foreground")
 
-            cv.waitKey(100)
-            if self.frame_counter > 5:
-                cv.waitKey(-1)
+    def test_proses_morfologi(self):
 
-        self.assertTrue(self.frame.any() and len(self.frame) > 0,
-                        "image frame not read")
+        foreground = self.pendeteksi_objek.background_subtraction(
+            self.citra_jalan)
+        morfologi = self.pendeteksi_objek.proses_morfologi(
+            foreground)
 
-    def test_widget_resize(self):
+        print(morfologi)
 
-        while self.frame_counter < 5:
+        self.assertTrue(len(morfologi) > 0,
+                        "Gagal ambil citra morfologi")
 
-            ret, self.frame = self.video.read()
-            self.frame_counter += 1
-            if not ret:
-                print("Tidak dapat membuka video. Stop.")
-                break
+    def test_dapatkan_blob_objek(self):
 
-            cv.waitKey(100)
-            if self.frame_counter > 5:
-                cv.waitKey(-1)
+        foreground = self.pendeteksi_objek.background_subtraction(
+            self.citra_jalan)
+        morfologi = self.pendeteksi_objek.proses_morfologi(
+            foreground)
+        daftar_objek = self.pendeteksi_objek.dapatkan_blob_objek(morfologi)
 
-        resized = cv.resize(self.frame, (640, 320))
-        a, b, _ = self.frame.shape
-        aa, bb, _ = resized.shape
+        self.assertIsInstance(daftar_objek, collections.abc.Sequence,
+                              "Gagal mengambi daftar objek")
 
-        self.assertFalse(a == aa and b == bb,
-                         'wrong size after resize')
+    def test_deteksi_objek(self):
+
+        daftar_objek = self.pendeteksi_objek.deteksi_objek(self.citra_jalan)
+
+        self.assertIsInstance(daftar_objek, collections.abc.Sequence,
+                              "Gagal mengambi daftar objek")

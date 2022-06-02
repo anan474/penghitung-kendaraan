@@ -32,12 +32,12 @@ class PendeteksiObjek():
 
         logger.info("init module")
 
-    def __background_subtraction(self, frame):
+    def background_subtraction(self, frame):
         frame_foreground = self.background_subtractor.apply(frame, 1)
 
         return frame_foreground
 
-    def __proses_morfologi(self, frame):
+    def proses_morfologi(self, frame):
 
         frame = cv.bilateralFilter(
             frame, 9, 75, 75)
@@ -59,7 +59,7 @@ class PendeteksiObjek():
 
         return (cx, cy)
 
-    def __dapatkan_blob_objek(self, frame):
+    def dapatkan_blob_objek(self, frame):
         contours, _ = cv.findContours(
             frame, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 
@@ -83,8 +83,8 @@ class PendeteksiObjek():
 
     def deteksi_objek(self, frame):
 
-        foreground = self.__background_subtraction(frame)
-        foreground = self.__proses_morfologi(foreground)
-        daftar_objek = self.__dapatkan_blob_objek(foreground)
+        foreground = self.background_subtraction(frame)
+        foreground = self.proses_morfologi(foreground)
+        daftar_objek = self.dapatkan_blob_objek(foreground)
 
         return daftar_objek
