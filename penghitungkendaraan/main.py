@@ -37,7 +37,8 @@ def main():
     gambar_objek = GambarObjek(config)
     utilitas = Utilitas()
 
-    utilitas.empty_output()
+    utilitas.create_output_folders()
+    utilitas.empty_output_content()
 
     if (config['sediadata']['realtime']):
         penyedia_data_realtime = PenyediaDataRealtime()

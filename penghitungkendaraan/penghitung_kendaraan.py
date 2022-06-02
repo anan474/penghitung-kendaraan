@@ -241,7 +241,7 @@ class PenghitungKendaraan ():
                     f.write('\n')
 
             # tambahkan ke basis data
-            self.pengelola_basisdata.simpan_ke_db(klasifikasi, lajur)
+            self.pengelola_basisdata.simpan_ke_db(klasifikasi, lajur, jumlah)
 
             # tambah nilai ke kounter
             if klasifikasi:
