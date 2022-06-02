@@ -19,8 +19,8 @@ def main():
     with open("config-dev.json") as json_data_file:
         config = json.load(json_data_file)
 
-    pendeteksi_objek = PendeteksiObjek(config)
-    penghitung_kendaraan = PenghitungKendaraan(config)
+    pendeteksi_objek = PendeteksiObjek()
+    penghitung_kendaraan = PenghitungKendaraan()
 
     if (config['sediadata']['realtime']):
         penyedia_data_realtime = PenyediaDataRealtime()
@@ -31,7 +31,6 @@ def main():
         penyedia_data_statistik.start()
 
     video = cv.VideoCapture(config["input"]["video"])
-    frame_counter = -1
 
     while True:
 
@@ -46,7 +45,7 @@ def main():
         daftar_objek = pendeteksi_objek.deteksi_objek(frame)
 
         penghitung_kendaraan.hitung_kendaraan(
-            daftar_objek, frame, frame_counter)
+            daftar_objek, frame)
 
         ###
         c = cv.waitKey(config["input"]["speed"])
