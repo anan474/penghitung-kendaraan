@@ -10,3 +10,9 @@ Requirement:
 - asyncio
 - websockets
 - pytest
+
+
+cara menjalankan : 
+masuk ke folder penghitung kendaraan, lalu jalankan ```python3 __main__.py```
+
+Catatan: anda mesti install requirements di perangkat anda. perhatikan konfigurasi di ```config-dev.json```

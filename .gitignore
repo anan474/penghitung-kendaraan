@@ -10,6 +10,7 @@ __pycache__
 nolog
 logklasifikasi
 penghitungkendaraan/gambar_output/**/*.png
+sistempenghitungkendaraan/gambar_output/**/*.png
 logs.csv
 debug
 logs_gabungan.csv
