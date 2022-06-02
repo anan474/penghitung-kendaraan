@@ -30,7 +30,7 @@ def main():
         penyedia_data_statistik = PenyediaDataStatistik()
         penyedia_data_statistik.start()
 
-    video = cv.VideoCapture(config["input"]["video"])
+    video = cv.VideoCapture("./ta.mp4")
 
     while True:
 

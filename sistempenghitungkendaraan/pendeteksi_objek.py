@@ -42,10 +42,6 @@ class PendeteksiObjek():
         frame = cv.bilateralFilter(
             frame, 9, 75, 75)
 
-        # frame_foreground = cv.morphologyEx(
-        #     frame, cv.MORPH_OPEN, self.kernel9)
-
-        # frame = cv.erode(frame, self.kernel3, iterations=3)
         frame = cv.erode(frame, self.kernel3, iterations=1)
         frame = cv.dilate(frame, self.kernel3, iterations=1)
         frame = cv.morphologyEx(
