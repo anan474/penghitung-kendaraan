@@ -108,7 +108,6 @@ class GambarObjek():
         if (self.config['simpangambar'][tipe]):
             cv.imwrite((self.config['simpangambar']['direktori'] + tipe + "/%04d.png") % frame_counter, frame)
 
-
     def tampilkan_frame(self, frame, foreground, frame_counter, daftar_objek, daftar_kendaraan):
         # print(cv.utils.dumpInputArray(frame))
 

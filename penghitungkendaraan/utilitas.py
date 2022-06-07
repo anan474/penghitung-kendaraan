@@ -5,6 +5,40 @@ import os
 import shutil
 import glob
 
+# delete folders
+dirarr = [
+    "./gambar_output/citra/asli",
+    "./gambar_output/citra/hasil",
+    "./gambar_output/citra/morfologi",
+    "./gambar_output/citra/morfologi_detail",
+    "./gambar_output/citra/gabungan",
+    "./gambar_output/klasifikasi/kiri/mobil",
+    "./gambar_output/klasifikasi/kiri/motor",
+    "./gambar_output/klasifikasi/kiri/keduanya",
+    "./gambar_output/klasifikasi/kiri/tidakdiketahui",
+    "./gambar_output/klasifikasi/kanan/mobil",
+    "./gambar_output/klasifikasi/kanan/motor",
+    "./gambar_output/klasifikasi/kanan/keduanya",
+    "./gambar_output/klasifikasi/kanan/tidakdiketahui",
+    "./logs/klasifikasi/gabungan",
+    "./logs/klasifikasi/kiri/mobil",
+    "./logs/klasifikasi/kiri/motor",
+    "./logs/klasifikasi/kiri/keduanya",
+    "./logs/klasifikasi/kiri/tidakdiketahui",
+    "./logs/klasifikasi/kanan/mobil",
+    "./logs/klasifikasi/kanan/motor",
+    "./logs/klasifikasi/kanan/keduanya",
+    "./logs/klasifikasi/kanan/tidakdiketahui",
+    "./debug/kiri/mobil",
+    "./debug/kiri/motor",
+    "./debug/kiri/keduanya",
+    "./debug/kiri/tidakdiketahui",
+    "./debug/kanan/mobil",
+    "./debug/kanan/motor",
+    "./debug/kanan/keduanya",
+    "./debug/kanan/tidakdiketahui",
+]
+
 
 class Utilitas():
     def __init__(self):
@@ -32,39 +66,6 @@ class Utilitas():
             self.sqliteConnection.commit()
 
             cursor.close()
-
-            # delete folders
-            dirarr = [
-                "./gambar_output/citra/asli",
-                "./gambar_output/citra/hasil",
-                "./gambar_output/citra/morfologi",
-                "./gambar_output/citra/gabungan",
-                "./gambar_output/klasifikasi/kiri/mobil",
-                "./gambar_output/klasifikasi/kiri/motor",
-                "./gambar_output/klasifikasi/kiri/keduanya",
-                "./gambar_output/klasifikasi/kiri/tidakdiketahui",
-                "./gambar_output/klasifikasi/kanan/mobil",
-                "./gambar_output/klasifikasi/kanan/motor",
-                "./gambar_output/klasifikasi/kanan/keduanya",
-                "./gambar_output/klasifikasi/kanan/tidakdiketahui",
-                "./logs/klasifikasi/gabungan",
-                "./logs/klasifikasi/kiri/mobil",
-                "./logs/klasifikasi/kiri/motor",
-                "./logs/klasifikasi/kiri/keduanya",
-                "./logs/klasifikasi/kiri/tidakdiketahui",
-                "./logs/klasifikasi/kanan/mobil",
-                "./logs/klasifikasi/kanan/motor",
-                "./logs/klasifikasi/kanan/keduanya",
-                "./logs/klasifikasi/kanan/tidakdiketahui",
-                "./debug/kiri/mobil",
-                "./debug/kiri/motor",
-                "./debug/kiri/keduanya",
-                "./debug/kiri/tidakdiketahui",
-                "./debug/kanan/mobil",
-                "./debug/kanan/motor",
-                "./debug/kanan/keduanya",
-                "./debug/kanan/tidakdiketahui",
-            ]
 
             for dir in dirarr:
                 for file in os.scandir(dir):
@@ -95,39 +96,6 @@ class Utilitas():
 
             cursor.close()
 
-            # folders with content to empty
-            dirarr = [
-                "./gambar_output/citra/asli",
-                "./gambar_output/citra/hasil",
-                "./gambar_output/citra/morfologi",
-                "./gambar_output/citra/gabungan",
-                "./gambar_output/klasifikasi/kiri/mobil",
-                "./gambar_output/klasifikasi/kiri/motor",
-                "./gambar_output/klasifikasi/kiri/keduanya",
-                "./gambar_output/klasifikasi/kiri/tidakdiketahui",
-                "./gambar_output/klasifikasi/kanan/mobil",
-                "./gambar_output/klasifikasi/kanan/motor",
-                "./gambar_output/klasifikasi/kanan/keduanya",
-                "./gambar_output/klasifikasi/kanan/tidakdiketahui",
-                "./logs/klasifikasi/gabungan",
-                "./logs/klasifikasi/kiri/mobil",
-                "./logs/klasifikasi/kiri/motor",
-                "./logs/klasifikasi/kiri/keduanya",
-                "./logs/klasifikasi/kiri/tidakdiketahui",
-                "./logs/klasifikasi/kanan/mobil",
-                "./logs/klasifikasi/kanan/motor",
-                "./logs/klasifikasi/kanan/keduanya",
-                "./logs/klasifikasi/kanan/tidakdiketahui",
-                "./debug/kiri/mobil",
-                "./debug/kiri/motor",
-                "./debug/kiri/keduanya",
-                "./debug/kiri/tidakdiketahui",
-                "./debug/kanan/mobil",
-                "./debug/kanan/motor",
-                "./debug/kanan/keduanya",
-                "./debug/kanan/tidakdiketahui",
-            ]
-
             for dir in dirarr:
                 for file in os.scandir(dir):
                     files = glob.glob(file.path)
@@ -144,38 +112,6 @@ class Utilitas():
     def create_output_folders(self):
         print("create output folders...\n")
         try:
-            # folders to create
-            dirarr = [
-                "./gambar_output/citra/asli",
-                "./gambar_output/citra/hasil",
-                "./gambar_output/citra/morfologi",
-                "./gambar_output/citra/gabungan",
-                "./gambar_output/klasifikasi/kiri/mobil",
-                "./gambar_output/klasifikasi/kiri/motor",
-                "./gambar_output/klasifikasi/kiri/keduanya",
-                "./gambar_output/klasifikasi/kiri/tidakdiketahui",
-                "./gambar_output/klasifikasi/kanan/mobil",
-                "./gambar_output/klasifikasi/kanan/motor",
-                "./gambar_output/klasifikasi/kanan/keduanya",
-                "./gambar_output/klasifikasi/kanan/tidakdiketahui",
-                "./logs/klasifikasi/gabungan",
-                "./logs/klasifikasi/kiri/mobil",
-                "./logs/klasifikasi/kiri/motor",
-                "./logs/klasifikasi/kiri/keduanya",
-                "./logs/klasifikasi/kiri/tidakdiketahui",
-                "./logs/klasifikasi/kanan/mobil",
-                "./logs/klasifikasi/kanan/motor",
-                "./logs/klasifikasi/kanan/keduanya",
-                "./logs/klasifikasi/kanan/tidakdiketahui",
-                "./debug/kiri/mobil",
-                "./debug/kiri/motor",
-                "./debug/kiri/keduanya",
-                "./debug/kiri/tidakdiketahui",
-                "./debug/kanan/mobil",
-                "./debug/kanan/motor",
-                "./debug/kanan/keduanya",
-                "./debug/kanan/tidakdiketahui",
-            ]
 
             for dir in dirarr:
                 if not os.path.exists(dir):

@@ -4,29 +4,31 @@
     "asli": false,
     "hasil": false,
     "morfologi": false,
-    "gabungan": false
+    "morfologi_detail": false,
+    "gabungan": true
   },
   "simpangambar": {
     "direktori": "gambar_output/citra/",
-    "asli": false,
-    "hasil": false,
-    "morfologi": false,
-    "gabungan": false,
-    "debug": false
+    "asli": true,
+    "hasil": true,
+    "morfologi": true,
+    "morfologi_detail": true,
+    "gabungan": true,
+    "debug": true
   },
   "simpangambar_klasifikasi": {
     "direktori": "gambar_output/klasifikasi/",
     "kiri": {
-      "mobil": false,
-      "motor": false,
-      "tidakdiketahui": false,
-      "keduanya": false
+      "mobil": true,
+      "motor": true,
+      "tidakdiketahui": true,
+      "keduanya": true
     },
     "kanan": {
-      "mobil": false,
-      "motor": false,
-      "tidakdiketahui": false,
-      "keduanya": false
+      "mobil": true,
+      "motor": true,
+      "tidakdiketahui": true,
+      "keduanya": true
     }
   },
   "logs": {
@@ -59,7 +61,7 @@
   "input": {
     "kamera": false,
     "background": "bg.png",
-    "video": "gabungan.mp4",
+    "video": "vid.mp4",
     "speed": 1,
     "dimensi": {
       "lebar": 640,

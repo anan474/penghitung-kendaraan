@@ -8,6 +8,7 @@ import json
 import time
 import sys
 import datetime
+import os
 
 import cv2 as cv
 import logging
@@ -64,7 +65,8 @@ def main():
 
         frame = cv.resize(frame, (RESIZE_LEBAR, RESIZE_TINGGI))
 
-        daftar_objek, foreground = pendeteksi_objek.deteksi_objek(frame)
+        daftar_objek, foreground = pendeteksi_objek.deteksi_objek(
+            frame, frame_counter)
 
         daftar_kendaraan = penghitung_kendaraan.hitung_kendaraan(
             daftar_objek, frame, frame_counter)
@@ -85,9 +87,10 @@ def main():
     cv.destroyAllWindows()
     penyedia_data_realtime.stop()
     print("Selesai .")
-
+    os._exit(0)
 
 # ============================================================================
+
 
 if __name__ == "__main__":
     print("Mulai .")
