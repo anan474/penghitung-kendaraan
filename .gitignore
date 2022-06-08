@@ -1,7 +1,10 @@
 video
 training
+hitungkendaraan/classifier/archivebaru/*
 sistempenghitungkendaraan/classifier/archive/*
+hitungkendaraan/classifier/archivebaru/*
 sistempenghitungkendaraan/classifier/archivebaru/*
+penghitungkendaraan/classifier/archivebaru/*
 *.pyc
 *.db
 contoh
@@ -10,6 +13,7 @@ __pycache__
 nolog
 logklasifikasi
 sistempenghitungkendaraan/gambar_output/**/*.png
+penghitungkendaraan/gambar_output/**/*.png
 logs.csv
 debug
 logs_gabungan.csv

@@ -15,11 +15,7 @@ class MainTestCase(unittest.TestCase):
     def test_read_video(self):
 
         while self.frame_counter < 5:
-
-            print(self.video)
-            print(self.video.read())
             ret, self.frame = self.video.read()
-            print(self.frame)
             self.frame_counter += 1
             if not ret:
                 print("Tidak dapat membuka video. Stop.")

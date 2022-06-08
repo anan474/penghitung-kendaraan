@@ -25,8 +25,6 @@ class PendeteksiObjekTestCase(unittest.TestCase):
         morfologi = self.pendeteksi_objek.proses_morfologi(
             foreground)
 
-        print(morfologi)
-
         self.assertTrue(len(morfologi) > 0,
                         "Gagal ambil citra morfologi")
 
