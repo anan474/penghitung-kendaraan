@@ -59,7 +59,7 @@
   "input": {
     "kamera": false,
     "background": "bg.png",
-    "video": "gabungan.mp4",
+    "video": "ta.mp4",
     "speed": 1,
     "dimensi": {
       "lebar": 640,
