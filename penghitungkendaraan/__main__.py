@@ -2,7 +2,7 @@ from utilitas import Utilitas
 from gambar_objek import GambarObjek
 from penyedia_data_statistik import PenyediaDataStatistik
 from penyedia_data_realtime import PenyediaDataRealtime
-from tracker_kendaraan import PenghitungKendaraan
+from penghitung_kendaraan import PenghitungKendaraan
 from pendeteksi_objek import PendeteksiObjek
 from picamera.array import PiRGBArray
 from picamera import PiCamera
@@ -37,7 +37,7 @@ def main():
         print('passed argument :: {}'.format(arg))
 
     pendeteksi_objek = PendeteksiObjek(config)
-    tracker_kendaraan = PenghitungKendaraan(config)
+    penghitung_kendaraan = PenghitungKendaraan(config)
     gambar_objek = GambarObjek(config)
     utilitas = Utilitas()
 
@@ -72,7 +72,7 @@ def main():
 
         daftar_objek, foreground = pendeteksi_objek.deteksi_objek(frame)
 
-        daftar_kendaraan = tracker_kendaraan.hitung_kendaraan(
+        daftar_kendaraan = penghitung_kendaraan.hitung_kendaraan(
             daftar_objek, frame, frame_counter)
 
         gambar_objek.tampilkan_frame(

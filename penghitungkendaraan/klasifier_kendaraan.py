@@ -29,12 +29,8 @@ class Klasifier():
     logger.info('init modul')
 
     def klasifikasi_kendaraan(self, gambar, gambarfull, lajur, frame_counter):
-        logger.info('kendaraan lajur %s', lajur)
-
-        identifier = str(uuid.uuid4())[:8]
-
-        filename = str(frame_counter) + "_"+identifier+".png"
-        filename_full = str(frame_counter) + "_"+identifier+"_"+"full.png"
+        # logger.info('kendaraan lajur %s', lajur)
+        base_name = str(frame_counter)+"_" + str(uuid.uuid4())[:8]
 
         if lajur == "kiri":
             klasifikasi_motor = self.klasifier_cascade_motor_kiri.detectMultiScale(
@@ -48,7 +44,7 @@ class Klasifier():
 
                 if(self.config['simpangambar']['debug']):
                     cv.imwrite(
-                        ("debug/" + lajur + "/motor/" + filename), gambar)
+                        ("debug/" + lajur + "/motor/" + base_name+".png"), gambar)
 
                 x, y, w, h = klasifikasi
                 cv.rectangle(gambar, (x, y), (x + w, y + h),
@@ -56,24 +52,24 @@ class Klasifier():
 
                 if(self.config['simpangambar']['debug']):
                     cv.imwrite(
-                        ("debug/" + lajur + "/motor/rec" + filename), gambar)
+                        ("debug/" + lajur + "/motor/" + base_name+"_rec.png"), gambar)
 
             for klasifikasi in klasifikasi_mobil:
                 # print(klasifikasi)
                 if(self.config['simpangambar']['debug']):
                     cv.imwrite(
-                        ("debug/" + lajur + "/mobil/rec" + filename), gambar)
+                        ("debug/" + lajur + "/mobil/" + base_name+"_rec.png"), gambar)
                 x, y, w, h = klasifikasi
                 cv.rectangle(gambar, (x, y), (x + w, y + h),
                              WARNA_BOUNDING_BOX_HIJAU, 1)
 
                 if(self.config['simpangambar']['debug']):
                     cv.imwrite(
-                        ("debug/" + lajur + "/mobil/" + filename), gambar)
+                        ("debug/" + lajur + "/mobil/" + base_name+".png"), gambar)
 
             if len(klasifikasi_mobil) == 0 and len(klasifikasi_motor) == 0 and self.config['simpangambar']['debug']:
                 cv.imwrite(
-                    ("debug/" + lajur + "/tidakdiketahui/" + filename), gambar)
+                    ("debug/" + lajur + "/tidakdiketahui/" + base_name+".png"), gambar)
 
             # ~~ DEBUG FULL PIC
             klasifikasi_motor_full = self.klasifier_cascade_motor_kiri.detectMultiScale(
@@ -90,7 +86,7 @@ class Klasifier():
 
                 if(self.config['simpangambar']['debug']):
                     cv.imwrite(("debug/" + lajur + "/motor/" +
-                                filename_full), gambarfull)
+                                base_name+"_full.png"), gambarfull)
 
             for klasifikasi in klasifikasi_mobil_full:
                 # print(klasifikasi)
@@ -100,11 +96,11 @@ class Klasifier():
 
                 if(self.config['simpangambar']['debug']):
                     cv.imwrite(("debug/" + lajur + "/mobil/" +
-                                filename_full), gambarfull)
+                                base_name+"_full.png"), gambarfull)
 
             if len(klasifikasi_mobil_full) == 0 and len(klasifikasi_motor_full) == 0 and self.config['simpangambar']['debug']:
                 cv.imwrite(("debug/" + lajur + "/tidakdiketahui/" +
-                            filename_full), gambarfull)
+                            base_name+"_full.png"), gambarfull)
 
         elif lajur == "kanan":
             klasifikasi_motor = self.klasifier_cascade_motor_kanan.detectMultiScale(
@@ -118,29 +114,29 @@ class Klasifier():
 
                 if(self.config['simpangambar']['debug']):
                     cv.imwrite(
-                        ("debug/" + lajur + "/motor/" + filename), gambar)
+                        ("debug/" + lajur + "/motor/" + base_name+".png"), gambar)
                 x, y, w, h = klasifikasi
                 cv.rectangle(gambar, (x, y), (x + w, y + h),
                              WARNA_BOUNDING_BOX, 1)
                 if(self.config['simpangambar']['debug']):
                     cv.imwrite(
-                        ("debug/" + lajur + "/motor/rec" + filename), gambar)
+                        ("debug/" + lajur + "/motor/" + base_name+"_rec.png"), gambar)
 
             for klasifikasi in klasifikasi_mobil:
                 # print(klasifikasi)
                 if(self.config['simpangambar']['debug']):
                     cv.imwrite(
-                        ("debug/" + lajur + "/mobil/" + filename), gambar)
+                        ("debug/" + lajur + "/mobil/" + base_name+".png"), gambar)
                 x, y, w, h = klasifikasi
                 cv.rectangle(gambar, (x, y), (x + w, y + h),
                              WARNA_BOUNDING_BOX_HIJAU, 1)
                 if(self.config['simpangambar']['debug']):
                     cv.imwrite(
-                        ("debug/" + lajur + "/mobil/rec" + filename), gambar)
+                        ("debug/" + lajur + "/mobil/" + base_name+"_rec.png"), gambar)
 
             if len(klasifikasi_mobil) == 0 and len(klasifikasi_motor) == 0 and self.config['simpangambar']['debug']:
                 cv.imwrite(
-                    ("debug/" + lajur + "/tidakdiketahui/" + filename), gambar)
+                    ("debug/" + lajur + "/tidakdiketahui/" + base_name+".png"), gambar)
 
             # ~~ DEBUG FULL PIC
 
@@ -158,7 +154,7 @@ class Klasifier():
                              WARNA_BOUNDING_BOX, 1)
                 if(self.config['simpangambar']['debug']):
                     cv.imwrite(("debug/" + lajur + "/motor/" +
-                                filename_full), gambarfull)
+                                base_name+"_full.png"), gambarfull)
 
             for klasifikasi in klasifikasi_mobil_full:
                 # print(klasifikasi)
@@ -168,26 +164,26 @@ class Klasifier():
                              WARNA_BOUNDING_BOX_HIJAU, 1)
                 if(self.config['simpangambar']['debug']):
                     cv.imwrite(("debug/" + lajur + "/mobil/" +
-                                filename_full), gambarfull)
+                                base_name+"_full.png"), gambarfull)
 
             if len(klasifikasi_mobil_full) == 0 and len(klasifikasi_motor_full) == 0 and self.config['simpangambar']['debug']:
                 cv.imwrite(("debug/" + lajur + "/tidakdiketahui/" +
-                            filename_full), gambarfull)
+                            base_name+"_full.png"), gambarfull)
 
         klasifikasi = "tidakdiketahui"
-        jumlah = 0
 
-        if((len(klasifikasi_motor) >= 1) and (len(klasifikasi_mobil) >= 1)):
-            klasifikasi = "keduanya"
-            jumlah = len(klasifikasi_motor) + len(klasifikasi_mobil)
-        elif(len(klasifikasi_motor) >= 1):
+        jumlah_mobil = 0
+        jumlah_motor = 0
+
+        if(len(klasifikasi_motor) >= 1):
             klasifikasi = "motor"
-            jumlah = len(klasifikasi_motor)
+            jumlah_motor = len(klasifikasi_motor)
 
         elif(len(klasifikasi_mobil) >= 1):
             klasifikasi = "mobil"
-            jumlah = len(klasifikasi_mobil)
+            jumlah_mobil = len(klasifikasi_mobil)
 
-        logger.info('klasifikasi %s %d', klasifikasi, jumlah)
+        # logger.info('klasifikasi %s, mobil %d, motor %d', klasifikasi,
+        #             jumlah_mobil, jumlah_motor)
 
-        return klasifikasi, jumlah
+        return klasifikasi, jumlah_mobil, jumlah_motor

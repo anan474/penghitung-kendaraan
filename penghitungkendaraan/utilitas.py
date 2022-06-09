@@ -11,6 +11,8 @@ dirarr = [
     "./gambar_output/citra/hasil",
     "./gambar_output/citra/morfologi",
     "./gambar_output/citra/morfologi_detail",
+    "./gambar_output/citra/morfologi_hasil",
+    "./gambar_output/citra/morfologi_hasil_garis",
     "./gambar_output/citra/gabungan",
     "./gambar_output/klasifikasi/kiri/mobil",
     "./gambar_output/klasifikasi/kiri/motor",
@@ -112,6 +114,21 @@ class Utilitas():
     def create_output_folders(self):
         print("create output folders...\n")
         try:
+
+            sqliteConnection = sqlite3.connect('trafikkendaraan.db')
+            sqlite_create_table_query = '''CREATE TABLE trafik_kendaraan (
+                                        id INTEGER PRIMARY KEY,
+                                        klasifikasi TEXT NOT NULL,
+                                        lajur TEXT NOT NULL,
+                                        waktu timestamp);'''
+
+            cursor = sqliteConnection.cursor()
+            print("Berhasil terhubung ke SQLite")
+            cursor.execute(sqlite_create_table_query)
+            sqliteConnection.commit()
+            print("Tabel berhasil dibuat")
+
+            cursor.close()
 
             for dir in dirarr:
                 if not os.path.exists(dir):

@@ -43,6 +43,14 @@ class DataView(FlaskView):
         respon.headers["Content-Type"] = "application/json; charset=utf-8"
         return respon
 
+    def jumlahdata(self):
+        data = pengelola_basis_data.jumlah_data()
+        data_json = json.dumps(data)
+        respon = Response(response=data_json, status=200,
+                          mimetype="application/json")
+        respon.headers["Content-Type"] = "application/json; charset=utf-8"
+        return respon
+
 
 class PenyediaDataStatistik():
     def __init__(self):
@@ -50,7 +58,7 @@ class PenyediaDataStatistik():
 
     def start(self):
 
-        self.app.use_reloader=False  
+        self.app.use_reloader = False
         DataView.register(self.app)
 
         def run_forever():

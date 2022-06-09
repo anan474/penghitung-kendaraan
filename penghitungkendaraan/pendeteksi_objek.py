@@ -8,8 +8,8 @@ GAMBAR_BACKGROUND = "bg.png"
 RESIZE_LEBAR = 640
 RESIZE_TINGGI = 360
 
-LEBAR_MINIMAL = 21
-TINGGI_MINIMAL = 21
+LEBAR_MINIMAL = 25
+TINGGI_MINIMAL = 25
 
 
 class PendeteksiObjek():
@@ -24,7 +24,7 @@ class PendeteksiObjek():
 
         self.background_subtractor = cv.createBackgroundSubtractorMOG2()
         self.background_subtractor.setShadowValue(0)
-        self.background_subtractor.apply(gambar_background, 1)
+        self.background_subtractor.apply(gambar_background)
 
         self.lebar_frame = RESIZE_LEBAR
 
@@ -35,7 +35,7 @@ class PendeteksiObjek():
         logger.info("init module")
 
     def __get_foreground(self, frame):
-        frame_foreground = self.background_subtractor.apply(frame, 1)
+        frame_foreground = self.background_subtractor.apply(frame)
 
         return frame_foreground
 
@@ -43,26 +43,37 @@ class PendeteksiObjek():
 
         # cv.imshow("Background Subtraction", frame)
         cv.imwrite((self.config['simpangambar']['direktori'] +
-                   "morfologi_detail" + "/%04d_1_backsubract.png") % frame_counter, frame)
+                    "morfologi_detail" + "/%04d_1_backsubract.png") % frame_counter, frame)
 
-        frame = cv.bilateralFilter(
-            frame, 9, 75, 75)
+        # frame = cv.bilateralFilter(
+        #     frame, 9, 75, 75)
 
-        cv.imwrite((self.config['simpangambar']['direktori'] +
-                   "morfologi_detail" + "/%04d_2_bilateralfilter.png") % frame_counter, frame)
+        # cv.imwrite((self.config['simpangambar']['direktori'] +
+        #             "morfologi_detail" + "/%04d_2_bilateralfilter.png") % frame_counter, frame)
 
         frame = cv.erode(frame, self.kernel3, iterations=1)
         # cv.imshow("Morfologi Erode", frame)
         cv.imwrite((self.config['simpangambar']['direktori'] +
-                    "morfologi_detail" + "/%04d_3_erode.png") % frame_counter, frame)
+                    "morfologi_detail" + "/%04d_2_erode.png") % frame_counter, frame)
 
-        frame = cv.dilate(frame, self.kernel3, iterations=1)
+        frame = cv.dilate(frame, self.kernel7, iterations=2)
         # cv.imshow("Morfologi Dilate", frame)
         cv.imwrite((self.config['simpangambar']['direktori'] +
-                    "morfologi_detail" + "/%04d_4_dilate.png") % frame_counter, frame)
+                    "morfologi_detail" + "/%04d_3_dilate.png") % frame_counter, frame)
+
+        frame = cv.erode(frame, self.kernel7, iterations=1)
+        # cv.imshow("Morfologi Erode", frame)
+        cv.imwrite((self.config['simpangambar']['direktori'] +
+                    "morfologi_detail" + "/%04d_4_erode.png") % frame_counter, frame)
+
+        # frame = cv.morphologyEx(
+        #     frame, cv.MORPH_OPEN, self.kernel3)
+        # # cv.imshow("Morfologi Opening", frame)
+        # cv.imwrite((self.config['simpangambar']['direktori'] +
+        #             "morfologi_detail" + "/%04d_4_opening.png") % frame_counter, frame)
 
         frame = cv.morphologyEx(
-            frame, cv.MORPH_CLOSE, self.kernel7)
+            frame, cv.MORPH_CLOSE, self.kernel9)
         # cv.imshow("Morfologi Close", frame)
         cv.imwrite((self.config['simpangambar']['direktori'] +
                     "morfologi_detail" + "/%04d_5_closing.png") % frame_counter, frame)

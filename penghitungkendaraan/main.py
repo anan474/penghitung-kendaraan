@@ -5,9 +5,7 @@ from penyedia_data_realtime import PenyediaDataRealtime
 from penghitung_kendaraan import PenghitungKendaraan
 from pendeteksi_objek import PendeteksiObjek
 import json
-import time
 import sys
-import datetime
 import os
 
 import cv2 as cv
@@ -19,6 +17,7 @@ logging.basicConfig(level=logging.INFO)
 
 RESIZE_LEBAR = 640
 RESIZE_TINGGI = 360
+
 # ============================================================================
 
 
@@ -68,11 +67,13 @@ def main():
         daftar_objek, foreground = pendeteksi_objek.deteksi_objek(
             frame, frame_counter)
 
+        daftar_objek_asli = daftar_objek.copy()
+
         daftar_kendaraan = penghitung_kendaraan.hitung_kendaraan(
-            daftar_objek, frame, frame_counter)
+            daftar_objek, frame, frame_counter, foreground)
 
         gambar_objek.tampilkan_frame(
-            frame, foreground, frame_counter, daftar_objek, daftar_kendaraan)
+            frame, foreground, frame_counter, daftar_objek_asli, daftar_kendaraan)
 
         ###
         c = cv.waitKey(config["input"]["speed"])

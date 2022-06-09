@@ -47,7 +47,6 @@ class PenghitungKendaraan ():
         self.kendaraan_untuk_diklasifikasi = []
 
         self.jumlah_kendaraan = 0
-        self.jumlah_kendaraan_terklasifikasi = 0
 
         # jika pada @limit frame tidak terlihat maka kendaraan dihilangkan
         self.limit_tidak_terlihat = BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT
@@ -106,7 +105,7 @@ class PenghitungKendaraan ():
         else:
             return False
 
-    def cocokkan_dengan_data_yg_ada(self, objek):
+    def cocokkan_dengan_data_yg_ada(self, objek, foreground):
         # dari data kendaraan yang telah di-tracking, cek satu persatu mana yang merupakan kendaraan tersebut
 
         # return sisa objek yang tidak ada kecocokan
@@ -117,34 +116,41 @@ class PenghitungKendaraan ():
             #  jika cocok update status kendaraan nya,
             #  jika tidak ada cocok dengan kendaraan yang sudah ada maka tambahkan jadi kendaraan baru
             ada_objek_yg_cocok = False
+
             for indek_objek_ini, objek_ini in enumerate(objek):
+                # looping data objek yang diberikan
                 posisi_objek_ini, centroid_objek_ini, lajur = objek_ini
 
                 vektor = self.hitung_vektor(
                     kendaraan.centroid_terakhir, centroid_objek_ini)
+
+                # print(lajur, kendaraan.centroid_terakhir, centroid_objek_ini)
+                # print(lajur, "turun:", kendaraan.centroid_terakhir[
+                #     1] < centroid_objek_ini[1])
+                # print(lajur, "naik:",
+                #       kendaraan.centroid_terakhir[1] > centroid_objek_ini[1])
+
+                # benar_di_kanan = kendaraan.centroid_terakhir[
+                #     1] < centroid_objek_ini[1] and lajur == "kanan"
+                # benar_di_kiri = kendaraan.centroid_terakhir[1] > centroid_objek_ini[1] and lajur == "kiri"
 
                 if self.apakah_vektor_valid(vektor):
                     # update status kendaraan
                     kendaraan.perbarui_centroid(centroid_objek_ini)
                     kendaraan.perbarui_posisi(posisi_objek_ini)
                     # hilangkan dari daftar objek
-                    del objek[indek_objek_ini]
                     # set bahwa ada objek yang cocok untuk kendaraan ini
                     ada_objek_yg_cocok = True
-
-                    # sampai disini sebenarnya bisa di hentikan perulangan nya tapi coba biarkan untuk cek apakah bisa terdeteksi menjadi lebih dari dua kendaraan untuk objek yang sama
+                    del objek[indek_objek_ini]
 
             # kalau tidak ada ketemu tambahkan hitungan jumlah frame tidak terlihat untuk kendaraan ini
             if ada_objek_yg_cocok is False:
-                kendaraan.tidak_terlihat += 1
+                self.kendaraan[indek_kendaraan].tidak_terlihat += 1
 
             # hitung kendaraan yang belum dihitung dan melewati garis batas keluar
-            if not kendaraan.telah_dihitung and self.apakah_melewati_garis_keluar(kendaraan):
-                self.jumlah_kendaraan += 1
-                kendaraan.telah_dihitung = True
-
             # jika kendaraan telah dihitung maka pindahkan ke kendaraan_untuk_diklasifikasi
-            if kendaraan.telah_dihitung:
+            if self.apakah_melewati_garis_keluar(kendaraan):
+                self.jumlah_kendaraan += 1
                 self.kendaraan_untuk_diklasifikasi.append(
                     self.kendaraan[indek_kendaraan])
                 del self.kendaraan[indek_kendaraan]
@@ -168,7 +174,8 @@ class PenghitungKendaraan ():
                 self.id_kendaraan_selanjutnya += 1
                 self.kendaraan.append(kendaraan_baru)
 
-    def handle_kendaraan_melewati_batas(self, frame, frame_counter):
+    def handle_kendaraan_melewati_batas(self, frame, frame_counter, foreground):
+
         # dari kendaraan_untuk_diklasifikasi lakukan klasifikasi, lalu masukkan nilai nya ke variabel
         for indek_kendaraan, kendaraan in enumerate(self.kendaraan_untuk_diklasifikasi):
             x, y, w, h = kendaraan.posisi
@@ -193,68 +200,187 @@ class PenghitungKendaraan ():
                 xb = 640
 
             # crop gambar jadi hanya kendaraan | ambil snapshot kendaraan
+            gambar_kendaraan_awal = frame[y:y+h, x:x+w]
             gambar_kendaraan = frame[ya:yb, xa:xb]
             gambar_kendaraan_gray = cv.cvtColor(
                 gambar_kendaraan, cv.COLOR_BGR2GRAY)  # convert ke grayscale
 
+            gambar_kendaraan_gray_awal = gambar_kendaraan_gray
             # kalo ada pixel di bawah 10 (hitam pekat), jadikan abu abu
+
             gambar_kendaraan_gray[gambar_kendaraan_gray < 10] = 10
+            # cv.imshow("frame 1", frame)
 
-            klasifikasi, jumlah = self.klasifier.klasifikasi_kendaraan(
-                gambar_kendaraan, frame, lajur, frame_counter)
+            frame_klasifikasi = frame.copy()
+            gambar_kendaraan_gray_klasifikasi = gambar_kendaraan_gray.copy()
+            klasifikasi, jumlah_mobil, jumlah_motor = self.klasifier.klasifikasi_kendaraan(
+                gambar_kendaraan_gray_klasifikasi, frame_klasifikasi, lajur, frame_counter)
+            # cv.imshow("frame 2", frame_klasifikasi)
 
-            filename = str(uuid.uuid4())[:8]+("%04d.png") % kendaraan.id
+            gambar_kendaraan_klasifikasi = frame_klasifikasi[ya:yb, xa:xb]
+
+            base_name = str(frame_counter)+"_" + str(uuid.uuid4())[:8]
+            filename = base_name+("_%04d.png") % kendaraan.id
+            filename_awal = base_name+("_%04d_awal.png") % kendaraan.id
+            filename_resized_ori = base_name + \
+                ("_%04d_resized_ori.png") % kendaraan.id
+            filename_resized_gray = base_name + \
+                ("_%04d_resized_gray.png") % kendaraan.id
+            filename_klasifikasi = base_name + \
+                ("_%04d_klasifikasi.png") % kendaraan.id
+            filename_klasifikasi_gray = base_name + \
+                ("_%04d_klasifikasi_gray.png") % kendaraan.id
 
             # gambar bounding box output klasifikasi, simpan
 
             # CEK KLASIFIKASI ~ END
 
-            if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
-                            lajur + "/" + klasifikasi + "/" + filename), gambar_kendaraan)
-            if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
-                with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
-                    ts = time.time()
-                    teks = (("%04d") % frame_counter) + ";"
-                    teks += str(int(ts))+";"+lajur+";" + \
-                        klasifikasi + ";"+filename
+            if(jumlah_motor):
+                while jumlah_motor:
                     if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                        teks += ";simpan"
-                    else:
-                        teks += ";tidaksimpan"
+                        cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                    lajur + "/" + klasifikasi + "/" + filename), gambar_kendaraan)
+                        cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                    lajur + "/" + klasifikasi + "/" + filename_awal), gambar_kendaraan_awal)
+                        cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                    lajur + "/" + klasifikasi + "/" + filename_resized_ori), gambar_kendaraan_gray_awal)
+                        cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                    lajur + "/" + klasifikasi + "/" + filename_resized_gray), gambar_kendaraan_gray)
+                        cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                    lajur + "/" + klasifikasi + "/" + filename_klasifikasi), gambar_kendaraan_klasifikasi)
+                        cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                    lajur + "/" + klasifikasi + "/" + filename_klasifikasi_gray), gambar_kendaraan_gray_klasifikasi)
+                    if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
+                        with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
+                            ts = time.time()
+                            teks = (("%04d") % frame_counter) + ";"
+                            teks += str(int(ts))+";"+lajur+";" + \
+                                klasifikasi + ";"+filename
+                            if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                                teks += ";simpan"
+                            else:
+                                teks += ";tidaksimpan"
 
-                    f.write(teks)
-                    f.write('\n')
+                            f.write(teks)
+                            f.write('\n')
+                    if(self.config['logs']['klasifikasi']['gabungan']):
+                        with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+"/gabungan/logs_gabungan.csv", 'a') as f:
+                            ts = time.time()
+                            teks = (("%04d") % frame_counter) + ";"
+                            teks += str(int(ts))+";"+lajur+";" + \
+                                klasifikasi + ";" + \
+                                str(int(jumlah_motor))+";"+filename
+                            if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                                teks += ";simpan"
+                            else:
+                                teks += ";tidaksimpan"
 
-            if(self.config['logs']['klasifikasi']['gabungan']):
-                with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+"/gabungan/logs_gabungan.csv", 'a') as f:
-                    ts = time.time()
-                    teks = (("%04d") % frame_counter) + ";"
-                    teks += str(int(ts))+";"+lajur+";" + \
-                        klasifikasi + ";"+str(int(jumlah))+";"+filename
+                            f.write(teks)
+                            f.write('\n')
+                    jumlah_motor = jumlah_motor-1
+
+            if(jumlah_mobil):
+                while jumlah_mobil:
                     if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                        teks += ";simpan"
-                    else:
-                        teks += ";tidaksimpan"
+                        cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                    lajur + "/" + klasifikasi + "/" + filename), gambar_kendaraan)
+                        cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                    lajur + "/" + klasifikasi + "/" + filename_awal), gambar_kendaraan_awal)
+                        cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                    lajur + "/" + klasifikasi + "/" + filename_resized_ori), gambar_kendaraan_gray_awal)
+                        cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                    lajur + "/" + klasifikasi + "/" + filename_resized_gray), gambar_kendaraan_gray)
+                        cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                    lajur + "/" + klasifikasi + "/" + filename_klasifikasi), gambar_kendaraan_klasifikasi)
+                        cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                    lajur + "/" + klasifikasi + "/" + filename_klasifikasi_gray), gambar_kendaraan_gray_klasifikasi)
+                    if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
+                        with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
+                            ts = time.time()
+                            teks = (("%04d") % frame_counter) + ";"
+                            teks += str(int(ts))+";"+lajur+";" + \
+                                klasifikasi + ";"+filename
+                            if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                                teks += ";simpan"
+                            else:
+                                teks += ";tidaksimpan"
 
-                    f.write(teks)
-                    f.write('\n')
+                            f.write(teks)
+                            f.write('\n')
+                    if(self.config['logs']['klasifikasi']['gabungan']):
+                        with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+"/gabungan/logs_gabungan.csv", 'a') as f:
+                            ts = time.time()
+                            teks = (("%04d") % frame_counter) + ";"
+                            teks += str(int(ts))+";"+lajur+";" + \
+                                klasifikasi + ";" + \
+                                str(int(jumlah_mobil)+int(jumlah_motor)) + \
+                                ";"+filename
+                            if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                                teks += ";simpan"
+                            else:
+                                teks += ";tidaksimpan"
+
+                            f.write(teks)
+                            f.write('\n')
+                    jumlah_mobil = jumlah_mobil - 1
+            else:
+                if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                    cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                lajur + "/" + klasifikasi + "/" + filename), gambar_kendaraan)
+                    cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                lajur + "/" + klasifikasi + "/" + filename_awal), gambar_kendaraan_awal)
+                    cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                lajur + "/" + klasifikasi + "/" + filename_resized_ori), gambar_kendaraan_gray_awal)
+                    cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                lajur + "/" + klasifikasi + "/" + filename_resized_gray), gambar_kendaraan_gray)
+                    cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                lajur + "/" + klasifikasi + "/" + filename_klasifikasi), gambar_kendaraan_klasifikasi)
+                    cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
+                                lajur + "/" + klasifikasi + "/" + filename_klasifikasi_gray), gambar_kendaraan_gray_klasifikasi)
+
+                if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
+                    with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
+                        ts = time.time()
+                        teks = (("%04d") % frame_counter) + ";"
+                        teks += str(int(ts))+";"+lajur+";" + \
+                            klasifikasi + ";"+filename
+                        if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                            teks += ";simpan"
+                        else:
+                            teks += ";tidaksimpan"
+
+                        f.write(teks)
+                        f.write('\n')
+                if(self.config['logs']['klasifikasi']['gabungan']):
+                    with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+"/gabungan/logs_gabungan.csv", 'a') as f:
+                        ts = time.time()
+                        teks = (("%04d") % frame_counter) + ";"
+                        teks += str(int(ts))+";"+lajur+";" + \
+                            klasifikasi + ";" + \
+                            str(int(jumlah_mobil)+int(jumlah_motor))+";"+filename
+                        if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                            teks += ";simpan"
+                        else:
+                            teks += ";tidaksimpan"
+
+                        f.write(teks)
+                        f.write('\n')
 
             # tambahkan ke basis data
-            self.pengelola_basisdata.simpan_ke_db(klasifikasi, lajur, jumlah)
-
-            # tambah nilai ke kounter
-            if klasifikasi:
-                self.jumlah_kendaraan_terklasifikasi += 1
+            self.pengelola_basisdata.simpan_ke_db(
+                klasifikasi, lajur, jumlah_mobil, jumlah_motor)
 
             # hapus dari daftar
             del self.kendaraan_untuk_diklasifikasi[indek_kendaraan]
 
-    def hitung_kendaraan(self, objek, frame, frame_counter):
-        objek_sisa = self.cocokkan_dengan_data_yg_ada(objek)
+    def hitung_kendaraan(self, objek, frame, frame_counter, foreground):
+
+        objek_sisa = self.cocokkan_dengan_data_yg_ada(objek, foreground)
+
+        # print("frame_counter", frame_counter)
 
         self.tambahkan_ke_daftar_tracking(objek_sisa)
 
-        self.handle_kendaraan_melewati_batas(frame, frame_counter)
+        self.handle_kendaraan_melewati_batas(frame, frame_counter, foreground)
 
         return self.kendaraan

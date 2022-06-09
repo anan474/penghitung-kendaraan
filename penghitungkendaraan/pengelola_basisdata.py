@@ -1,6 +1,5 @@
 import sqlite3
-import logging
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 
 
 class PengelolaBasisdata(object):
@@ -155,23 +154,46 @@ class PengelolaBasisdata(object):
 
         return self
 
-    def simpan_ke_db(self, klasifikasi, lajur, jumlah):
+    def simpan_ke_db(self, klasifikasi, lajur, jumlah_mobil, jumlah_motor):
         try:
             waktu = datetime.now()
 
-            while jumlah:
+            if(klasifikasi == "tidakdiketahui"):
+                cursor = self.sqliteConnection.cursor()
+                query = """INSERT INTO trafik_kendaraan (klasifikasi, lajur, waktu) VALUES (? ,?, ? );"""
+                params = (klasifikasi, lajur, waktu)
+                cursor.execute(query, params)
+                self.sqliteConnection.commit()
+
+                cursor.close()
+
+            while jumlah_mobil:
                 cursor = self.sqliteConnection.cursor()
 
                 query = """INSERT INTO trafik_kendaraan (klasifikasi, lajur, waktu) VALUES (? ,?, ? );"""
 
-                params = (klasifikasi, lajur, waktu)
+                params = ("mobil", lajur, waktu)
 
                 cursor.execute(query, params)
                 self.sqliteConnection.commit()
 
                 cursor.close()
 
-                jumlah -= 1
+                jumlah_mobil -= 1
+
+            while jumlah_motor:
+                cursor = self.sqliteConnection.cursor()
+
+                query = """INSERT INTO trafik_kendaraan (klasifikasi, lajur, waktu) VALUES (? ,?, ? );"""
+
+                params = ("motor", lajur, waktu)
+
+                cursor.execute(query, params)
+                self.sqliteConnection.commit()
+
+                cursor.close()
+
+                jumlah_motor -= 1
 
         except sqlite3.Error as error:
             print("Gagal menulis ke tabel:", error)

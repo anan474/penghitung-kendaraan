@@ -5,7 +5,9 @@
     "hasil": false,
     "morfologi": false,
     "morfologi_detail": false,
-    "gabungan": true
+    "morfologi_hasil": false,
+    "morfologi_hasil_garis": false,
+    "gabungan": false
   },
   "simpangambar": {
     "direktori": "gambar_output/citra/",
@@ -13,6 +15,8 @@
     "hasil": true,
     "morfologi": true,
     "morfologi_detail": true,
+    "morfologi_hasil": true,
+    "morfologi_hasil_garis": true,
     "gabungan": true,
     "debug": true
   },
@@ -55,7 +59,7 @@
     "statistik": true
   },
   "db": {
-    "simpandb": true,
+    "simpandb": false,
     "nama": "trafikkendaraan-dev.db"
   },
   "input": {
