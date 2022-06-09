@@ -6,14 +6,14 @@ from penghitung_kendaraan import PenghitungKendaraan
 
 
 # masih ecek ecek untuk laporan jak
-class PenghitungKendaraanTestCase(unittest.TestCase):
+class PengelolaBasisdataTestCase(unittest.TestCase):
     def setUp(self):
         self.pendeteksi_objek = PendeteksiObjek()
         self.penghitung_kendaraan = PenghitungKendaraan()
 
         self.citra_jalan = cv.imread("./test_assets/citra_jalan.png")
 
-    def test_hitung_vektor(self):
+    def test_get_semua_data_by_tanggal(self):
 
         foreground = self.pendeteksi_objek.background_subtraction(
             self.citra_jalan)
@@ -21,7 +21,7 @@ class PenghitungKendaraanTestCase(unittest.TestCase):
         self.assertTrue(foreground.any() and len(foreground) > 0,
                         "Gagal ambil foreground")
 
-    def test_apakah_vektor_valid(self):
+    def test_get_status_sekarang(self):
 
         foreground = self.pendeteksi_objek.background_subtraction(
             self.citra_jalan)
@@ -30,7 +30,7 @@ class PenghitungKendaraanTestCase(unittest.TestCase):
         self.assertTrue(len(morfologi) > 0,
                         "Gagal ambil citra morfologi")
 
-    def test_apakah_masuk_garis(self):
+    def test_get_status_by_tanggal(self):
 
         foreground = self.pendeteksi_objek.background_subtraction(
             self.citra_jalan)
@@ -41,37 +41,24 @@ class PenghitungKendaraanTestCase(unittest.TestCase):
         self.assertIsInstance(daftar_objek, collections.abc.Sequence,
                               "Gagal mengambi daftar objek")
 
-    def test_apakah_melewati_garis(self):
+    def test_get_jumlah_data(self):
 
-        daftar_objek = self.pendeteksi_objek.deteksi_objek(self.citra_jalan)
-
-        self.assertIsInstance(daftar_objek, collections.abc.Sequence,
-                              "Gagal mengambi daftar objek")
-
-    def test_cocokkan_data_yang_ada(self):
-
-        daftar_objek = self.pendeteksi_objek.deteksi_objek(self.citra_jalan)
+        foreground = self.pendeteksi_objek.background_subtraction(
+            self.citra_jalan)
+        morfologi = self.pendeteksi_objek.proses_morfologi(
+            foreground)
+        daftar_objek = self.pendeteksi_objek.dapatkan_blob_objek(morfologi)
 
         self.assertIsInstance(daftar_objek, collections.abc.Sequence,
                               "Gagal mengambi daftar objek")
 
-    def test_tambahkan_ke_daftar_tracking(self):
+    def test_simpan_ke_db(self):
 
-        daftar_objek = self.pendeteksi_objek.deteksi_objek(self.citra_jalan)
-
-        self.assertIsInstance(daftar_objek, collections.abc.Sequence,
-                              "Gagal mengambi daftar objek")
-
-    def test_handle_kendaraan_melewati_batas(self):
-
-        daftar_objek = self.pendeteksi_objek.deteksi_objek(self.citra_jalan)
-
-        self.assertIsInstance(daftar_objek, collections.abc.Sequence,
-                              "Gagal mengambi daftar objek")
-
-    def test_prebarui_tracker(self):
-
-        daftar_objek = self.pendeteksi_objek.deteksi_objek(self.citra_jalan)
+        foreground = self.pendeteksi_objek.background_subtraction(
+            self.citra_jalan)
+        morfologi = self.pendeteksi_objek.proses_morfologi(
+            foreground)
+        daftar_objek = self.pendeteksi_objek.dapatkan_blob_objek(morfologi)
 
         self.assertIsInstance(daftar_objek, collections.abc.Sequence,
                               "Gagal mengambi daftar objek")
