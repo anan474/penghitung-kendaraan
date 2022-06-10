@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 CASCADE_MOTOR_KIRI = "./classifier/motorkiri.xml"
 CASCADE_MOTOR_KANAN = "./classifier/motorkanan.xml"
-CASCADE_MOBIL_KIRI = "./classifier/mobil_kiri/classifier/cascade.xml"
+CASCADE_MOBIL_KIRI = "./classifier/download/cars.xml"
 CASCADE_MOBIL_KANAN = "./classifier/download/cars.xml"
 
 WARNA_BOUNDING_BOX = (255, 0, 0)
