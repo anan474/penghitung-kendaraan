@@ -42,8 +42,9 @@ class PendeteksiObjek():
     def __proses_morfologi(self, frame, frame_counter):
 
         # cv.imshow("Background Subtraction", frame)
-        cv.imwrite((self.config['simpangambar']['direktori'] +
-                    "morfologi_detail" + "/%04d_1_backsubract.png") % frame_counter, frame)
+        if(self.config['simpangambar']["morfologi_detail"]):
+            cv.imwrite((self.config['simpangambar']['direktori'] +
+                        "morfologi_detail" + "/%04d_1_backsubract.png") % frame_counter, frame)
 
         # frame = cv.bilateralFilter(
         #     frame, 9, 75, 75)
@@ -53,18 +54,21 @@ class PendeteksiObjek():
 
         frame = cv.erode(frame, self.kernel3, iterations=1)
         # cv.imshow("Morfologi Erode", frame)
-        cv.imwrite((self.config['simpangambar']['direktori'] +
-                    "morfologi_detail" + "/%04d_2_erode.png") % frame_counter, frame)
+        if(self.config['simpangambar']["morfologi_detail"]):
+            cv.imwrite((self.config['simpangambar']['direktori'] +
+                        "morfologi_detail" + "/%04d_2_erode.png") % frame_counter, frame)
 
         frame = cv.dilate(frame, self.kernel7, iterations=2)
         # cv.imshow("Morfologi Dilate", frame)
-        cv.imwrite((self.config['simpangambar']['direktori'] +
-                    "morfologi_detail" + "/%04d_3_dilate.png") % frame_counter, frame)
+        if(self.config['simpangambar']["morfologi_detail"]):
+            cv.imwrite((self.config['simpangambar']['direktori'] +
+                        "morfologi_detail" + "/%04d_3_dilate.png") % frame_counter, frame)
 
         frame = cv.erode(frame, self.kernel7, iterations=1)
         # cv.imshow("Morfologi Erode", frame)
-        cv.imwrite((self.config['simpangambar']['direktori'] +
-                    "morfologi_detail" + "/%04d_4_erode.png") % frame_counter, frame)
+        if(self.config['simpangambar']["morfologi_detail"]):
+            cv.imwrite((self.config['simpangambar']['direktori'] +
+                        "morfologi_detail" + "/%04d_4_erode.png") % frame_counter, frame)
 
         # frame = cv.morphologyEx(
         #     frame, cv.MORPH_OPEN, self.kernel3)
@@ -75,8 +79,9 @@ class PendeteksiObjek():
         frame = cv.morphologyEx(
             frame, cv.MORPH_CLOSE, self.kernel9)
         # cv.imshow("Morfologi Close", frame)
-        cv.imwrite((self.config['simpangambar']['direktori'] +
-                    "morfologi_detail" + "/%04d_5_closing.png") % frame_counter, frame)
+        if(self.config['simpangambar']["morfologi_detail"]):
+            cv.imwrite((self.config['simpangambar']['direktori'] +
+                        "morfologi_detail" + "/%04d_5_closing.png") % frame_counter, frame)
 
         # cv.imshow('morfologi', frame)
 

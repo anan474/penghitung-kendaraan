@@ -2,7 +2,7 @@
   "logging": true,
   "cetakgambar": {
     "asli": false,
-    "hasil": false,
+    "hasil": true,
     "morfologi": false,
     "morfologi_detail": false,
     "morfologi_hasil": false,
@@ -11,28 +11,28 @@
   },
   "simpangambar": {
     "direktori": "gambar_output/citra/",
-    "asli": true,
-    "hasil": true,
-    "morfologi": true,
-    "morfologi_detail": true,
-    "morfologi_hasil": true,
-    "morfologi_hasil_garis": true,
-    "gabungan": true,
-    "debug": true
+    "asli": false,
+    "hasil": false,
+    "morfologi": false,
+    "morfologi_detail": false,
+    "morfologi_hasil": false,
+    "morfologi_hasil_garis": false,
+    "gabungan": false,
+    "debug": false
   },
   "simpangambar_klasifikasi": {
     "direktori": "gambar_output/klasifikasi/",
     "kiri": {
-      "mobil": true,
-      "motor": true,
-      "tidakdiketahui": true,
-      "keduanya": true
+      "mobil": false,
+      "motor": false,
+      "tidakdiketahui": false,
+      "keduanya": false
     },
     "kanan": {
-      "mobil": true,
-      "motor": true,
-      "tidakdiketahui": true,
-      "keduanya": true
+      "mobil": false,
+      "motor": false,
+      "tidakdiketahui": false,
+      "keduanya": false
     }
   },
   "logs": {
@@ -59,13 +59,14 @@
     "statistik": true
   },
   "db": {
-    "simpandb": false,
+    "simpandb": true,
     "nama": "trafikkendaraan-dev.db"
   },
   "input": {
     "kamera": false,
     "background": "bg.png",
-    "video": "video/2.mp4",
+    "video": "gabungan.mp4",
+    "loop": true,
     "speed": 1,
     "dimensi": {
       "lebar": 640,

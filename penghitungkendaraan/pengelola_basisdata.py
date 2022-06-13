@@ -158,8 +158,8 @@ class PengelolaBasisdata(object):
         try:
             waktu = datetime.now()
 
-            print("mau simpan kendaraan di lajur %s dengan klasifikasi %s dengan jumlah motor %d dan jumlah mobil %d" % (
-                  lajur, klasifikasi, jumlah_motor, jumlah_mobil))
+            # print("mau simpan kendaraan di lajur %s dengan klasifikasi %s dengan jumlah motor %d dan jumlah mobil %d" % (
+            #       lajur, klasifikasi, jumlah_motor, jumlah_mobil))
 
             if(klasifikasi == "tidakdiketahui"):
                 cursor = self.sqliteConnection.cursor()

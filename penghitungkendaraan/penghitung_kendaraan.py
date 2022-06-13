@@ -216,8 +216,8 @@ class PenghitungKendaraan ():
             klasifikasi, jumlah_mobil, jumlah_motor = self.klasifier.klasifikasi_kendaraan(
                 gambar_kendaraan_gray_klasifikasi, frame_klasifikasi, lajur, frame_counter)
             # cv.imshow("frame 2", frame_klasifikasi)
-            print("menerima hasil klasifikasi di lajur %s dengan klasifikasi %s dengan jumlah motor %d dan jumlah mobil %d" % (
-                  lajur, klasifikasi, jumlah_motor, jumlah_mobil))
+            # print("menerima hasil klasifikasi di lajur %s dengan klasifikasi %s dengan jumlah motor %d dan jumlah mobil %d" % (
+            #       lajur, klasifikasi, jumlah_motor, jumlah_mobil))
 
             gambar_kendaraan_klasifikasi = frame_klasifikasi[ya:yb, xa:xb]
 
