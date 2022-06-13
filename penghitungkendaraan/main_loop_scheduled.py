@@ -93,7 +93,7 @@ def main():
         if now.hour >= 17:
             print("Selesai .")
             penyedia_data_realtime.stop()
-            sys.exit(1)
+            os._exit(0)
 
     print("Menutup video ...")
     video.release()
