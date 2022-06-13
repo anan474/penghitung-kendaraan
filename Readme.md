@@ -5,11 +5,13 @@ Bagian dari tugas akhir oleh Agung Tuah Ananda pada program studi Teknik Informa
 Requirement:
 
 - opencv
-- sqlite3
 - flask & flask-classful
 - asyncio
 - websockets
 - pytest
+
+cara install:
+```python3 -m pip install flask flask-classful asyncio websockets pytest opencv-python```
 
 
 cara menjalankan : 
