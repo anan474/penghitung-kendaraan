@@ -7,6 +7,7 @@ from pendeteksi_objek import PendeteksiObjek
 import json
 import sys
 import os
+import datetime
 
 import cv2 as cv
 import logging
@@ -87,6 +88,12 @@ def main():
         if c == 27:
             print("ESC ditekan, menghentikan program.")
             break
+
+        now = datetime.datetime.now()
+        if now.hour >= 17:
+            print("Selesai .")
+            penyedia_data_realtime.stop()
+            sys.exit(1)
 
     print("Menutup video ...")
     video.release()
