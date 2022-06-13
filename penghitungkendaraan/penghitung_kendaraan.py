@@ -216,6 +216,8 @@ class PenghitungKendaraan ():
             klasifikasi, jumlah_mobil, jumlah_motor = self.klasifier.klasifikasi_kendaraan(
                 gambar_kendaraan_gray_klasifikasi, frame_klasifikasi, lajur, frame_counter)
             # cv.imshow("frame 2", frame_klasifikasi)
+            print("menerima hasil klasifikasi di lajur %s dengan klasifikasi %s dengan jumlah motor %d dan jumlah mobil %d" % (
+                  lajur, klasifikasi, jumlah_motor, jumlah_mobil))
 
             gambar_kendaraan_klasifikasi = frame_klasifikasi[ya:yb, xa:xb]
 
@@ -235,8 +237,10 @@ class PenghitungKendaraan ():
 
             # CEK KLASIFIKASI ~ END
 
-            if(jumlah_motor):
-                while jumlah_motor:
+            jumlah_motor_print = jumlah_motor
+            jumlah_mobil_print = jumlah_mobil
+            if(jumlah_motor_print):
+                while jumlah_motor_print:
                     if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
                         cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
                                     lajur + "/" + klasifikasi + "/" + filename), gambar_kendaraan)
@@ -277,10 +281,10 @@ class PenghitungKendaraan ():
 
                             f.write(teks)
                             f.write('\n')
-                    jumlah_motor = jumlah_motor-1
+                    jumlah_motor_print = jumlah_motor_print-1
 
-            if(jumlah_mobil):
-                while jumlah_mobil:
+            if(jumlah_mobil_print):
+                while jumlah_mobil_print:
                     if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
                         cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
                                     lajur + "/" + klasifikasi + "/" + filename), gambar_kendaraan)
@@ -313,7 +317,7 @@ class PenghitungKendaraan ():
                             teks = (("%04d") % frame_counter) + ";"
                             teks += str(int(ts))+";"+lajur+";" + \
                                 klasifikasi + ";" + \
-                                str(int(jumlah_mobil)+int(jumlah_motor)) + \
+                                str(int(jumlah_mobil_print)+int(jumlah_motor)) + \
                                 ";"+filename
                             if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
                                 teks += ";simpan"
@@ -322,7 +326,7 @@ class PenghitungKendaraan ():
 
                             f.write(teks)
                             f.write('\n')
-                    jumlah_mobil = jumlah_mobil - 1
+                    jumlah_mobil_print = jumlah_mobil_print - 1
             else:
                 if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
                     cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +

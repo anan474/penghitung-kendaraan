@@ -29,7 +29,7 @@ class Klasifier():
     logger.info('init modul')
 
     def klasifikasi_kendaraan(self, gambar, gambarfull, lajur, frame_counter):
-        # logger.info('kendaraan lajur %s', lajur)
+        logger.info('kendaraan lajur %s', lajur)
         base_name = str(frame_counter)+"_" + str(uuid.uuid4())[:8]
 
         if lajur == "kiri":
@@ -179,11 +179,11 @@ class Klasifier():
             klasifikasi = "motor"
             jumlah_motor = len(klasifikasi_motor)
 
-        elif(len(klasifikasi_mobil) >= 1):
+        if(len(klasifikasi_mobil) >= 1):
             klasifikasi = "mobil"
             jumlah_mobil = len(klasifikasi_mobil)
 
-        # logger.info('klasifikasi %s, mobil %d, motor %d', klasifikasi,
-        #             jumlah_mobil, jumlah_motor)
+        logger.info('klasifikasi %s, mobil %d, motor %d', klasifikasi,
+                    jumlah_mobil, jumlah_motor)
 
         return klasifikasi, jumlah_mobil, jumlah_motor
