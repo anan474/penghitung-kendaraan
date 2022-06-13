@@ -50,7 +50,9 @@ def main():
 
     video = cv.VideoCapture(config["input"]["video"])
     frame_counter = -1
-
+    fps = video.get(cv.CAP_PROP_FPS)
+    print("Video fps")
+    print(fps)
     while True:
 
         frame_counter += 1
