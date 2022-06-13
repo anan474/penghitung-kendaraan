@@ -1,8 +1,8 @@
 {
-  "logging": true,
+  "logging": false,
   "cetakgambar": {
     "asli": false,
-    "hasil": true,
+    "hasil": false,
     "morfologi": false,
     "morfologi_detail": false,
     "morfologi_hasil": false,
@@ -38,19 +38,19 @@
   "logs": {
     "direktori": "logs/",
     "klasifikasi": {
-      "gabungan": true,
+      "gabungan": false,
       "direktori": "klasifikasi/",
       "kiri": {
-        "mobil": true,
-        "motor": true,
-        "tidakdiketahui": true,
-        "keduanya": true
+        "mobil": false,
+        "motor": false,
+        "tidakdiketahui": false,
+        "keduanya": false
       },
       "kanan": {
-        "mobil": true,
-        "motor": true,
-        "tidakdiketahui": true,
-        "keduanya": true
+        "mobil": false,
+        "motor": false,
+        "tidakdiketahui": false,
+        "keduanya": false
       }
     }
   },
@@ -67,7 +67,7 @@
     "background": "bg.png",
     "video": "gabungan.mp4",
     "loop": true,
-    "speed": 1,
+    "speed": 66,
     "dimensi": {
       "lebar": 640,
       "tinggi": 360
