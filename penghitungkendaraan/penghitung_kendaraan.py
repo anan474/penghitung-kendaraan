@@ -240,6 +240,34 @@ class PenghitungKendaraan ():
             jumlah_motor_print = jumlah_motor
             jumlah_mobil_print = jumlah_mobil
             if(jumlah_motor_print):
+                if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
+                    with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
+                        ts = time.time()
+                        teks = (("%04d") % frame_counter) + ";"
+                        teks += str(int(ts))+";"+lajur+";" + \
+                            klasifikasi + ";"+filename
+                        if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                            teks += ";simpan"
+                        else:
+                            teks += ";tidaksimpan"
+
+                        f.write(teks)
+                        f.write('\n')
+                if(self.config['logs']['klasifikasi']['gabungan']):
+                    with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+"/gabungan/logs_gabungan.csv", 'a') as f:
+                        ts = time.time()
+                        teks = (("%04d") % frame_counter) + ";"
+                        teks += str(int(ts))+";"+lajur+";" + \
+                            klasifikasi + ";" + \
+                            str(int(jumlah_motor))+";"+filename
+                        if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                            teks += ";simpan"
+                        else:
+                            teks += ";tidaksimpan"
+
+                        f.write(teks)
+                        f.write('\n')
+
                 while jumlah_motor_print:
                     if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
                         cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
@@ -254,36 +282,38 @@ class PenghitungKendaraan ():
                                     lajur + "/" + klasifikasi + "/" + filename_klasifikasi), gambar_kendaraan_klasifikasi)
                         cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
                                     lajur + "/" + klasifikasi + "/" + filename_klasifikasi_gray), gambar_kendaraan_gray_klasifikasi)
-                    if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
-                        with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
-                            ts = time.time()
-                            teks = (("%04d") % frame_counter) + ";"
-                            teks += str(int(ts))+";"+lajur+";" + \
-                                klasifikasi + ";"+filename
-                            if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                                teks += ";simpan"
-                            else:
-                                teks += ";tidaksimpan"
-
-                            f.write(teks)
-                            f.write('\n')
-                    if(self.config['logs']['klasifikasi']['gabungan']):
-                        with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+"/gabungan/logs_gabungan.csv", 'a') as f:
-                            ts = time.time()
-                            teks = (("%04d") % frame_counter) + ";"
-                            teks += str(int(ts))+";"+lajur+";" + \
-                                klasifikasi + ";" + \
-                                str(int(jumlah_motor))+";"+filename
-                            if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                                teks += ";simpan"
-                            else:
-                                teks += ";tidaksimpan"
-
-                            f.write(teks)
-                            f.write('\n')
                     jumlah_motor_print = jumlah_motor_print-1
 
             if(jumlah_mobil_print):
+                if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
+                    with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
+                        ts = time.time()
+                        teks = (("%04d") % frame_counter) + ";"
+                        teks += str(int(ts))+";"+lajur+";" + \
+                            klasifikasi + ";"+filename
+                        if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                            teks += ";simpan"
+                        else:
+                            teks += ";tidaksimpan"
+
+                        f.write(teks)
+                        f.write('\n')
+                if(self.config['logs']['klasifikasi']['gabungan']):
+                    with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+"/gabungan/logs_gabungan.csv", 'a') as f:
+                        ts = time.time()
+                        teks = (("%04d") % frame_counter) + ";"
+                        teks += str(int(ts))+";"+lajur+";" + \
+                            klasifikasi + ";" + \
+                            str(int(jumlah_mobil_print)+int(jumlah_motor)) + \
+                            ";"+filename
+                        if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
+                            teks += ";simpan"
+                        else:
+                            teks += ";tidaksimpan"
+
+                        f.write(teks)
+                        f.write('\n')
+
                 while jumlah_mobil_print:
                     if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
                         cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
@@ -298,36 +328,8 @@ class PenghitungKendaraan ():
                                     lajur + "/" + klasifikasi + "/" + filename_klasifikasi), gambar_kendaraan_klasifikasi)
                         cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
                                     lajur + "/" + klasifikasi + "/" + filename_klasifikasi_gray), gambar_kendaraan_gray_klasifikasi)
-                    if(self.config['logs']['klasifikasi'][lajur][klasifikasi]):
-                        with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+lajur+"/"+klasifikasi+"/logs.csv", 'a') as f:
-                            ts = time.time()
-                            teks = (("%04d") % frame_counter) + ";"
-                            teks += str(int(ts))+";"+lajur+";" + \
-                                klasifikasi + ";"+filename
-                            if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                                teks += ";simpan"
-                            else:
-                                teks += ";tidaksimpan"
-
-                            f.write(teks)
-                            f.write('\n')
-                    if(self.config['logs']['klasifikasi']['gabungan']):
-                        with open(self.config['logs']["direktori"]+self.config['logs']['klasifikasi']["direktori"]+"/gabungan/logs_gabungan.csv", 'a') as f:
-                            ts = time.time()
-                            teks = (("%04d") % frame_counter) + ";"
-                            teks += str(int(ts))+";"+lajur+";" + \
-                                klasifikasi + ";" + \
-                                str(int(jumlah_mobil_print)+int(jumlah_motor)) + \
-                                ";"+filename
-                            if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
-                                teks += ";simpan"
-                            else:
-                                teks += ";tidaksimpan"
-
-                            f.write(teks)
-                            f.write('\n')
                     jumlah_mobil_print = jumlah_mobil_print - 1
-            else:
+            if(not jumlah_motor and not jumlah_mobil):
                 if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
                     cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
                                 lajur + "/" + klasifikasi + "/" + filename), gambar_kendaraan)

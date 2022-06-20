@@ -37,8 +37,8 @@ def main():
     gambar_objek = GambarObjek(config)
     utilitas = Utilitas()
 
+#    utilitas.empty_output_content()
     utilitas.create_output_folders()
-    utilitas.empty_output_content()
 
     if (config['sediadata']['realtime']):
         penyedia_data_realtime = PenyediaDataRealtime()
@@ -75,6 +75,7 @@ def main():
         gambar_objek.tampilkan_frame(
             frame, foreground, frame_counter, daftar_objek_asli, daftar_kendaraan)
 
+        print(frame_counter)
         ###
         c = cv.waitKey(config["input"]["speed"])
         if c == ord('p'):
@@ -86,7 +87,8 @@ def main():
     print("Menutup video ...")
     video.release()
     cv.destroyAllWindows()
-    penyedia_data_realtime.stop()
+    if (config['sediadata']['realtime']):
+        penyedia_data_realtime.stop()
     print("Selesai .")
     os._exit(0)
 

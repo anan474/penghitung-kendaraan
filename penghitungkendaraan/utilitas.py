@@ -115,6 +115,11 @@ class Utilitas():
         print("create output folders...\n")
         try:
 
+            for dir in dirarr:
+                if not os.path.exists(dir):
+                    os.makedirs(dir)
+            return "done"
+
             sqliteConnection = sqlite3.connect('trafikkendaraan.db')
             sqlite_create_table_query = '''CREATE TABLE trafik_kendaraan (
                                         id INTEGER PRIMARY KEY,
