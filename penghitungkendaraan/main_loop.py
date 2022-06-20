@@ -35,10 +35,11 @@ def main():
     pendeteksi_objek = PendeteksiObjek(config)
     penghitung_kendaraan = PenghitungKendaraan(config)
     gambar_objek = GambarObjek(config)
-#    utilitas = Utilitas()
 
-#    utilitas.create_output_folders()
-#    utilitas.empty_output_content()
+    # utilitas = Utilitas()
+
+    # utilitas.create_output_folders()
+    # utilitas.empty_output_content()
 
     if (config['sediadata']['realtime']):
         penyedia_data_realtime = PenyediaDataRealtime()

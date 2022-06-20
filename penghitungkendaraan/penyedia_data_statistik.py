@@ -35,6 +35,14 @@ class DataView(FlaskView):
         respon.headers["Content-Type"] = "application/json; charset=utf-8"
         return respon
 
+    def semuadatahariini(self):
+        data = pengelola_basis_data.get_semua_hari_ini()
+        data_json = json.dumps(data)
+        respon = Response(response=data_json, status=200,
+                          mimetype="application/json")
+        respon.headers["Content-Type"] = "application/json; charset=utf-8"
+        return respon
+
     def statusbytanggal(self, tanggal):
         data = pengelola_basis_data.get_status_by_tanggal(tanggal)
         data_json = json.dumps(data)

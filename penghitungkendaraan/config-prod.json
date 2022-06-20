@@ -56,7 +56,8 @@
   },
   "sediadata": {
     "realtime": true,
-    "statistik": true
+    "statistik": true,
+    "websocketdelay": 5
   },
   "db": {
     "simpandb": true,

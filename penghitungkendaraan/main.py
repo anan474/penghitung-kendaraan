@@ -75,7 +75,7 @@ def main():
         gambar_objek.tampilkan_frame(
             frame, foreground, frame_counter, daftar_objek_asli, daftar_kendaraan)
 
-        print(frame_counter)
+        # print(frame_counter)
         ###
         c = cv.waitKey(config["input"]["speed"])
         if c == ord('p'):

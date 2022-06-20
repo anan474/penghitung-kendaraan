@@ -63,7 +63,7 @@ class Utilitas():
                         id INTEGER PRIMARY KEY,
                         klasifikasi TEXT NOT NULL,
                         lajur TEXT NOT NULL,
-                        waktu timestamp);'''
+                        waktu datetime);'''
             cursor.execute(query2)
             self.sqliteConnection.commit()
 
@@ -92,7 +92,7 @@ class Utilitas():
                         id INTEGER PRIMARY KEY,
                         klasifikasi TEXT NOT NULL,
                         lajur TEXT NOT NULL,
-                        waktu timestamp);'''
+                        waktu datetime);'''
             cursor.execute(query2)
             self.sqliteConnection.commit()
 
@@ -125,7 +125,7 @@ class Utilitas():
                                         id INTEGER PRIMARY KEY,
                                         klasifikasi TEXT NOT NULL,
                                         lajur TEXT NOT NULL,
-                                        waktu timestamp);'''
+                                        waktu datetime);'''
 
             cursor = sqliteConnection.cursor()
             print("Berhasil terhubung ke SQLite")
