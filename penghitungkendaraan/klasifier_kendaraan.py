@@ -1,13 +1,18 @@
 import cv2 as cv
 import logging
 import uuid
+import os
 
 logger = logging.getLogger(__name__)
 
-CASCADE_MOTOR_KIRI = "./classifier/motorkiri.xml"
-CASCADE_MOTOR_KANAN = "./classifier/motorkanan.xml"
-CASCADE_MOBIL_KIRI = "./classifier/download/cars.xml"
-CASCADE_MOBIL_KANAN = "./classifier/download/cars.xml"
+# ============================================================================
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+CONFIG_PATH = os.path.join(ROOT_DIR, 'config-dev.json')
+
+CASCADE_MOTOR_KIRI = os.path.join(ROOT_DIR, "classifier/motorkiri.xml")
+CASCADE_MOTOR_KANAN = os.path.join(ROOT_DIR, "classifier/motorkanan.xml")
+CASCADE_MOBIL_KIRI = os.path.join(ROOT_DIR, "classifier/download/cars.xml")
+CASCADE_MOBIL_KANAN = os.path.join(ROOT_DIR, "classifier/download/cars.xml")
 
 WARNA_BOUNDING_BOX = (255, 0, 0)
 WARNA_BOUNDING_BOX_HIJAU = (0, 255, 0)

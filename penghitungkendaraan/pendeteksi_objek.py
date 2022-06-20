@@ -1,9 +1,10 @@
 import cv2 as cv
 import logging
+import os
 
 logger = logging.getLogger(__name__)
-
-GAMBAR_BACKGROUND = "bg.png"
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+GAMBAR_BACKGROUND = os.path.join(ROOT_DIR, "bg.png")
 
 RESIZE_LEBAR = 640
 RESIZE_TINGGI = 360

@@ -20,11 +20,11 @@ RESIZE_LEBAR = 640
 RESIZE_TINGGI = 360
 
 # ============================================================================
-
-
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+CONFIG_PATH = os.path.join(ROOT_DIR, 'config-dev.json')
 def main():
 
-    with open("config-dev.json") as json_data_file:
+    with open(CONFIG_PATH) as json_data_file:
         config = json.load(json_data_file)
 
     print('in main')
@@ -49,7 +49,7 @@ def main():
         penyedia_data_statistik = PenyediaDataStatistik()
         penyedia_data_statistik.start()
 
-    video = cv.VideoCapture(config["input"]["video"])
+    video = cv.VideoCapture(os.path.join(ROOT_DIR, config["input"]["video"]))
     frame_counter = -1
 
     while True:
