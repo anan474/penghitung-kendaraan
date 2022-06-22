@@ -7,50 +7,50 @@
     "morfologi_detail": false,
     "morfologi_hasil": false,
     "morfologi_hasil_garis": false,
-    "gabungan": false
+    "gabungan": true
   },
   "simpangambar": {
     "direktori": "gambar_output/citra/",
-    "asli": false,
-    "hasil": false,
-    "morfologi": false,
-    "morfologi_detail": false,
-    "morfologi_hasil": false,
-    "morfologi_hasil_garis": false,
-    "gabungan": false,
-    "debug": false
+    "asli": true,
+    "hasil": true,
+    "morfologi": true,
+    "morfologi_detail": true,
+    "morfologi_hasil": true,
+    "morfologi_hasil_garis": true,
+    "gabungan": true,
+    "debug": true
   },
   "simpangambar_klasifikasi": {
     "direktori": "gambar_output/klasifikasi/",
     "kiri": {
-      "mobil": false,
-      "motor": false,
-      "tidakdiketahui": false,
-      "keduanya": false
+      "mobil": true,
+      "motor": true,
+      "tidakdiketahui": true,
+      "keduanya": true
     },
     "kanan": {
-      "mobil": false,
-      "motor": false,
-      "tidakdiketahui": false,
-      "keduanya": false
+      "mobil": true,
+      "motor": true,
+      "tidakdiketahui": true,
+      "keduanya": true
     }
   },
   "logs": {
     "direktori": "logs/",
     "klasifikasi": {
-      "gabungan": false,
+      "gabungan": true,
       "direktori": "klasifikasi/",
       "kiri": {
-        "mobil": false,
-        "motor": false,
-        "tidakdiketahui": false,
-        "keduanya": false
+        "mobil": true,
+        "motor": true,
+        "tidakdiketahui": true,
+        "keduanya": true
       },
       "kanan": {
-        "mobil": false,
-        "motor": false,
-        "tidakdiketahui": false,
-        "keduanya": false
+        "mobil": true,
+        "motor": true,
+        "tidakdiketahui": true,
+        "keduanya": true
       }
     }
   },
@@ -66,9 +66,9 @@
   "input": {
     "kamera": false,
     "background": "bg.png",
-    "video": "gabungan.mp4",
+    "video": "video/pengujian/pagi-cut.mp4",
     "loop": false,
-    "speed": 66,
+    "speed": 1,
     "dimensi": {
       "lebar": 640,
       "tinggi": 360

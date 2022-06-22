@@ -21,7 +21,7 @@ class PenyediaDataRealtime():
     def start(self):
         print("starting websocket")
         self.start_server = websockets.serve(
-            self.server_websocket, "localhost", 8010)
+            self.server_websocket, "localhost", 6789)
 
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(self.start_server)
