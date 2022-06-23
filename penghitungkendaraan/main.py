@@ -37,8 +37,8 @@ def main():
     gambar_objek = GambarObjek(config)
     utilitas = Utilitas()
 
-#    utilitas.empty_output_content()
-    utilitas.create_output_folders()
+    utilitas.empty_output_content(resetdb=True)
+    utilitas.create_output_folders(resetdb=True)
 
     if (config['sediadata']['realtime']):
         penyedia_data_realtime = PenyediaDataRealtime()
@@ -75,8 +75,6 @@ def main():
         gambar_objek.tampilkan_frame(
             frame, foreground, frame_counter, daftar_objek_asli, daftar_kendaraan)
 
-        # print(frame_counter)
-        ###
         c = cv.waitKey(config["input"]["speed"])
         if c == ord('p'):
             cv.waitKey(-1)

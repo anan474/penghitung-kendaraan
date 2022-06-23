@@ -2,22 +2,22 @@
   "logging": true,
   "cetakgambar": {
     "asli": false,
-    "hasil": false,
+    "hasil": true,
     "morfologi": false,
     "morfologi_detail": false,
     "morfologi_hasil": false,
     "morfologi_hasil_garis": false,
-    "gabungan": true
+    "gabungan": false
   },
   "simpangambar": {
     "direktori": "gambar_output/citra/",
-    "asli": true,
+    "asli": false,
     "hasil": true,
     "morfologi": true,
-    "morfologi_detail": true,
-    "morfologi_hasil": true,
-    "morfologi_hasil_garis": true,
-    "gabungan": true,
+    "morfologi_detail": false,
+    "morfologi_hasil": false,
+    "morfologi_hasil_garis": false,
+    "gabungan": false,
     "debug": true
   },
   "simpangambar_klasifikasi": {
@@ -66,9 +66,9 @@
   "input": {
     "kamera": false,
     "background": "bg.png",
-    "video": "video/pengujian/pagi-cut.mp4",
+    "video": "video/pengujian/siang-cut.mp4",
     "loop": false,
-    "speed": 1,
+    "speed": 66,
     "dimensi": {
       "lebar": 640,
       "tinggi": 360

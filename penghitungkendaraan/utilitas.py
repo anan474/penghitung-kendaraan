@@ -80,23 +80,24 @@ class Utilitas():
 
         return self
 
-    def empty_output_content(self):
+    def empty_output_content(self, resetdb=False):
         print("menghapus output sebelumnya...\n")
         try:
-            cursor = self.sqliteConnection.cursor()
-            query1 = """DROP TABLE trafik_kendaraan;"""
-            cursor.execute(query1)
-            self.sqliteConnection.commit()
+            if resetdb is True:
+                cursor = self.sqliteConnection.cursor()
+                query1 = """DROP TABLE trafik_kendaraan;"""
+                cursor.execute(query1)
+                self.sqliteConnection.commit()
 
-            query2 = '''CREATE TABLE trafik_kendaraan (
-                        id INTEGER PRIMARY KEY,
-                        klasifikasi TEXT NOT NULL,
-                        lajur TEXT NOT NULL,
-                        waktu datetime);'''
-            cursor.execute(query2)
-            self.sqliteConnection.commit()
+                query2 = '''CREATE TABLE trafik_kendaraan (
+                            id INTEGER PRIMARY KEY,
+                            klasifikasi TEXT NOT NULL,
+                            lajur TEXT NOT NULL,
+                            waktu datetime);'''
+                cursor.execute(query2)
+                self.sqliteConnection.commit()
 
-            cursor.close()
+                cursor.close()
 
             for dir in dirarr:
                 for file in os.scandir(dir):
@@ -111,33 +112,29 @@ class Utilitas():
 
         return self
 
-    def create_output_folders(self):
+    def create_output_folders(self, resetdb=False):
         print("create output folders...\n")
         try:
-
             for dir in dirarr:
                 if not os.path.exists(dir):
                     os.makedirs(dir)
-            return "done"
 
-            sqliteConnection = sqlite3.connect('trafikkendaraan.db')
-            sqlite_create_table_query = '''CREATE TABLE trafik_kendaraan (
-                                        id INTEGER PRIMARY KEY,
-                                        klasifikasi TEXT NOT NULL,
-                                        lajur TEXT NOT NULL,
-                                        waktu datetime);'''
+            if resetdb is True:
+                sqliteConnection = sqlite3.connect('trafikkendaraan.db')
+                sqlite_create_table_query = '''CREATE TABLE trafik_kendaraan (
+                                            id INTEGER PRIMARY KEY,
+                                            klasifikasi TEXT NOT NULL,
+                                            lajur TEXT NOT NULL,
+                                            waktu datetime);'''
 
-            cursor = sqliteConnection.cursor()
-            print("Berhasil terhubung ke SQLite")
-            cursor.execute(sqlite_create_table_query)
-            sqliteConnection.commit()
-            print("Tabel berhasil dibuat")
+                cursor = sqliteConnection.cursor()
+                print("Berhasil terhubung ke SQLite")
+                cursor.execute(sqlite_create_table_query)
+                sqliteConnection.commit()
+                print("Tabel berhasil dibuat")
 
-            cursor.close()
+                cursor.close()
 
-            for dir in dirarr:
-                if not os.path.exists(dir):
-                    os.makedirs(dir)
             return "done"
 
         except:
