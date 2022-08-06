@@ -12,27 +12,27 @@
   "simpangambar": {
     "direktori": "gambar_output/citra/",
     "asli": false,
-    "hasil": true,
-    "morfologi": true,
+    "hasil": false,
+    "morfologi": false,
     "morfologi_detail": false,
     "morfologi_hasil": false,
     "morfologi_hasil_garis": false,
     "gabungan": false,
-    "debug": true
+    "debug": false
   },
   "simpangambar_klasifikasi": {
     "direktori": "gambar_output/klasifikasi/",
     "kiri": {
-      "mobil": true,
-      "motor": true,
-      "tidakdiketahui": true,
-      "keduanya": true
+      "mobil": false,
+      "motor": false,
+      "tidakdiketahui": false,
+      "keduanya": false
     },
     "kanan": {
-      "mobil": true,
-      "motor": true,
-      "tidakdiketahui": true,
-      "keduanya": true
+      "mobil": false,
+      "motor": false,
+      "tidakdiketahui": false,
+      "keduanya": false
     }
   },
   "logs": {
@@ -66,9 +66,9 @@
   "input": {
     "kamera": false,
     "background": "bg.png",
-    "video": "video/pengujian/siang-cut.mp4",
-    "loop": false,
-    "speed": 66,
+    "video": "gabungan_baru.mp4",
+    "loop": true,
+    "speed": 33,
     "dimensi": {
       "lebar": 640,
       "tinggi": 360

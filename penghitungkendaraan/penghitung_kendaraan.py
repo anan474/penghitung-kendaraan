@@ -14,11 +14,17 @@ from gambar_objek import GambarObjek
 
 # ============================================================================
 
-GARIS_PEMBATAS_KIRI_MASUK = 240
+# GARIS_PEMBATAS_KIRI_MASUK = 240
+GARIS_PEMBATAS_KIRI_MASUK = 120
+
 GARIS_PEMBATAS_KIRI_KELUAR = 60
 
+# GARIS_PEMBATAS_KANAN_MASUK = 10
 GARIS_PEMBATAS_KANAN_MASUK = 40
-GARIS_PEMBATAS_KANAN_KELUAR = 120
+# GARIS_PEMBATAS_KANAN_KELUAR = 50
+GARIS_PEMBATAS_KANAN_KELUAR = 80
+# GARIS_PEMBATAS_KANAN_KELUAR = 100
+# GARIS_PEMBATAS_KANAN_KELUAR = 120
 
 
 BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT = 10
@@ -304,7 +310,7 @@ class PenghitungKendaraan ():
                         teks = (("%04d") % frame_counter) + ";"
                         teks += str(int(ts))+";"+lajur+";" + \
                             klasifikasi + ";" + \
-                            str(int(jumlah_mobil_print)+int(jumlah_motor)) + \
+                            str(int(jumlah_mobil)) + \
                             ";"+filename
                         if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
                             teks += ";simpan"
@@ -329,6 +335,7 @@ class PenghitungKendaraan ():
                         cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
                                     lajur + "/" + klasifikasi + "/" + filename_klasifikasi_gray), gambar_kendaraan_gray_klasifikasi)
                     jumlah_mobil_print = jumlah_mobil_print - 1
+
             if(not jumlah_motor and not jumlah_mobil):
                 if(self.config['simpangambar_klasifikasi'][lajur][klasifikasi]):
                     cv.imwrite((self.config['simpangambar_klasifikasi']['direktori'] +
