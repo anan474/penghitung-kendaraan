@@ -11,8 +11,8 @@ CONFIG_PATH = os.path.join(ROOT_DIR, 'config-dev.json')
 
 CASCADE_MOTOR_KIRI = os.path.join(ROOT_DIR, "classifier/motorkiri.xml")
 CASCADE_MOTOR_KANAN = os.path.join(ROOT_DIR, "classifier/motorkanan.xml")
-CASCADE_MOBIL_KIRI = os.path.join(ROOT_DIR, "classifier/download/cars.xml")
-CASCADE_MOBIL_KANAN = os.path.join(ROOT_DIR, "classifier/download/cars.xml")
+CASCADE_MOBIL_KIRI = os.path.join(ROOT_DIR, "classifier/mobilkiri.xml")
+CASCADE_MOBIL_KANAN = os.path.join(ROOT_DIR, "classifier/mobilkanan.xml")
 
 WARNA_BOUNDING_BOX = (255, 0, 0)
 WARNA_BOUNDING_BOX_HIJAU = (0, 255, 0)
