@@ -8,6 +8,7 @@ import glob
 # delete folders
 dirarr = [
     "./gambar_output/citra/asli",
+    "./gambar_output/citra/elapsed",
     "./gambar_output/citra/hasil",
     "./gambar_output/citra/morfologi",
     "./gambar_output/citra/morfologi_detail",

@@ -166,7 +166,7 @@ class GambarObjek():
             cv.imwrite((self.config['simpangambar']['direktori'] +
                         tipe + "/%04d.png") % frame_counter, frame)
 
-    def tampilkan_frame(self, frame, foreground, frame_counter, daftar_objek, daftar_kendaraan):
+    def tampilkan_frame(self, frame, foreground, frame_counter, daftar_objek, daftar_kendaraan, elapsed, jmlobjek, jmlkendaaan):
         # print(cv.utils.dumpInputArray(frame))
 
         self.tampilkan_simpan_jalan('asli', frame, frame_counter)
@@ -189,6 +189,9 @@ class GambarObjek():
         frame_foreground_hasil_garis = self.gambar_garis_batas(
             frame_foreground_hasil_garis, True)
 
+        if elapsed % 5.0 == 0:
+            self.tampilkan_simpan_jalan('elapsed', frame, frame_counter)
+        
         self.tampilkan_simpan_jalan('hasil', frame_hasil, frame_counter)
         self.tampilkan_simpan_jalan('morfologi', foreground, frame_counter)
         self.tampilkan_simpan_jalan(

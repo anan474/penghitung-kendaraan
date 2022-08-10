@@ -53,6 +53,7 @@ class PenghitungKendaraan ():
         self.kendaraan_untuk_diklasifikasi = []
 
         self.jumlah_kendaraan = 0
+        self.jumlah_kendaraan_terklasifikasi = 0
 
         # jika pada @limit frame tidak terlihat maka kendaraan dihilangkan
         self.limit_tidak_terlihat = BATAS_FRAME_KENDARAAN_TIDAK_TERLIHAT
@@ -378,6 +379,10 @@ class PenghitungKendaraan ():
 
                         f.write(teks)
                         f.write('\n')
+
+            # tambahkan count objek terklasifikasi kalo iya salah satu motor atau mobil
+            if jumlah_motor or jumlah_mobil:
+                self.jumlah_kendaraan_terklasifikasi += 1
 
             # tambahkan ke basis data
             self.pengelola_basisdata.simpan_ke_db(

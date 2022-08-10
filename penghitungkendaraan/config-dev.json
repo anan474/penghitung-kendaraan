@@ -2,7 +2,8 @@
   "logging": true,
   "cetakgambar": {
     "asli": false,
-    "hasil": true,
+    "elapsed": false,
+    "hasil": false,
     "morfologi": false,
     "morfologi_detail": false,
     "morfologi_hasil": false,
@@ -11,6 +12,7 @@
   },
   "simpangambar": {
     "direktori": "gambar_output/citra/",
+    "elapsed": true,
     "asli": false,
     "hasil": false,
     "morfologi": false,
@@ -55,8 +57,8 @@
     }
   },
   "sediadata": {
-    "realtime": true,
-    "statistik": true,
+    "realtime": false,
+    "statistik": false,
     "websocketdelay": 5
   },
   "db": {
@@ -66,9 +68,9 @@
   "input": {
     "kamera": false,
     "background": "bg.png",
-    "video": "gabungan_baru.mp4",
-    "loop": true,
-    "speed": 33,
+    "video": "video/pengujianbaru/dataujilagisoreslowed.mp4",
+    "loop": false,
+    "speed": 1,
     "dimensi": {
       "lebar": 640,
       "tinggi": 360

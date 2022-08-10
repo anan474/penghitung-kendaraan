@@ -1,3 +1,7 @@
+python3 -m pstats profilerresult
+python3 -m cProfile -o profilerresult main.py
+python3 -m snakeviz profilerresult
+
 saat objek telah di dihitung tampilkan lah 
     gambar objek
     jumlah pixel objek tersebut
@@ -27,3 +31,12 @@ struktur baru
 
     gambar_objek
     logger
+
+
+
+Todo:
+- generate log per 15 detik video dengan atribut:
+    - timestamp video
+    - frame range
+    - jumlah objek terdeteksi
+    - jumlah objek terklasifikasi
