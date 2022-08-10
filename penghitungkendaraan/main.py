@@ -35,8 +35,8 @@ def main():
     pendeteksi_objek = PendeteksiObjek(config)
     penghitung_kendaraan = PenghitungKendaraan(config)
     gambar_objek = GambarObjek(config)
-    utilitas = Utilitas()
 
+    utilitas = Utilitas()
     utilitas.empty_output_content(resetdb=True)
     utilitas.create_output_folders(resetdb=True)
 
@@ -50,6 +50,8 @@ def main():
 
     video = cv.VideoCapture(config["input"]["video"])
     frame_counter = -1
+
+    fps = video.get(cv.CAP_PROP_FPS)
 
     while True:
 
@@ -72,8 +74,19 @@ def main():
         daftar_kendaraan = penghitung_kendaraan.hitung_kendaraan(
             daftar_objek, frame, frame_counter, foreground)
 
+        elapsed = frame_counter/fps
+
+        if elapsed % 5.0 == 0:
+            print("frame: " + str(frame_counter) + "; fps: "+ str(fps)+"; elapsed: "+str(elapsed)+"; objek: "+ str(penghitung_kendaraan.jumlah_kendaraan)+"; kendaraan:"+str(penghitung_kendaraan.jumlah_kendaraan_terklasifikasi) )
+            with open(config['logs']["direktori"]+config['logs']['klasifikasi']["direktori"]+"/gabungan/elapsed.csv", 'a') as f:
+                teks = "frame: " + str(frame_counter) + "; fps: "+ str(fps)+"; elapsed: "+str(elapsed)+"; objek: "+ str(penghitung_kendaraan.jumlah_kendaraan)+"; kendaraan:"+str(penghitung_kendaraan.jumlah_kendaraan_terklasifikasi) 
+                f.write(teks)
+                f.write('\n')
+
+
+
         gambar_objek.tampilkan_frame(
-            frame, foreground, frame_counter, daftar_objek_asli, daftar_kendaraan)
+            frame, foreground, frame_counter, daftar_objek_asli, daftar_kendaraan,elapsed,penghitung_kendaraan.jumlah_kendaraan,penghitung_kendaraan.jumlah_kendaraan_terklasifikasi)
 
         c = cv.waitKey(config["input"]["speed"])
         if c == ord('p'):
@@ -88,7 +101,7 @@ def main():
     if (config['sediadata']['realtime']):
         penyedia_data_realtime.stop()
     print("Selesai .")
-    os._exit(0)
+    # os._exit(0)
 
 # ============================================================================
 

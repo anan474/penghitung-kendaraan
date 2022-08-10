@@ -2,7 +2,8 @@
   "logging": true,
   "cetakgambar": {
     "asli": false,
-    "hasil": true,
+    "elapsed": false,
+    "hasil": false,
     "morfologi": false,
     "morfologi_detail": false,
     "morfologi_hasil": false,
@@ -11,28 +12,29 @@
   },
   "simpangambar": {
     "direktori": "gambar_output/citra/",
+    "elapsed": true,
     "asli": false,
-    "hasil": true,
-    "morfologi": true,
+    "hasil": false,
+    "morfologi": false,
     "morfologi_detail": false,
     "morfologi_hasil": false,
     "morfologi_hasil_garis": false,
     "gabungan": false,
-    "debug": true
+    "debug": false
   },
   "simpangambar_klasifikasi": {
     "direktori": "gambar_output/klasifikasi/",
     "kiri": {
-      "mobil": true,
-      "motor": true,
-      "tidakdiketahui": true,
-      "keduanya": true
+      "mobil": false,
+      "motor": false,
+      "tidakdiketahui": false,
+      "keduanya": false
     },
     "kanan": {
-      "mobil": true,
-      "motor": true,
-      "tidakdiketahui": true,
-      "keduanya": true
+      "mobil": false,
+      "motor": false,
+      "tidakdiketahui": false,
+      "keduanya": false
     }
   },
   "logs": {
@@ -55,8 +57,8 @@
     }
   },
   "sediadata": {
-    "realtime": true,
-    "statistik": true,
+    "realtime": false,
+    "statistik": false,
     "websocketdelay": 5
   },
   "db": {
@@ -66,9 +68,9 @@
   "input": {
     "kamera": false,
     "background": "bg.png",
-    "video": "video/pengujian/siang-cut.mp4",
+    "video": "video/pengujianbaru/dataujilagisoreslowed.mp4",
     "loop": false,
-    "speed": 66,
+    "speed": 1,
     "dimensi": {
       "lebar": 640,
       "tinggi": 360
