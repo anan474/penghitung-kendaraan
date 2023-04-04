@@ -68,7 +68,7 @@
   "input": {
     "kamera": false,
     "background": "bg.png",
-    "video": "video/pengujianbaru/dataujilagisoreslowedfix.mp4",
+    "video": "video/pengujianbaru/dataujilagislowedfix.mp4",
     "loop": false,
     "speed": 1,
     "dimensi": {
